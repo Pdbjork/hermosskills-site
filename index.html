@@ -365,10 +365,10 @@
               <b>Sponsor</b> a skill your team depends on. <b>Commission</b> a custom skill and we'll route 30% of the work to a public-good AI project. <b>Submit</b> a skill you've authored — we review submissions twice a month.
             </p>
           </div>
-          <form action="mailto:team@hermosskills.com" method="post" enctype="text/plain">
-            <input type="email" name="email" placeholder="you@company.com" required aria-label="Email" />
+          <form id="partnerForm" action="mailto:team@hermosskills.com" method="post" enctype="text/plain" novalidate>
+            <input type="email" name="email" placeholder="you@company.com" required aria-label="Email" autocomplete="email" />
             <button type="submit">Get in touch →</button>
-            <div class="note">Sends to <code>team@hermosskills.com</code> · forwarded to <code>admin@bjorked.com</code></div>
+            <div class="note" id="partnerNote">Sends to <code>team@hermosskills.com</code> · forwarded to <code>admin@bjorked.com</code></div>
           </form>
         </div>
       </div>
@@ -414,5 +414,53 @@
       <span>Built in the open. Funded by people who use the skills.</span>
     </div>
   </footer>
+  <script>
+    // Hayden Cate — hermosskills partner / sponsor form → /api/subscribe
+    (function () {
+      var form = document.getElementById('partnerForm');
+      var note = document.getElementById('partnerNote');
+      if (!form || !note) return;
+
+      function renderCount(n) {
+        note.textContent = "Logged. You're contact #" + n + " in the partner queue. We'll reply within two business days.";
+        note.style.color = 'rgba(255,255,255,.95)';
+      }
+      function renderError(msg) {
+        note.textContent = msg || 'Could not save — email team@hermosskills.com directly.';
+        note.style.color = 'rgba(255,210,210,.95)';
+      }
+      function paintInitial() {
+        fetch('/api/stats', { credentials: 'omit' })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (j) {
+            if (!j || !j.sites) return;
+            var n = (j.sites.hermosskills || 0) + 1;
+            note.textContent = n + ' partners in the queue · ' + note.textContent;
+          })
+          .catch(function () { /* keep original note */ });
+      }
+      paintInitial();
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = (form.querySelector('input[type=email]') || {}).value || '';
+        var btn = form.querySelector('button');
+        if (btn) btn.disabled = true;
+        note.textContent = 'Saving your contact…';
+        fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ site: 'hermosskills', email: email, note: 'cta partner form' })
+        })
+          .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (res.ok && res.j && res.j.ok) renderCount(res.j.count);
+            else renderError((res.j && res.j.error) || 'Could not save.');
+          })
+          .catch(function () { renderError(); })
+          .finally(function () { if (btn) btn.disabled = false; });
+      });
+    })();
+  </script>
 </body>
 </html>
