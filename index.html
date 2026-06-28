@@ -168,6 +168,14 @@
                   background: var(--copper); color: #fff; font-weight: 900; cursor: pointer; font: inherit; }
     .cta .note { grid-column: 1/-1; text-align: center; color: rgba(255,255,255,.7); font-size: 13px; margin: 8px 0 0; }
 
+    .checkout-options { display:grid; gap: 10px; }
+    .checkout-card { border: 1px solid rgba(255,255,255,.24); border-radius: 20px; padding: 16px; background: rgba(255,255,255,.1); }
+    .checkout-card b { display:block; font-size: 17px; }
+    .checkout-card span { display:block; margin-top: 4px; color: rgba(255,255,255,.82); font-size: 13px; }
+    .checkout-card button { margin-top: 12px; width: 100%; border: 0; padding: 12px 16px; border-radius: 999px; background: #fff; color: var(--green); font-weight: 950; cursor: pointer; font: inherit; }
+    .checkout-email { width: 100%; border: 0; outline: 0; padding: 13px 16px; font: inherit; border-radius: 999px; background: #fff; color: var(--ink); margin-bottom: 12px; }
+    .checkout-status { min-height: 22px; color: rgba(255,255,255,.86); font-size: 13px; text-align: center; }
+
     /* FOOTER */
     footer { padding: 56px 22px 80px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
     .foot { max-width: var(--max); margin: 0 auto; display:grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 32px; }
@@ -369,11 +377,25 @@
               <b>Sponsor</b> a skill your team depends on. <b>Commission</b> a custom skill and we'll route 30% of the work to a public-good AI project. <b>Submit</b> a skill you've authored — we review submissions twice a month.
             </p>
           </div>
-          <form id="partnerForm" action="mailto:team@hermosskills.com" method="post" enctype="text/plain" novalidate>
-            <input type="email" name="email" placeholder="you@company.com" required aria-label="Email" autocomplete="email" />
-            <button type="submit">Get in touch →</button>
-            <div class="note" id="partnerNote">Sends to <code>team@hermosskills.com</code> · forwarded to <code>admin@bjorked.com</code></div>
-          </form>
+          <div id="partnerForm" class="checkout-options">
+            <input class="checkout-email" type="email" name="email" placeholder="you@company.com" required aria-label="Email" autocomplete="email" />
+            <div class="checkout-card">
+              <b>Skill Sponsor · $49/month</b>
+              <span>Fund maintenance for a curated AI-agent skill your team depends on.</span>
+              <button type="button" data-plan="sponsor">Sponsor a skill →</button>
+            </div>
+            <div class="checkout-card">
+              <b>Commission Deposit · $500</b>
+              <span>Start a scoped custom skill, integration, or agent workflow audit.</span>
+              <button type="button" data-plan="commission">Commission work →</button>
+            </div>
+            <div class="checkout-card">
+              <b>Founding Sponsor · $250/month</b>
+              <span>Support the public-good skill catalog as a founding sponsor.</span>
+              <button type="button" data-plan="founding">Become a founding sponsor →</button>
+            </div>
+            <div class="checkout-status" id="partnerNote">Secure checkout is powered by Stripe. Questions: team@hermosskills.com</div>
+          </div>
         </div>
       </div>
     </section>
@@ -419,50 +441,40 @@
     </div>
   </footer>
   <script>
-    // Hayden Cate — hermosskills partner / sponsor form → /api/subscribe
     (function () {
-      var form = document.getElementById('partnerForm');
+      var box = document.getElementById('partnerForm');
       var note = document.getElementById('partnerNote');
-      if (!form || !note) return;
-
-      function renderCount(n) {
-        note.textContent = "Logged. You're contact #" + n + " in the partner queue. We'll reply within two business days.";
-        note.style.color = 'rgba(255,255,255,.95)';
+      if (!box || !note) return;
+      var emailInput = box.querySelector('input[type=email]');
+      function setStatus(msg, isError) {
+        note.textContent = msg;
+        note.style.color = isError ? 'rgba(255,210,210,.96)' : 'rgba(255,255,255,.88)';
       }
-      function renderError(msg) {
-        note.textContent = msg || 'Could not save — email team@hermosskills.com directly.';
-        note.style.color = 'rgba(255,210,210,.95)';
-      }
-      function paintInitial() {
-        fetch('/api/stats', { credentials: 'omit' })
-          .then(function (r) { return r.ok ? r.json() : null; })
-          .then(function (j) {
-            if (!j || !j.sites) return;
-            var n = (j.sites.hermosskills || 0) + 1;
-            note.textContent = n + ' partners in the queue · ' + note.textContent;
+      box.querySelectorAll('button[data-plan]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var email = emailInput ? emailInput.value.trim() : '';
+          if (!email || email.indexOf('@') === -1) {
+            setStatus('Enter your email first so Stripe can attach it to the checkout.', true);
+            if (emailInput) emailInput.focus();
+            return;
+          }
+          var original = btn.textContent;
+          btn.disabled = true;
+          btn.textContent = 'Opening Stripe…';
+          setStatus('Opening secure Stripe Checkout…');
+          fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ plan: btn.getAttribute('data-plan'), email: email })
           })
-          .catch(function () { /* keep original note */ });
-      }
-      paintInitial();
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var email = (form.querySelector('input[type=email]') || {}).value || '';
-        var btn = form.querySelector('button');
-        if (btn) btn.disabled = true;
-        note.textContent = 'Saving your contact…';
-        fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ site: 'hermosskills', email: email, note: 'cta partner form' })
-        })
-          .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
-          .then(function (res) {
-            if (res.ok && res.j && res.j.ok) renderCount(res.j.count);
-            else renderError((res.j && res.j.error) || 'Could not save.');
-          })
-          .catch(function () { renderError(); })
-          .finally(function () { if (btn) btn.disabled = false; });
+            .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+            .then(function (res) {
+              if (!res.ok || !res.j || !res.j.url) throw new Error((res.j && res.j.error) || 'Unable to open checkout.');
+              window.location.href = res.j.url;
+            })
+            .catch(function (err) { setStatus(err.message || 'Could not open checkout. Email team@hermosskills.com.', true); })
+            .finally(function () { btn.disabled = false; btn.textContent = original; });
+        });
       });
     })();
   </script>
