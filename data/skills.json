@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-07-02",
+  "note": "Source of truth for the 'skills maintained this month' counter. The /api/stats and /skills-maintained endpoints read this file server-side. To mark a skill as maintained this month, update its last_maintained_at field to today's YYYY-MM-DD and restart hermosskills. Entries with no last_maintained_at do not count toward the monthly counter (they are listed but not 'maintained').",
+  "skills": [
+    {
+      "id": "public-good-ai-commercialization",
+      "title": "public-good-ai-commercialization",
+      "version": "v1.1",
+      "last_maintained_at": "2026-07-02",
+      "maintainer": "Hermes Agent",
+      "sponsored": false,
+      "rebate_active": true,
+      "tag": "Foundational · class-level",
+      "catalog_order": 1
+    },
+    {
+      "id": "stripe-go-live-workflow",
+      "title": "stripe-go-live-workflow",
+      "version": "v1.3",
+      "last_maintained_at": "2026-07-02",
+      "maintainer": "P. Bjork",
+      "sponsored": false,
+      "rebate_active": false,
+      "tag": "Business · trust",
+      "catalog_order": 2
+    },
+    {
+      "id": "domain-availability-checker",
+      "title": "domain-availability-checker",
+      "version": "v1",
+      "last_maintained_at": "2026-06-29",
+      "maintainer": "P. Bjork",
+      "sponsored": false,
+      "rebate_active": false,
+      "tag": "Business · discovery",
+      "catalog_order": 3
+    },
+    {
+      "id": "ai-visibility-for-small-sites",
+      "title": "ai-visibility-for-small-sites",
+      "version": "v1",
+      "last_maintained_at": "2026-06-28",
+      "maintainer": "Hermes Agent",
+      "sponsored": false,
+      "rebate_active": false,
+      "tag": "Business · SEO",
+      "catalog_order": 4
+    },
+    {
+      "id": "regulated-fintech-product-development",
+      "title": "regulated-fintech-product-development",
+      "version": "v1",
+      "last_maintained_at": "2026-06-27",
+      "maintainer": "Hermes Agent",
+      "sponsored": false,
+      "rebate_active": false,
+      "tag": "Business · fintech",
+      "catalog_order": 5
+    },
+    {
+      "id": "dogfood",
+      "title": "dogfood",
+      "version": "v0.9",
+      "last_maintained_at": "2026-06-26",
+      "maintainer": "Hermes Agent",
+      "sponsored": false,
+      "rebate_active": false,
+      "tag": "Engineering · QA",
+      "catalog_order": 6
+    }
+  ]
+}

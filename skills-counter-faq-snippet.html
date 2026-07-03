@@ -1,0 +1,114 @@
+<!--
+Hermosskills / Hayden Cate — "Skills maintained this month" counter FAQ snippet
+(prepared 2026-07-03, not yet injected into hermosskills.com/index.html)
+
+Drop-in HTML block for the FAQ section of the live homepage at
+https://hermosskills.com/ (the homepage renders FAQ as both visible <details>
+elements and a JSON-LD FAQPage in the <head>).
+
+This snippet is a stand-alone <div> that the live FAQ copy can include
+verbatim once the prepared skills-counter endpoint is deployed
+(/root/repos/hermosskills-site/server-skills-counter.mjs + data/skills.json).
+The snippet calls the public endpoint and renders the counter inline.
+
+The deploy ritual (Pete):
+  1. Apply /root/repos/hermosskills-site/server-skills-counter.mjs to
+     /root/repos/hermosskills-site/server.mjs (see the file header).
+  2. Copy this snippet into the live index.html FAQ section, e.g. just
+     after the existing "What skills are in the charter catalog?" Q.
+  3. install -o root -g root -m 644 \
+        /root/repos/hermosskills-site/data/skills.json \
+        /var/www/hermosskills.com/data/skills.json
+     (or, if serving from the repo root via express-static, no copy needed)
+  4. systemctl restart hermosskills
+  5. curl -s https://hermosskills.com/skills-maintained  →  expect JSON
+  6. Reload the homepage; the snippet below will render the live count.
+
+Until steps 1-4 are done, the snippet falls back to "0 skills maintained
+this month" via the catch in the fetch — same as the existing /api/stats
+"this will be live once the sponsorship tier is active" pattern. The
+fallback copy is honest; the page does not need to claim numbers it has
+not earned.
+
+NOTE on JSON-LD: when this snippet is added to the live page, also add
+a parallel <script type="application/ld+json"> entry inside the existing
+FAQPage @graph node to expose the question to AI search crawlers. A draft
+of that JSON-LD block is at the bottom of this file.
+-->
+
+<style>
+  .skills-counter {
+    margin: 18px 0 8px; padding: 18px 22px;
+    background: linear-gradient(160deg, #0e1530 0%, #1d2a4a 100%);
+    color: #fff; border-radius: 18px;
+    box-shadow: 0 16px 40px rgba(13,21,48,.18);
+  }
+  .skills-counter .kicker { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+  .skills-counter .count { font-size: 44px; font-weight: 900; letter-spacing: -.025em; line-height: 1.1; margin: 6px 0 4px; }
+  .skills-counter .count em { font-style: normal; color: #d6a419; }
+  .skills-counter .copy { font-size: 15px; color: rgba(255,255,255,.86); margin: 0; max-width: 540px; }
+  .skills-counter .roster { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .skills-counter .roster span { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.86); }
+</style>
+
+<div class="skills-counter" id="skills-counter-block" aria-live="polite">
+  <div class="kicker">Skills maintained this month</div>
+  <div class="count" id="skills-counter-number">—</div>
+  <p class="copy" id="skills-counter-copy">Loading the live count…</p>
+  <div class="roster" id="skills-counter-roster" aria-label="Skills in the charter catalog"></div>
+</div>
+
+<script>
+  (function () {
+    var number = document.getElementById('skills-counter-number');
+    var copy = document.getElementById('skills-counter-copy');
+    var roster = document.getElementById('skills-counter-roster');
+    if (!number || !copy || !roster) return;
+    fetch('/skills-maintained', { credentials: 'omit' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (!j) {
+          number.textContent = '0';
+          copy.textContent = 'Charter catalog — first maintained-skill update drops this month.';
+          return;
+        }
+        number.innerHTML = '<em>' + j.maintained_this_month + '</em> skill' + (j.maintained_this_month === 1 ? '' : 's');
+        copy.textContent = j.copy || ('Maintained as of ' + (j.this_month || 'this month') + '.');
+        // Try /api/stats for the full roster
+        return fetch('/api/stats', { credentials: 'omit' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (s) {
+          if (s && Array.isArray(s.skills)) {
+            s.skills.forEach(function (sk) {
+              if (!sk || !sk.id) return;
+              var tag = document.createElement('span');
+              tag.textContent = sk.title + ' · ' + (sk.version || 'v0');
+              roster.appendChild(tag);
+            });
+          }
+        });
+      })
+      .catch(function () {
+        number.textContent = '0';
+        copy.textContent = 'Charter catalog — first maintained-skill update drops this month.';
+      });
+  })();
+</script>
+
+<!--
+JSON-LD addition for AI-search crawlers (add to the existing FAQPage @graph
+node in the <head> of /root/repos/hermosskills-site/index.html when this
+snippet is injected into the visible FAQ):
+
+  ,
+  {
+    "@type": "Question",
+    "name": "How many skills does hermosskills maintain each month?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The charter catalog grows one skill at a time. The /skills-maintained endpoint returns the live count of skills updated in the current calendar month, sourced from hermosskills.com/data/skills.json. Updated monthly; no human curation between updates."
+    }
+  }
+
+  (or, if the live /skills-maintained endpoint is not yet deployed, simply
+  skip this JSON-LD addition until the endpoint is live — the visible
+  <div> fallback copy is honest about the count being 0 until then.)
+-->
