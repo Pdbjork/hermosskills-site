@@ -44,11 +44,17 @@
 // `app.listen(port, '127.0.0.1', () => {` line in server.mjs.
 // Each endpoint is additive; the existing /api/health and
 // /api/create-checkout-session paths are untouched.
+//
+// IMPORTANT: this patch is meant to be appended (cat >> server.mjs) to the
+// existing server.mjs. It therefore relies on the host module's imports:
+//   - `fs` is `node:fs/promises` (already imported in server.mjs)
+//   - `path` is `node:path` (already imported in server.mjs)
+//   - `__dirname` is already declared in server.mjs
+// Do NOT re-import them below — duplicate `import` statements and
+// duplicate `const __dirname` would crash the process at module-load time.
+// The deploy ritual in the file header is correct; this comment exists
+// so a future reader does not "tidy up" by re-adding the imports.
 
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SKILLS_DATA = path.join(__dirname, 'data', 'skills.json');
 
 async function readSkillsRoster() {

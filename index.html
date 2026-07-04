@@ -202,6 +202,25 @@
       .foot { grid-template-columns: 1fr; }
       .navlinks { display:none; }
     }
+
+    /* SKILLS MAINTAINED COUNTER */
+    .skills-counter {
+      margin: 0; padding: 28px 32px;
+      background: linear-gradient(160deg, #0e1530 0%, #1d2a4a 100%);
+      color: #fff; border-radius: var(--radius);
+      box-shadow: 0 16px 40px rgba(13,21,48,.18);
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 28px; align-items: center;
+    }
+    .skills-counter .kicker { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+    .skills-counter .count { font-size: 72px; font-weight: 900; letter-spacing: -.035em; line-height: .9; margin: 6px 0 4px; }
+    .skills-counter .count em { font-style: normal; color: #d6a419; }
+    .skills-counter .copy { font-size: 16px; color: rgba(255,255,255,.86); margin: 0; max-width: 540px; }
+    .skills-counter .roster { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .skills-counter .roster span { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.86); }
+    .skills-counter .src { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 14px; grid-column: 1 / -1; }
+    .skills-counter .src code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 4px; }
+    #skills-counter { padding-top: 30px; padding-bottom: 30px; }
+    @media (max-width: 720px) { .skills-counter { grid-template-columns: 1fr; } .skills-counter .count { font-size: 56px; } }
   </style>
 
   <script type="application/ld+json">
@@ -219,6 +238,7 @@
       </a>
       <nav class="navlinks" aria-label="Primary">
         <a href="#catalog">Catalog</a>
+        <a href="#skills-counter">Maintained</a>
         <a href="#principles">Principles</a>
         <a href="#funding">Funding</a>
         <a href="#commission">Commission</a>
@@ -271,7 +291,7 @@
         <div class="section-head">
           <div>
             <div class="kicker">Opening catalog · June 2026</div>
-            <h2 style="margin-top:10px;">Five skills in the charter issue.</h2>
+            <h2 style="margin-top:10px;">Six skills in the charter issue.</h2>
           </div>
           <p>Each skill is reviewed for trust, tested on a real agent, and disclosed about funding. The catalog grows one at a time, by hand.</p>
         </div>
@@ -327,6 +347,19 @@
             <div class="trust"><span>Reviewed</span><span>Agent-tested</span></div>
             <div class="meta"><span>Maintainer · Hermes Agent</span><span>v0.9</span></div>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS MAINTAINED COUNTER -->
+    <section id="skills-counter" aria-label="Skills maintained this month">
+      <div class="wrap">
+        <div class="skills-counter" id="skills-counter-block" aria-live="polite">
+          <div class="kicker">Skills maintained this month</div>
+          <div class="count" id="skills-counter-number">—</div>
+          <p class="copy" id="skills-counter-copy">Loading the live count from the catalog…</p>
+          <div class="roster" id="skills-counter-roster" aria-label="Skills in the charter catalog"></div>
+          <p class="src">Source: <code>/skills-maintained</code> — live JSON endpoint, server-side data, no manual curation between updates.</p>
         </div>
       </div>
     </section>
@@ -415,6 +448,7 @@
         <h5>Catalog</h5>
         <ul>
           <li><a href="#catalog">All skills</a></li>
+          <li><a href="#skills-counter">Skills maintained</a></li>
           <li><a href="#funding">How funding works</a></li>
           <li><a href="#principles">Editorial principles</a></li>
         </ul>
@@ -479,6 +513,48 @@
             .finally(function () { btn.disabled = false; btn.textContent = original; });
         });
       });
+    })();
+  </script>
+
+  <script>
+    // Hayden Cate / hermosskills — live "skills maintained this month" counter.
+    // Reads /skills-maintained (live server-side JSON), then /api/stats for
+    // the per-skill roster. Falls back to honest "0 / Charter catalog" copy
+    // before the counter endpoint is deployed.
+    (function () {
+      var number = document.getElementById('skills-counter-number');
+      var copy = document.getElementById('skills-counter-copy');
+      var roster = document.getElementById('skills-counter-roster');
+      if (!number || !copy || !roster) return;
+      function renderZero() {
+        number.innerHTML = '<em>0</em>';
+        copy.textContent = 'Charter catalog — first maintained-skill update drops this month.';
+      }
+      fetch('/skills-maintained', { credentials: 'omit' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          if (!j) { renderZero(); return null; }
+          var n = Number(j.maintained_this_month) || 0;
+          number.innerHTML = '<em>' + n + '</em> skill' + (n === 1 ? '' : 's');
+          copy.textContent = j.copy || ('Maintained as of ' + (j.this_month || 'this month') + '.');
+          return fetch('/api/stats', { credentials: 'omit' });
+        })
+        .then(function (r) { return r && r.ok ? r.json() : null; })
+        .then(function (s) {
+          if (s && Array.isArray(s.skills)) {
+            s.skills.forEach(function (sk) {
+              if (!sk || !sk.id) return;
+              var tag = document.createElement('span');
+              var label = sk.title || sk.id;
+              var ver = sk.version || 'v0';
+              var mon = sk.last_maintained_at ? sk.last_maintained_at.slice(0, 7) : null;
+              var cur = (mon && s.this_month && mon === s.this_month) ? ' · this month' : '';
+              tag.textContent = label + ' · ' + ver + cur;
+              roster.appendChild(tag);
+            });
+          }
+        })
+        .catch(function () { renderZero(); });
     })();
   </script>
 </body>
