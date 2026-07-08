@@ -1,629 +1,163 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>hermosskills — a curated marketplace & repository of agent skills</title>
-  <meta name="description" content="hermosskills is a curated, trust-first repository where AI-agent skills are listed, sponsored, and collaborated on. Machine-readable catalog for OpenClaw, Hermes, Claude Code, and Moltbook agents. 30% of every commission funds public-good AI." />
-  <link rel="canonical" href="https://hermosskills.com/" />
-  <link rel="alternate" type="application/json" href="/catalog/v1/skills.json" title="Hermesskills skill catalog (JSON)" />
-  <meta name="theme-color" content="#255f54" />
-  <meta property="og:title" content="hermosskills — a curated marketplace of agent skills" />
-  <meta property="og:description" content="A curated, trust-first marketplace where AI-agent skills are sponsored, requested, and commissioned — and where the money funds public-good AI." />
+  <meta name="theme-color" content="#0d9488" />
+  <title>Hermosskills — Curated marketplace for AI agent skills</title>
+  <meta name="description" content="The curated marketplace for AI agent skills — every listing reviewed, every sponsor disclosed." />
+  <link rel="canonical" href="https://hermosskills.com" />
+  <meta property="og:title" content="Hermosskills" />
+  <meta property="og:description" content="The curated marketplace for AI agent skills — every listing reviewed, every sponsor disclosed." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://hermosskills.com" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-  <style>
-    :root {
-      --bg: #f6f0e4;
-      --paper: #fffaf1;
-      --ink: #1b1815;
-      --muted: #686057;
-      --line: rgba(27,24,21,.14);
-      --line-strong: rgba(27,24,21,.32);
-      --green: #255f54;
-      --green-soft: #5d8b81;
-      --copper: #b46a3c;
-      --gold: #d9a441;
-      --shadow: 0 26px 80px rgba(51,38,24,.13);
-      --radius: 28px;
-      --max: 1200px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.55;
-      background:
-        radial-gradient(circle at 6% -2%, rgba(217,164,65,.22), transparent 28rem),
-        radial-gradient(circle at 94% 6%, rgba(37,95,84,.18), transparent 32rem),
-        linear-gradient(180deg, #fbf6ee 0%, var(--bg) 60%, #efe5d3 100%);
-    }
-    a { color: inherit; }
-    .skip { position:absolute; left:-999px; top:8px; background:#fff; padding:12px 16px; border-radius:12px; }
-    .skip:focus { left:8px; z-index:50; }
-
-    /* HEADER */
-    header {
-      position: sticky; top:0; z-index:20;
-      backdrop-filter: blur(18px);
-      background: rgba(246,240,228,.78);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav { max-width: var(--max); margin: 0 auto; padding: 16px 22px;
-           display:flex; align-items:center; justify-content:space-between; gap: 18px; }
-    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; font-weight: 900; letter-spacing: -.02em; }
-    .mark { width: 40px; height: 40px; border-radius: 14px;
-            background: conic-gradient(from 170deg, var(--green), var(--gold), var(--copper), var(--green));
-            box-shadow: 0 12px 28px rgba(37,95,84,.22); }
-    .wordmark { font-size: 19px; }
-    .wordmark b { letter-spacing: -.03em; }
-    .wordmark span { color: var(--muted); font-weight: 700; margin-left: 6px; font-size: 13px; }
-    .navlinks { display:flex; gap: 22px; align-items:center; color: var(--muted); font-size: 14px; }
-    .navlinks a { text-decoration: none; }
-    .navlinks a:hover { color: var(--ink); }
-    .button {
-      display:inline-flex; align-items:center; justify-content:center;
-      min-height: 46px; padding: 12px 18px; border-radius: 999px;
-      text-decoration: none; font-weight: 850; border: 1px solid var(--line);
-      background: rgba(255,250,241,.78);
-    }
-    .button.primary { background: var(--green); color: #fff; border-color: var(--green); box-shadow: 0 18px 40px rgba(37,95,84,.24); }
-    .button.copper { background: var(--copper); color: #fff; border-color: var(--copper); }
-    .button.ghost { background: transparent; }
-    .button:hover { transform: translateY(-1px); }
-    .button:focus-visible, a:focus-visible { outline: 3px solid rgba(217,164,65,.78); outline-offset: 4px; }
-
-    /* MAIN */
-    main { overflow:hidden; }
-    section { padding: 78px 22px; }
-    .wrap { max-width: var(--max); margin: 0 auto; }
-
-    /* HERO */
-    .hero { padding-top: 84px; min-height: calc(100svh - 80px); display:grid; align-items:center; }
-    .hero-grid { display:grid; grid-template-columns: minmax(0,1.1fr) minmax(320px,.78fr); gap: 52px; align-items:center; }
-    .eyebrow { display:inline-flex; gap: 8px; align-items:center; padding: 8px 14px;
-               border: 1px solid var(--line-strong); border-radius: 999px;
-               background: rgba(255,250,241,.78); color: var(--green);
-               font-weight: 900; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
-    .eyebrow::before { content:""; width:8px; height:8px; border-radius:50%;
-                       background: var(--gold); box-shadow: 0 0 0 6px rgba(217,164,65,.18); }
-    h1,h2,h3 { margin:0; line-height:.98; letter-spacing:-.055em; text-wrap:balance; }
-    h1 { margin-top: 24px; font-size: clamp(54px, 9vw, 120px); max-width: 920px; }
-    h1 .accent { color: var(--green); }
-    h1 .copper { color: var(--copper); }
-    h2 { font-size: clamp(34px, 4.6vw, 64px); }
-    h3 { font-size: 22px; letter-spacing: -.035em; }
-    p { margin: 0; }
-    .lede { margin-top: 28px; max-width: 720px; font-size: clamp(18px, 1.7vw, 22px); color: var(--muted); }
-    .hero-actions { margin-top: 34px; display:flex; gap: 14px; flex-wrap:wrap; }
-
-    /* FUNDING CARD */
-    .fund-card {
-      border: 1px solid var(--line); border-radius: var(--radius);
-      background: linear-gradient(155deg, rgba(255,250,241,.96), rgba(220,232,220,.66));
-      padding: 26px; box-shadow: var(--shadow);
-    }
-    .fund-card .label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--green); font-weight: 900; }
-    .fund-card h3 { margin-top: 8px; font-size: 24px; letter-spacing: -.025em; }
-    .flow { margin-top: 16px; display:grid; gap: 10px; }
-    .flow-row { display:grid; grid-template-columns: 38px 1fr; gap: 12px; align-items:start;
-                padding: 12px; border: 1px solid var(--line); border-radius: 16px;
-                background: rgba(255,255,255,.62); }
-    .flow-row .ic { width: 38px; height: 38px; border-radius: 12px; display:grid; place-items:center;
-                    background: rgba(37,95,84,.1); color: var(--green); font-weight: 900; }
-    .flow-row b { font-size: 14px; letter-spacing: -.01em; }
-    .flow-row span { display:block; color: var(--muted); font-size: 13px; margin-top: 2px; }
-
-    /* SECTION HEAD */
-    .section-head { display:flex; justify-content:space-between; align-items:end; gap: 28px; margin-bottom: 32px; }
-    .section-head p { max-width: 540px; color: var(--muted); font-size: 18px; }
-    .kicker { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--green); font-weight: 900; }
-
-    /* SKILLS GRID */
-    .skills { display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .skill { padding: 24px; border-radius: 24px; border: 1px solid var(--line);
-             background: rgba(255,250,241,.82); display:flex; flex-direction:column; gap: 14px;
-             box-shadow: 0 16px 40px rgba(51,38,24,.06); }
-    .skill .tag { display:inline-flex; padding: 5px 10px; border-radius: 999px;
-                  border: 1px solid var(--line); background: rgba(255,255,255,.7);
-                  color: var(--muted); font-size: 11px; letter-spacing: .14em; font-weight: 900; text-transform: uppercase; width: fit-content; }
-    .skill.featured { grid-column: span 3; background: linear-gradient(145deg, rgba(37,95,84,.97), rgba(37,95,84,.82));
-                       color: #fff; }
-    .skill.featured .tag { background: rgba(255,255,255,.18); color: #fff; border-color: rgba(255,255,255,.24); }
-    .skill.featured p, .skill.featured .meta, .skill.featured .trust { color: rgba(255,255,255,.85); }
-    .skill h3 { font-size: 22px; }
-    .skill.featured h3 { color: #fff; font-size: 30px; letter-spacing: -.04em; }
-    .skill p { color: var(--muted); font-size: 15px; }
-    .meta { display:flex; justify-content: space-between; gap: 12px; padding-top: 14px;
-            border-top: 1px dashed var(--line); font-size: 13px; color: var(--muted); font-weight: 700; }
-    .skill.featured .meta { border-color: rgba(255,255,255,.24); }
-    .trust { display:flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-    .trust span { font-size: 12px; padding: 4px 8px; border-radius: 999px;
-                  border: 1px solid var(--line); background: rgba(255,255,255,.55); color: var(--muted); }
-    .skill.featured .trust span { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.28); color: #fff; }
-
-    /* PRINCIPLES */
-    .principles { display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .principle { padding: 24px; border-radius: 22px; border: 1px solid var(--line);
-                 background: rgba(255,250,241,.82); }
-    .principle .num { color: var(--green); font-weight: 900; letter-spacing: -.02em; font-size: 14px; }
-    .principle h4 { margin: 12px 0 6px; font-size: 18px; letter-spacing: -.02em; }
-    .principle p { color: var(--muted); font-size: 14px; }
-
-    /* CTA */
-    .cta {
-      padding: 48px; border-radius: 28px; border: 1px solid var(--line);
-      background: linear-gradient(160deg, var(--green), #143a32); color: #fff;
-      display:grid; grid-template-columns: 1.2fr 1fr; gap: 36px; align-items:center;
-      box-shadow: var(--shadow);
-    }
-    .cta h2 { color: #fff; }
-    .cta p { color: rgba(255,255,255,.85); margin-top: 14px; font-size: 17px; max-width: 540px; }
-    .cta form { display:flex; gap: 10px; background: #fff; padding: 8px; border-radius: 999px; box-shadow: var(--shadow); }
-    .cta input { flex: 1; min-width: 0; border: 0; outline: 0; padding: 12px 16px; font: inherit;
-                 background: transparent; color: var(--ink); }
-    .cta button { border: 0; padding: 12px 22px; border-radius: 999px;
-                  background: var(--copper); color: #fff; font-weight: 900; cursor: pointer; font: inherit; }
-    .cta .note { grid-column: 1/-1; text-align: center; color: rgba(255,255,255,.7); font-size: 13px; margin: 8px 0 0; }
-
-    .checkout-options { display:grid; gap: 10px; }
-    .checkout-card { border: 1px solid rgba(255,255,255,.24); border-radius: 20px; padding: 16px; background: rgba(255,255,255,.1); }
-    .checkout-card b { display:block; font-size: 17px; }
-    .checkout-card span { display:block; margin-top: 4px; color: rgba(255,255,255,.82); font-size: 13px; }
-    .checkout-card button { margin-top: 12px; width: 100%; border: 0; padding: 12px 16px; border-radius: 999px; background: #fff; color: var(--green); font-weight: 950; cursor: pointer; font: inherit; }
-    .checkout-email { width: 100%; border: 0; outline: 0; padding: 13px 16px; font: inherit; border-radius: 999px; background: #fff; color: var(--ink); margin-bottom: 12px; }
-    .checkout-status { min-height: 22px; color: rgba(255,255,255,.86); font-size: 13px; text-align: center; }
-
-    /* FOOTER */
-    footer { padding: 56px 22px 80px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
-    .foot { max-width: var(--max); margin: 0 auto; display:grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 32px; }
-    .foot h5 { margin: 0 0 10px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink); }
-    .foot ul { list-style:none; padding:0; margin:0; display:grid; gap: 8px; }
-    .foot a { text-decoration: none; }
-    .foot a:hover { color: var(--ink); }
-    .legal { max-width: var(--max); margin: 36px auto 0; padding-top: 24px; border-top: 1px dashed var(--line);
-             display:flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-
-    /* RESPONSIVE */
-    @media (max-width: 980px) {
-      .hero-grid, .cta { grid-template-columns: 1fr; }
-      .skills { grid-template-columns: 1fr 1fr; }
-      .skill.featured { grid-column: span 2; }
-      .principles { grid-template-columns: 1fr 1fr; }
-      .foot { grid-template-columns: 1fr 1fr; }
-      .section-head { flex-direction: column; align-items: start; }
-    }
-    @media (max-width: 560px) {
-      .skills { grid-template-columns: 1fr; }
-      .skill.featured { grid-column: span 1; }
-      .principles { grid-template-columns: 1fr; }
-      .foot { grid-template-columns: 1fr; }
-      .navlinks { display:none; }
-    }
-
-    /* SKILLS MAINTAINED COUNTER */
-    .skills-counter {
-      margin: 0; padding: 28px 32px;
-      background: linear-gradient(160deg, #0e1530 0%, #1d2a4a 100%);
-      color: #fff; border-radius: var(--radius);
-      box-shadow: 0 16px 40px rgba(13,21,48,.18);
-      display: grid; grid-template-columns: 1fr 1.4fr; gap: 28px; align-items: center;
-    }
-    .skills-counter .kicker { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.7); }
-    .skills-counter .count { font-size: 72px; font-weight: 900; letter-spacing: -.035em; line-height: .9; margin: 6px 0 4px; }
-    .skills-counter .count em { font-style: normal; color: #d6a419; }
-    .skills-counter .copy { font-size: 16px; color: rgba(255,255,255,.86); margin: 0; max-width: 540px; }
-    .skills-counter .roster { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
-    .skills-counter .roster span { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.86); }
-    .skills-counter .src { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 14px; grid-column: 1 / -1; }
-    .skills-counter .src code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 4px; }
-    #skills-counter { padding-top: 30px; padding-bottom: 30px; }
-    @media (max-width: 720px) { .skills-counter { grid-template-columns: 1fr; } .skills-counter .count { font-size: 56px; } }
-  </style>
-
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":["Organization","LocalBusiness"],"@id":"https://hermosskills.com/#organization","name":"hermosskills","alternateName":"hermosskills marketplace","url":"https://hermosskills.com/","logo":"https://hermosskills.com/assets/favicon.svg","image":"https://hermosskills.com/assets/favicon.svg","description":"A curated, trust-first marketplace where AI-agent skills are sponsored, requested, and commissioned \u2014 and where 30% of every commission funds public-good AI projects.","founder":{"@type":"Person","name":"Pete Bjork","email":"mailto:team@hermosskills.com"},"contactPoint":[{"@type":"ContactPoint","contactType":"partner and sponsor inquiries","email":"team@hermosskills.com","url":"https://hermosskills.com/","availableLanguage":["English"],"areaServed":"Global"}],"sameAs":["https://chromebloom.com","https://offlinehelpers.com"],"address":{"@type":"PostalAddress","addressCountry":"US"}},{"@type":"Service","@id":"https://hermosskills.com/#service-sponsor","serviceType":"Skill sponsorship","name":"Sponsor a skill your team depends on","description":"Monthly sponsorship of the maintainers of an AI-agent skill your team relies on. Transparent funding \u2014 sponsor logos appear on the skill page once the sponsor tier is active.","provider":{"@id":"https://hermosskills.com/#organization"},"areaServed":"Global","offers":{"@type":"Offer","url":"https://hermosskills.com/#commission","price":"49.00","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Monthly sponsorship","priceSpecification":{"@type":"UnitPriceSpecification","price":"49.00","priceCurrency":"USD","unitText":"MONTH"}}},{"@type":"Service","@id":"https://hermosskills.com/#service-commission","serviceType":"Skill commission","name":"Commission a custom skill","description":"One-off paid work \u2014 a custom skill built to your team's spec. 30% of the commission is routed to a public-good AI project that depends on the open skill ecosystem.","provider":{"@id":"https://hermosskills.com/#organization"},"areaServed":"Global","offers":{"@type":"Offer","url":"https://hermosskills.com/#commission","price":"500.00","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Custom skill commission","priceSpecification":{"@type":"UnitPriceSpecification","price":"500.00","priceCurrency":"USD","unitText":"JOB"}}},{"@type":"Service","@id":"https://hermosskills.com/#service-submit","serviceType":"Skill submission","name":"Submit a skill you have authored","description":"Free submission review, twice a month. Skills are reviewed for trust, tested on a real agent, and disclosed about funding before they appear in the catalog.","provider":{"@id":"https://hermosskills.com/#organization"},"areaServed":"Global","offers":{"@type":"Offer","url":"https://hermosskills.com/#commission","price":"0.00","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Free submission review"}},{"@type":"FAQPage","@id":"https://hermosskills.com/#faq","url":"https://hermosskills.com/#faq","mainEntity":[{"@type":"Question","name":"What is hermosskills?","acceptedAnswer":{"@type":"Answer","text":"hermosskills is a curated, trust-first marketplace for AI-agent skills \u2014 the reusable capabilities that let a model check a domain name, run a Stripe rollout, draft a TDD plan, or dogfood a web app. Every listing is reviewed by a human and a model before it goes up."}},{"@type":"Question","name":"How is hermosskills different from an open skill registry?","acceptedAnswer":{"@type":"Answer","text":"Open registries let anyone list. hermosskills does the opposite: every skill is reviewed, tested on a real agent, and disclosed about funding before it appears. One good skill a week beats fifty auto-imported ones."}},{"@type":"Question","name":"How does the public-good rebate work?","acceptedAnswer":{"@type":"Answer","text":"30% of every commission is routed to a public-good AI project that the open skill ecosystem depends on. The rebate is published on the homepage and disclosed in the skill's funding card, not buried."}},{"@type":"Question","name":"Can I sponsor a skill without being the team that uses it?","acceptedAnswer":{"@type":"Answer","text":"Yes. Sponsors can be individuals, foundations, or companies that want to keep the upstream open ecosystem healthy. Sponsor logos appear on the skill page once the sponsorship tier is active."}},{"@type":"Question","name":"How do I submit a skill I have authored?","acceptedAnswer":{"@type":"Answer","text":"Send a short note through the partner form with a link to the skill's repository or installation instructions. Submissions are reviewed twice a month. There is no listing fee."}},{"@type":"Question","name":"Who is behind hermosskills?","acceptedAnswer":{"@type":"Answer","text":"hermosskills is a project of Peter Bjork and the Hermes Agent build team. It is one of three live businesses running on the same VPS infrastructure; the marketplace itself is built using hermesskills' own public-good-ai-commercialization skill."}},{"@type":"Question","name":"What skills are in the charter catalog?","acceptedAnswer":{"@type":"Answer","text":"The charter issue lists five skills: public-good-ai-commercialization (the editorial pattern for the marketplace itself), regulated-fintech-product-development (fintech simulation-first), dogfood (vision-capable QA), and others tuned for Hermes Agent. The catalog grows one at a time, by hand."}}]},{"@type":"WebSite","@id":"https://hermosskills.com/#website","url":"https://hermosskills.com/","name":"hermosskills","publisher":{"@id":"https://hermosskills.com/#organization"}}]}
-  </script>
+  <link rel="stylesheet" href="/assets/polsia.css" />
 </head>
-<body>
-  <a class="skip" href="#main">Skip to content</a>
-
-  <header>
-    <div class="nav">
-      <a class="brand" href="/">
-        <span class="mark" aria-hidden="true"></span>
-        <span class="wordmark"><b>hermosskills</b><span>marketplace</span></span>
+<body class="min-h-screen bg-background font-body text-foreground antialiased">
+  <header class="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <div class="container-page flex h-14 items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 font-display font-bold text-foreground" aria-label="Hermosskills home">
+        <span class="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">H</span>
+        <span>Hermosskills</span>
       </a>
-      <nav class="navlinks" aria-label="Primary">
-        <a href="/skills/">Catalog</a>
-        <a href="#skills-counter">Maintained</a>
-        <a href="#developers">For developers</a>
-        <a href="#principles">Principles</a>
-        <a href="#funding">Funding</a>
-        <a href="#commission">Commission</a>
+      <nav class="hidden items-center gap-6 text-small font-medium text-muted-foreground md:flex" aria-label="Main navigation">
+        <a class="hover:text-foreground" href="#how-it-works">Process</a>
+        <a class="hover:text-foreground" href="#why">Why</a>
+        <a class="hover:text-foreground" href="/submit.html">Submit</a>
+        <a class="hover:text-foreground" href="/catalog/">Catalog</a>
       </nav>
-      <a class="button primary" href="#commission">Sponsor a skill</a>
+      <a href="mailto:hermosskills@polsia.app" class="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Get early access</a>
     </div>
   </header>
 
-  <main id="main">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <span class="eyebrow">Curated · trust-first · public-good funded</span>
-          <h1>Agent skills, <span class="accent">curated</span> like a <span class="copper">publication</span>.</h1>
-          <p class="lede">
-            hermosskills is a marketplace for the reusable skills that power AI agents — the kind that let a model check a domain name, run a Stripe rollout, draft a TDD plan, or dogfood a web app.
-            We curate, sponsor, and commission them so the public-good AI stack keeps working.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#commission">Sponsor a skill →</a>
-            <a class="button" href="/skills/">Browse the catalog</a>
+  <main class="flex flex-col">
+    <section class="relative overflow-hidden bg-secondary/30 pt-section-lg pb-section">
+      <div class="absolute inset-0 -z-10" aria-hidden="true">
+        <svg class="absolute inset-0 h-full w-full" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="hero-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--brand-100)" stop-opacity="0.6"></stop>
+              <stop offset="100%" stop-color="var(--brand-500)" stop-opacity="0.08"></stop>
+            </linearGradient>
+          </defs>
+          <path d="M0 0 H100% V60% Q80% 85% 0 100% Z" fill="url(#hero-grad)"></path>
+        </svg>
+      </div>
+      <div class="container-page">
+        <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div class="flex flex-col gap-6">
+            <div class="flex flex-wrap gap-2">
+              <span class="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-medium text-foreground">Opening catalog — June 2026</span>
+              <span class="inline-flex items-center rounded-md border border-border/60 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">OpenClaw</span>
+              <span class="inline-flex items-center rounded-md border border-border/60 px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">Hermes Agent</span>
+            </div>
+            <h1 class="font-display text-[clamp(2.4rem,5vw,3.8rem)] font-bold tracking-tight text-foreground [line-height:1.06]">The curated marketplace<br />for <span class="text-primary">AI agent skills</span></h1>
+            <p class="text-body-lg text-muted-foreground [max-width:46ch]">Every listing reviewed by a human editor and a model before it ships. Every sponsor disclosed. Independent audits found an average of 6.3 security issues per unvetted skill — Hermosskills makes curation the core product, not an afterthought.</p>
+            <div class="flex flex-wrap gap-3 pt-2">
+              <a href="mailto:hermosskills@polsia.app" class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Get early access</a>
+              <a href="#how-it-works" class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground">How it works</a>
+            </div>
+          </div>
+          <div class="relative hidden lg:block" aria-hidden="true">
+            <div class="absolute right-0 top-6 w-72 rounded-xl border border-border bg-card p-5 shadow-lg">
+              <p class="text-caption font-medium text-muted-foreground">SKILL.md</p>
+              <div class="mt-2 space-y-1">
+                <div class="h-2 w-3/4 rounded bg-muted"></div>
+                <div class="h-2 w-1/2 rounded bg-muted"></div>
+                <div class="mt-3 h-2 w-full rounded bg-brand-100"></div>
+                <div class="h-2 w-5/6 rounded bg-muted"></div>
+                <div class="h-2 w-2/3 rounded bg-muted"></div>
+              </div>
+              <div class="mt-4 flex items-center gap-2"><div class="size-4 rounded-full bg-primary/70"></div><div class="h-2 w-24 rounded bg-muted"></div></div>
+            </div>
+            <div class="relative w-80 rounded-xl border border-border bg-card p-5 shadow-xl">
+              <div class="flex items-start justify-between">
+                <div><p class="font-semibold text-foreground">web-search v2.4</p><p class="mt-0.5 text-small text-muted-foreground">OpenClaw · Claude Code</p></div>
+                <span class="inline-flex items-center rounded-md bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">Reviewed</span>
+              </div>
+              <div class="my-3 h-px bg-border"></div>
+              <div class="space-y-2">
+                <p class="text-small"><span class="text-muted-foreground">Security:</span> <span class="font-medium text-foreground">No prompt injection vectors</span></p>
+                <p class="text-small"><span class="text-muted-foreground">Disclosure:</span> <span class="font-medium text-foreground">Sponsor: Acme AI (disclosed)</span></p>
+                <p class="text-small"><span class="text-muted-foreground">Editor:</span> <span class="font-medium text-foreground">Human + model review</span></p>
+              </div>
+              <div class="mt-4 rounded-md bg-muted/50 px-3 py-2 text-caption text-muted-foreground">Last reviewed: 2026-05-12</div>
+            </div>
+            <div class="absolute -left-4 bottom-8 flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5 shadow-md"><span class="size-3.5 rounded-full bg-primary"></span><span class="text-caption font-medium text-foreground">MCP-ready</span></div>
           </div>
         </div>
-
-        <aside class="fund-card" id="funding" aria-label="How funding flows">
-          <span class="label">How the money flows</span>
-          <h3>Three streams, one fund.</h3>
-          <div class="flow">
-            <div class="flow-row">
-              <div class="ic">★</div>
-              <div><b>Sponsorships</b><span>Companies fund maintenance of skills they rely on. Monthly, transparent.</span></div>
-            </div>
-            <div class="flow-row">
-              <div class="ic">$</div>
-              <div><b>Commissions</b><span>One-off paid work — custom skills, integrations, audits.</span></div>
-            </div>
-            <div class="flow-row">
-              <div class="ic">↺</div>
-              <div><b>Public-good rebate</b><span>30% of every commission funds upstream open-source AI projects.</span></div>
-            </div>
-          </div>
-        </aside>
       </div>
     </section>
 
-    <!-- OPERATOR PORTFOLIO STRIP -->
-    <section id="operator" style="padding: 56px 22px; background: rgba(27,24,21,.03); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
-      <div class="wrap">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap: 24px; flex-wrap: wrap;">
+    <section class="bg-background py-section">
+      <div class="container-page">
+        <p class="text-eyebrow mb-8">The problem with uncurated marketplaces</p>
+        <div class="grid gap-6 sm:grid-cols-3">
+          <div class="flex flex-col gap-2 rounded-lg border border-border bg-card p-6"><span class="font-display text-4xl font-bold text-primary" style="line-height:1.1">6.3</span><p class="text-body font-medium text-foreground whitespace-pre-line">Avg security issues<br />per unvetted skill</p><p class="text-small text-muted-foreground">Independent audit, 2025</p></div>
+          <div class="flex flex-col gap-2 rounded-lg border border-border bg-card p-6"><span class="font-display text-4xl font-bold text-primary" style="line-height:1.1">33%</span><p class="text-body font-medium text-foreground whitespace-pre-line">Skills with prompt<br />injection vectors</p><p class="text-small text-muted-foreground">Same audit</p></div>
+          <div class="flex flex-col gap-2 rounded-lg border border-border bg-card p-6"><span class="font-display text-4xl font-bold text-primary" style="line-height:1.1">100%</span><p class="text-body font-medium text-foreground whitespace-pre-line">Hermosskills listings<br />human-reviewed</p><p class="text-small text-muted-foreground">Our editorial policy</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="bg-secondary/20 py-section">
+      <div class="container-page">
+        <div class="mb-10 max-w-2xl"><p class="text-eyebrow mb-3">Process</p><h2 class="font-display text-h2 font-bold text-foreground">From submission to catalog</h2><p class="mt-3 text-body-lg text-muted-foreground">Every skill passes through a dual-review pipeline before it reaches the catalog. No exceptions.</p></div>
+        <div class="grid gap-6 lg:grid-cols-3">
+          <article class="rounded-xl border border-border/60 bg-card text-card-foreground shadow"><div class="flex flex-col space-y-1.5 p-6 pb-3"><span class="font-display text-4xl font-bold text-primary/30">01</span><h3 class="font-semibold leading-none tracking-tight text-foreground">Submit your skill</h3></div><div class="p-6 pt-0"><p class="text-body text-muted-foreground">Package as a SKILL.md file and submit through the catalog portal. Include usage examples, permissions scope, and runtime requirements.</p></div></article>
+          <article class="rounded-xl border border-border/60 bg-card text-card-foreground shadow"><div class="flex flex-col space-y-1.5 p-6 pb-3"><span class="font-display text-4xl font-bold text-primary/30">02</span><h3 class="font-semibold leading-none tracking-tight text-foreground">Dual review</h3></div><div class="p-6 pt-0"><p class="text-body text-muted-foreground">A human editor checks for factual accuracy, safety, and disclosure compliance. An LLM runs automated red-teaming for prompt injection and output manipulation.</p></div></article>
+          <article class="rounded-xl border border-border/60 bg-card text-card-foreground shadow"><div class="flex flex-col space-y-1.5 p-6 pb-3"><span class="font-display text-4xl font-bold text-primary/30">03</span><h3 class="font-semibold leading-none tracking-tight text-foreground">Published &amp; tracked</h3></div><div class="p-6 pt-0"><p class="text-body text-muted-foreground">Approved skills enter the catalog with editorial notes. Sponsor relationships are disclosed inline. Security updates trigger catalog bumps with diff notes.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="bg-background py-section">
+      <div class="container-page">
+        <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
-            <div class="kicker">From the same operator</div>
-            <p style="margin-top: 8px; color: var(--muted); font-size: 15px; max-width: 520px;">Hermesskills is built by the team behind these products. We ship skills the way we ship products — reviewed, tested, disclosed.</p>
+            <p class="text-eyebrow mb-3">Why Hermosskills</p>
+            <h2 class="font-display text-h2 font-bold text-foreground">Curation as infrastructure</h2>
+            <p class="mt-4 text-body-lg text-muted-foreground">In a market where independent audits have found prompt injection in more than a third of tested listings, transparent editorial standards are not a marketing claim — they are genuine infrastructure for the AI agent ecosystem.</p>
+            <ul class="mt-8 space-y-4" role="list">
+              <li class="flex gap-4"><span class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">✓</span><div><p class="font-semibold text-foreground">Editorial standards</p><p class="mt-0.5 text-small text-muted-foreground">Every listing is reviewed before it ships. We do not aggregate — we curate.</p></div></li>
+              <li class="flex gap-4"><span class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">✓</span><div><p class="font-semibold text-foreground">Full sponsor disclosure</p><p class="mt-0.5 text-small text-muted-foreground">Sponsored listings are labelled. Commission relationships are disclosed. No hidden placements.</p></div></li>
+              <li class="flex gap-4"><span class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">✓</span><div><p class="font-semibold text-foreground">JSON catalog + SKILL.md</p><p class="mt-0.5 text-small text-muted-foreground">Skills distribute via versioned catalog endpoints and per-skill markdown files. MCP-based live access on the roadmap.</p></div></li>
+              <li class="flex gap-4"><span class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">✓</span><div><p class="font-semibold text-foreground">30% public-good rebate</p><p class="mt-0.5 text-small text-muted-foreground">Commission revenue is partially rebated to the upstream OSS AI projects that make the ecosystem possible.</p></div></li>
+            </ul>
           </div>
-          <div style="display:flex; gap: 28px; flex-wrap: wrap; align-items:center;">
-            <a href="https://offlinehelpers.com" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:10px; text-decoration:none; color: var(--ink); font-weight: 800; letter-spacing: -.01em;">
-              <span style="width:32px; height:32px; border-radius:10px; background:#1f4e3d; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:900; font-size:14px;">OH</span>
-              <span>offlinehelpers<span style="color:var(--muted); font-weight:600; margin-left:4px;">· mental health</span></span>
-            </a>
-            <a href="https://chromebloom.com" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:10px; text-decoration:none; color: var(--ink); font-weight: 800; letter-spacing: -.01em;">
-              <span style="width:32px; height:32px; border-radius:10px; background:#b46a3c; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:900; font-size:14px;">CB</span>
-              <span>chromebloom<span style="color:var(--muted); font-weight:600; margin-left:4px;">· plants</span></span>
-            </a>
-            <a href="https://guardianbuilder.org" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:10px; text-decoration:none; color: var(--ink); font-weight: 800; letter-spacing: -.01em;">
-              <span style="width:32px; height:32px; border-radius:10px; background:#255f54; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-weight:900; font-size:14px;">GB</span>
-              <span>guardianbuilder<span style="color:var(--muted); font-weight:600; margin-left:4px;">· foundation</span></span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CATALOG -->
-    <section id="catalog">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <div class="kicker">Opening catalog · June 2026</div>
-            <h2 style="margin-top:10px;">Six skills in the charter issue.</h2>
-          </div>
-          <p>Each skill is reviewed for trust, tested on a real agent, and disclosed about funding. The catalog grows one at a time, by hand. <a href="/skills/" style="color: var(--green); font-weight: 800;">Browse the full catalog →</a></p>
-        </div>
-
-        <div class="skills">
-          <!-- FEATURED: PUBLIC-GOOD-AI-COMMERCIALIZATION -->
-          <article class="skill featured">
-            <span class="tag">Foundational · class-level</span>
-            <h3>public-good-ai-commercialization</h3>
-            <p>The pattern that hermosskills is built on. How a curated, sponsor-funded marketplace funds public-good AI without becoming an ad network or a SaaS bucket shop. Reads as a manifesto with receipts.</p>
-            <div class="trust">
-              <span>Reviewed</span><span>Agent-tested</span><span>Sponsored</span><span>Public-good rebate active</span>
+          <div class="flex flex-col gap-4">
+            <p class="text-small font-medium uppercase tracking-wider text-muted-foreground">Supported platforms</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3"><span class="flex size-8 items-center justify-center rounded-md bg-primary/10 font-display text-small font-bold text-primary">O</span><span class="text-small font-semibold text-foreground">OpenClaw</span></div>
+              <div class="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3"><span class="flex size-8 items-center justify-center rounded-md bg-primary/10 font-display text-small font-bold text-primary">H</span><span class="text-small font-semibold text-foreground">Hermes Agent</span></div>
+              <div class="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3"><span class="flex size-8 items-center justify-center rounded-md bg-primary/10 font-display text-small font-bold text-primary">C</span><span class="text-small font-semibold text-foreground">Claude Code</span></div>
+              <div class="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3"><span class="flex size-8 items-center justify-center rounded-md bg-primary/10 font-display text-small font-bold text-primary">M</span><span class="text-small font-semibold text-foreground">Moltbook</span></div>
             </div>
-            <div class="meta"><span>Maintainer · Hermes Agent</span><span>v1 · since 2025</span></div>
-          </article>
-
-          <article class="skill">
-            <span class="tag">Business · trust</span>
-            <h3>stripe-go-live-workflow</h3>
-            <p>Sequenced operational workflow for taking a working test-mode Stripe integration live. KYC, webhooks, radar rules, dispute handling, refunds, and a clean rollback path.</p>
-            <div class="trust"><span>Reviewed</span><span>Agent-tested</span></div>
-            <div class="meta"><span>Maintainer · P. Bjork</span><span>v1.2</span></div>
-          </article>
-
-          <article class="skill">
-            <span class="tag">Business · discovery</span>
-            <h3>domain-availability-checker</h3>
-            <p>Pick a brand name and learn which TLDs are still free, parked, or contested — across registrars. The skill that named chromebloom.com and hermosskills.com.</p>
-            <div class="trust"><span>Reviewed</span><span>Agent-authored</span></div>
-            <div class="meta"><span>Maintainer · P. Bjork</span><span>v1</span></div>
-          </article>
-
-          <article class="skill">
-            <span class="tag">Business · SEO</span>
-            <h3>ai-visibility-for-small-sites</h3>
-            <p>Make a small business site (solo founder, local services, niche ecommerce) discoverable to AI search and answer engines. Practical, no growth-hacker nonsense.</p>
-            <div class="trust"><span>Reviewed</span></div>
-            <div class="meta"><span>Maintainer · Hermes Agent</span><span>v1</span></div>
-          </article>
-
-          <article class="skill">
-            <span class="tag">Business · fintech</span>
-            <h3>regulated-fintech-product-development</h3>
-            <p>Plan and prototype regulated fintech products — sandbox-first, simulation-first, with KYC, BSA, and disclosures in scope from day one.</p>
-            <div class="trust"><span>Reviewed</span><span>Simulation-first</span></div>
-            <div class="meta"><span>Maintainer · Hermes Agent</span><span>v1</span></div>
-          </article>
-
-          <article class="skill">
-            <span class="tag">Engineering · QA</span>
-            <h3>dogfood</h3>
-            <p>Exploratory QA of web apps: a vision-capable agent crawls a flow, finds bugs with evidence, and writes reproducible reports. The skill that broke three of our own pages last week.</p>
-            <div class="trust"><span>Reviewed</span><span>Agent-tested</span></div>
-            <div class="meta"><span>Maintainer · Hermes Agent</span><span>v0.9</span></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOR DEVELOPERS / AGENT BUILDERS -->
-    <section id="developers" style="background: rgba(37,95,84,.06); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <div class="kicker">For agent developers</div>
-            <h2 style="margin-top:10px;">A catalog your agent can read.</h2>
-          </div>
-          <p>Hermesskills exposes a machine-readable skill catalog and a per-skill install path. Compatible with <b>OpenClaw</b>, <b>Hermes Agent</b>, <b>Claude Code</b>, and <b>Moltbook</b> agents. 100% open, no auth required for read.</p>
-          <p style="margin-top: 14px; font-size: 14px; color: var(--muted);">Two surfaces: <b>curated charter</b> (6 skills, trust-first, with sponsor & commission paths) and <b>full repository</b> (84+ Hermes Agent skills mirrored as installable artifacts). OpenClaw gets both.</p>
-        </div>
-
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 18px; margin-top: 24px;">
-          <div style="background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 22px;">
-            <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green); font-weight: 900;">Catalog · JSON</div>
-            <h3 style="margin-top: 8px;">GET /catalog/v1/skills.json</h3>
-            <p style="margin-top: 10px; color: var(--muted); font-size: 14px;">Full catalog of curated skills with versions, tags, sponsor tiers, install URLs. One fetch, one decision.</p>
-            <pre style="margin-top: 14px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font-size: 12px; overflow-x: auto;">curl -s https://hermosskills.com/catalog/v1/skills.json</pre>
-          </div>
-
-          <div style="background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 22px;">
-            <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green); font-weight: 900;">Install · one line</div>
-            <h3 style="margin-top: 8px;">SKILL.md per skill</h3>
-            <p style="margin-top: 10px; color: var(--muted); font-size: 14px;">Every skill exposes its canonical SKILL.md at a stable URL. Drop it into your agent's skills dir.</p>
-            <pre style="margin-top: 14px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font-size: 12px; overflow-x: auto;">curl -sSL https://hermosskills.com/skills/stripe-go-live-workflow/SKILL.md</pre>
-          </div>
-
-          <div style="background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 22px;">
-            <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green); font-weight: 900;">OpenClaw · ready</div>
-            <h3 style="margin-top: 8px;">/.well-known/openclaw.json</h3>
-            <p style="margin-top: 10px; color: var(--muted); font-size: 14px;">Capability manifest declaring endpoints, install pattern, submission criteria, commercial model. For agents that introspect.</p>
-            <pre style="margin-top: 14px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font-size: 12px; overflow-x: auto;">curl -s https://hermosskills.com/.well-known/openclaw.json</pre>
-          </div>
-        </div>
-
-        <p style="margin-top: 22px; color: var(--muted); font-size: 14px;">Want to list your skill? <a href="/submit.html" style="color: var(--green); font-weight: 800;">Submit for review →</a> &nbsp;·&nbsp; Manual review, 14-day SLA, MIT or compatible required.</p>
-      </div>
-    </section>
-
-    <!-- SKILLS MAINTAINED COUNTER -->
-    <section id="skills-counter" aria-label="Skills maintained this month">
-      <div class="wrap">
-        <div class="skills-counter" id="skills-counter-block" aria-live="polite">
-          <div class="kicker">Skills maintained this month</div>
-          <div class="count" id="skills-counter-number">—</div>
-          <p class="copy" id="skills-counter-copy">Loading the live count from the catalog…</p>
-          <div class="roster" id="skills-counter-roster" aria-label="Skills in the charter catalog"></div>
-          <p class="src">Source: <code>/skills-maintained</code> — live JSON endpoint, server-side data, no manual curation between updates.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRINCIPLES -->
-    <section id="principles" style="background: rgba(27,24,21,.03); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <div class="kicker">Editorial principles</div>
-            <h2 style="margin-top:10px;">We are a publication, not an app store.</h2>
-          </div>
-          <p>If you want an open marketplace where anyone can list a skill, there are several. We are the opposite: every listing is reviewed by a human and a model before it goes up.</p>
-        </div>
-        <div class="principles">
-          <div class="principle">
-            <div class="num">01</div>
-            <h4>Curation over transaction</h4>
-            <p>One good skill a week beats fifty auto-imported ones. We review, test, and disclose.</p>
-          </div>
-          <div class="principle">
-            <div class="num">02</div>
-            <h4>Funding is visible</h4>
-            <p>Every skill shows who funds it, who maintains it, and where the rebate goes. No dark money.</p>
-          </div>
-          <div class="principle">
-            <div class="num">03</div>
-            <h4>Manual first, automated later</h4>
-            <p>Third-party submission only after the review workflow is real and the trust bar holds.</p>
-          </div>
-          <div class="principle">
-            <div class="num">04</div>
-            <h4>Public-good rebate</h4>
-            <p>30% of every commission funds upstream open-source AI projects. It is on the homepage, not buried.</p>
+            <p class="text-small text-muted-foreground">JSON catalog endpoints + per-skill SKILL.md distribution. MCP-based live access on the roadmap.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- COMMISSION / SPONSOR CTA -->
-    <section id="commission">
-      <div class="wrap">
-        <div class="cta">
-          <div>
-            <div class="kicker" style="color: rgba(255,255,255,.85);">Sponsor · Commission · Submit</div>
-            <h2 style="margin-top:10px;">Three ways to support the catalog.</h2>
-            <p>
-              <b>Sponsor</b> a skill your team depends on. <b>Commission</b> a custom skill and we'll route 30% of the work to a public-good AI project. <b>Submit</b> a skill you've authored — we review submissions twice a month.
-            </p>
-          </div>
-          <div id="partnerForm" class="checkout-options">
-            <input class="checkout-email" type="email" name="email" placeholder="you@company.com" required aria-label="Email" autocomplete="email" />
-            <div class="checkout-card">
-              <b>Skill Sponsor · $49/month</b>
-              <span>Fund maintenance for a curated AI-agent skill your team depends on.</span>
-              <button type="button" data-plan="sponsor">Sponsor a skill →</button>
-            </div>
-            <div class="checkout-card">
-              <b>Commission Deposit · $500</b>
-              <span>Start a scoped custom skill, integration, or agent workflow audit.</span>
-              <button type="button" data-plan="commission">Commission work →</button>
-            </div>
-            <div class="checkout-card">
-              <b>Founding Sponsor · $250/month</b>
-              <span>Support the public-good skill catalog as a founding sponsor.</span>
-              <button type="button" data-plan="founding">Become a founding sponsor →</button>
-            </div>
-            <div class="checkout-status" id="partnerNote">Secure checkout is powered by Stripe. Questions: team@hermosskills.com</div>
-          </div>
+    <section class="bg-secondary/30 py-section">
+      <div class="container-page">
+        <div class="relative overflow-hidden rounded-2xl border border-border bg-card px-8 py-12 text-center">
+          <div class="absolute inset-0 -z-10" aria-hidden="true"><div class="absolute -right-16 -top-8 size-48 rounded-full bg-primary/5"></div><div class="absolute -left-16 -bottom-8 size-48 rounded-full bg-primary/5"></div></div>
+          <span class="mb-4 inline-flex items-center rounded-md bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">Founding tier open</span>
+          <h2 class="font-display text-h2 font-bold text-foreground">Ready to list a skill?</h2>
+          <p class="mx-auto mt-3 max-w-xl text-body-lg text-muted-foreground">Join the opening catalog. Submit your skill for editorial review, or reach out about a custom commission.</p>
+          <div class="mt-8 flex flex-wrap justify-center gap-4"><a href="mailto:hermosskills@polsia.app" class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Submit a skill</a><a href="mailto:hermosskills@polsia.app" class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground">Ask about founding sponsor</a></div>
         </div>
       </div>
     </section>
-
   </main>
 
-  <footer>
-    <div class="foot">
-      <div>
-        <a class="brand" href="/" style="margin-bottom:10px;">
-          <span class="mark" aria-hidden="true"></span>
-          <span class="wordmark"><b>hermosskills</b><span>marketplace</span></span>
-        </a>
-        <p style="margin-top:14px; max-width: 340px;">A curated, trust-first marketplace for AI-agent skills. Sponsorships, commissions, and a public-good rebate on every transaction.</p>
-      </div>
-      <div>
-        <h5>Catalog</h5>
-        <ul>
-          <li><a href="#catalog">All skills</a></li>
-          <li><a href="#skills-counter">Skills maintained</a></li>
-          <li><a href="#funding">How funding works</a></li>
-          <li><a href="#principles">Editorial principles</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5>Get involved</h5>
-        <ul>
-          <li><a href="#commission">Sponsor a skill</a></li>
-          <li><a href="#commission">Commission work</a></li>
-          <li><a href="#commission">Submit a skill</a></li>
-          <li><a href="/terms/">Terms</a></li>
-          <li><a href="/privacy/">Privacy</a></li>
-          <li><a href="/refund-policy/">Refunds</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5>Companion sites</h5>
-        <ul>
-          <li><a href="https://chromebloom.com" rel="noopener">chromebloom.com →</a></li>
-          <li><a href="https://offlinehelpers.com" rel="noopener">offlinehelpers.com →</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="legal">
-      <span>© 2026 hermosskills · A Peter Bjork project</span>
-      <span>Built in the open. Funded by people who use the skills.</span>
+  <footer class="border-t border-border bg-secondary/20 py-8">
+    <div class="container-page flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between">
+      <div class="flex flex-col gap-1"><span class="font-display text-body font-semibold text-foreground">Hermosskills</span><span class="text-small text-muted-foreground">The curated marketplace for AI agent skills</span></div>
+      <div class="flex flex-col gap-1"><a href="mailto:hermosskills@polsia.app" class="text-small text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary">hermosskills@polsia.app</a><p class="text-small text-muted-foreground">Every listing reviewed · Every sponsor disclosed</p></div>
     </div>
   </footer>
-  <script>
-    (function () {
-      var box = document.getElementById('partnerForm');
-      var note = document.getElementById('partnerNote');
-      if (!box || !note) return;
-      var emailInput = box.querySelector('input[type=email]');
-      function setStatus(msg, isError) {
-        note.textContent = msg;
-        note.style.color = isError ? 'rgba(255,210,210,.96)' : 'rgba(255,255,255,.88)';
-      }
-      box.querySelectorAll('button[data-plan]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var email = emailInput ? emailInput.value.trim() : '';
-          if (!email || email.indexOf('@') === -1) {
-            setStatus('Enter your email first so Stripe can attach it to the checkout.', true);
-            if (emailInput) emailInput.focus();
-            return;
-          }
-          var original = btn.textContent;
-          btn.disabled = true;
-          btn.textContent = 'Opening Stripe…';
-          setStatus('Opening secure Stripe Checkout…');
-          fetch('/api/create-checkout-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ plan: btn.getAttribute('data-plan'), email: email })
-          })
-            .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
-            .then(function (res) {
-              if (!res.ok || !res.j || !res.j.url) throw new Error((res.j && res.j.error) || 'Unable to open checkout.');
-              window.location.href = res.j.url;
-            })
-            .catch(function (err) { setStatus(err.message || 'Could not open checkout. Email team@hermosskills.com.', true); })
-            .finally(function () { btn.disabled = false; btn.textContent = original; });
-        });
-      });
-    })();
-  </script>
-
-  <script>
-    // Hayden Cate / hermosskills — live "skills maintained this month" counter.
-    // Reads /skills-maintained (live server-side JSON), then /api/stats for
-    // the per-skill roster. Falls back to honest "0 / Charter catalog" copy
-    // before the counter endpoint is deployed.
-    (function () {
-      var number = document.getElementById('skills-counter-number');
-      var copy = document.getElementById('skills-counter-copy');
-      var roster = document.getElementById('skills-counter-roster');
-      if (!number || !copy || !roster) return;
-      function renderZero() {
-        number.innerHTML = '<em>0</em>';
-        copy.textContent = 'Charter catalog — first maintained-skill update drops this month.';
-      }
-      fetch('/skills-maintained', { credentials: 'omit' })
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (j) {
-          if (!j) { renderZero(); return null; }
-          var n = Number(j.maintained_this_month) || 0;
-          number.innerHTML = '<em>' + n + '</em> skill' + (n === 1 ? '' : 's');
-          copy.textContent = j.copy || ('Maintained as of ' + (j.this_month || 'this month') + '.');
-          return fetch('/api/stats', { credentials: 'omit' });
-        })
-        .then(function (r) { return r && r.ok ? r.json() : null; })
-        .then(function (s) {
-          if (s && Array.isArray(s.skills)) {
-            s.skills.forEach(function (sk) {
-              if (!sk || !sk.id) return;
-              var tag = document.createElement('span');
-              var label = sk.title || sk.id;
-              var ver = sk.version || 'v0';
-              var mon = sk.last_maintained_at ? sk.last_maintained_at.slice(0, 7) : null;
-              var cur = (mon && s.this_month && mon === s.this_month) ? ' · this month' : '';
-              tag.textContent = label + ' · ' + ver + cur;
-              roster.appendChild(tag);
-            });
-          }
-        })
-        .catch(function () { renderZero(); });
-    })();
-  </script>
 </body>
 </html>
