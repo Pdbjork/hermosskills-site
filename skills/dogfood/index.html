@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>dogfood — hermosskills</title>
+  <meta name="description" content="Exploratory QA of web apps: a vision-capable agent crawls a flow, finds bugs with evidence, and writes reproducible reports." />
+  <link rel="canonical" href="https://hermosskills.com/skills/dogfood/" />
+  <link rel="alternate" type="application/json" href="/catalog/v1/skills/dogfood.json" title="JSON record" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <style>
+    :root { --bg:#f6f0e4; --paper:#fffaf1; --ink:#1b1815; --muted:#686057; --line:rgba(27,24,21,.14); --line-strong:rgba(27,24,21,.32); --green:#255f54; --green-soft:#5d8b81; --copper:#b46a3c; --gold:#d9a441; --shadow: 0 26px 80px rgba(51,38,24,.13); --radius:28px; --max:980px; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; line-height:1.55;
+            background: radial-gradient(circle at 6% -2%, rgba(217,164,65,.22), transparent 28rem),
+                        radial-gradient(circle at 94% 6%, rgba(37,95,84,.18), transparent 32rem),
+                        linear-gradient(180deg, #fbf6ee 0%, var(--bg) 60%, #efe5d3 100%); }
+    header { position:sticky; top:0; z-index:20; backdrop-filter: blur(18px); background:rgba(246,240,228,.78); border-bottom: 1px solid var(--line); }
+    .nav { max-width:var(--max); margin:0 auto; padding:16px 22px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; font-weight:900; letter-spacing:-.02em; }
+    .mark { width:40px; height:40px; border-radius:14px; background: conic-gradient(from 170deg, var(--green), var(--gold), var(--copper), var(--green)); }
+    .wordmark { font-size:19px; }
+    .wordmark b { letter-spacing:-.03em; }
+    .wordmark span { color:var(--muted); font-weight:700; margin-left:6px; font-size:13px; }
+    .navlinks a { color:var(--muted); text-decoration:none; font-size:14px; margin-left:18px; }
+    section { padding:64px 22px; }
+    .wrap { max-width:var(--max); margin:0 auto; }
+    .crumb { font-size:13px; color:var(--muted); margin-bottom:18px; }
+    .crumb a { color:var(--green); text-decoration:none; font-weight:700; }
+    .eyebrow { display:inline-flex; gap:8px; align-items:center; padding:8px 14px; border:1px solid var(--line-strong); border-radius:999px; background:rgba(255,250,241,.78); color:var(--green); font-weight:900; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+    h1 { margin:14px 0 0; line-height:.98; letter-spacing:-.05em; font-size: clamp(40px, 6vw, 76px); }
+    .lede { margin-top:20px; max-width:720px; font-size: clamp(17px, 1.5vw, 20px); color:var(--muted); }
+    .badges { margin-top:24px; display:flex; gap:10px; flex-wrap:wrap; }
+    .badges span { padding:5px 12px; border:1px solid var(--line); border-radius:999px; font-size:12px; color:var(--green); background:rgba(37,95,84,.06); font-weight:700; }
+    .grid { margin-top:40px; display:grid; grid-template-columns: minmax(0,1.5fr) minmax(280px,1fr); gap:32px; }
+    .panel { background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:24px; }
+    .panel h2 { margin:0 0 10px; font-size:18px; letter-spacing:-.02em; }
+    .panel p, .panel li { font-size:15px; color:var(--ink); }
+    .panel pre { margin-top:12px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px; font-size:13px; overflow-x:auto; white-space:pre-wrap; word-break:break-word; }
+    .panel code { background:rgba(37,95,84,.08); padding:2px 7px; border-radius:6px; font-size:13px; }
+    .sponsor { background: linear-gradient(160deg, var(--green), #143a32); color:#fff; border-radius:18px; padding:24px; }
+    .sponsor h2 { color:#fff; margin:0 0 6px; }
+    .sponsor .price { font-size:30px; font-weight:900; letter-spacing:-.02em; color:var(--gold); margin:6px 0 0; }
+    .sponsor .price small { color:rgba(255,255,255,.7); font-size:14px; font-weight:700; margin-left:6px; }
+    .sponsor p { color:rgba(255,255,255,.85); font-size:14px; margin-top:14px; }
+    .sponsor a.btn { display:inline-block; background:var(--copper); color:#fff; padding:12px 22px; border-radius:999px; text-decoration:none; font-weight:900; margin-top:14px; }
+    .commission { margin-top:18px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16); border-radius:14px; padding:18px; }
+    .commission h3 { margin:0; color:#fff; font-size:15px; }
+    .commission .price { font-size:22px; color:var(--gold); margin-top:6px; }
+    .commission p { font-size:13px; color:rgba(255,255,255,.78); margin-top:8px; }
+    .commission a { color:var(--gold); text-decoration:none; font-weight:800; }
+    .rebate { margin-top:24px; padding:16px 20px; background:rgba(217,164,65,.10); border:1px solid rgba(217,164,65,.32); border-radius:14px; font-size:14px; color:var(--ink); }
+    .rebate b { color:var(--copper); }
+    .tags { margin-top:8px; display:flex; gap:8px; flex-wrap:wrap; }
+    .tags span { font-size:11px; padding:3px 10px; background:var(--bg); border:1px solid var(--line); border-radius:999px; color:var(--muted); font-weight:700; }
+    footer { margin-top:60px; padding:40px 22px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; text-align:center; }
+    footer a { color:var(--green); text-decoration:none; font-weight:700; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a href="/" class="brand">
+        <span class="mark"></span>
+        <span class="wordmark"><b>hermosskills</b><span>marketplace</span></span>
+      </a>
+      <nav class="navlinks">
+        <a href="/">Home</a>
+        <a href="/skills/">Catalog</a>
+        <a href="/catalog/v1/skills.json">JSON</a>
+      </nav>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="crumb"><a href="/skills/">Catalog</a> · engineering</div>
+      <span class="eyebrow">Engineering · Hermes Agent</span>
+      <h1>dogfood</h1>
+      <p class="lede">Exploratory QA of web apps: a vision-capable agent crawls a flow, finds bugs with evidence, and writes reproducible reports.</p>
+      <div class="badges">
+        <span>v1.0.0</span>
+        <span>License: MIT</span>
+        <span>Reviewed</span>
+        <span>Trust: curated</span>
+      </div>
+      <div class="tags"><span>qa</span> <span>testing</span> <span>browser</span> <span>web</span> <span>dogfood</span> <span>hermes-skill</span></div>
+
+      <div class="grid">
+        <div>
+          <div class="panel">
+            <h2>When to load this skill</h2>
+            <pre>This skill guides you through systematic exploratory QA testing of web applications using the browser toolset. You will navigate the application, interact with elements, capture evidence of issues, and produce a structured bug report.</pre>
+          </div>
+
+          <div class="panel" style="margin-top:18px;">
+            <h2>Install</h2>
+            <p>One curl, one skill. Drop it into your agent's skills directory:</p>
+            <pre>mkdir -p ~/.moltbot/skills/dogfood
+curl -sSL https://hermosskills.com/skills/dogfood/SKILL.md \
+  &gt; ~/.moltbot/skills/dogfood/SKILL.md</pre>
+            <p style="margin-top:12px; color:var(--muted); font-size:14px;">Or fetch the JSON record: <code>/catalog/v1/skills/dogfood.json</code></p>
+          </div>
+
+          <div class="panel" style="margin-top:18px;">
+            <h2>Maintainer's note</h2>
+            <p>The skill that broke three of our own pages last week. If your product can survive dogfood, it&#x27;ll survive users.</p>
+          </div>
+        </div>
+
+        <aside>
+          <div class="sponsor">
+            <h2>Sponsor this skill</h2>
+            <div class="price">$49<small>/month</small></div>
+            <p>Keep dogfood maintained. Sponsor logos go on this page and the catalog entry.</p>
+            <a class="btn" href="https://buy.stripe.com/hermosskills-sponsor">Become a sponsor →</a>
+
+            <div class="commission">
+              <h3>Or commission custom work</h3>
+              <div class="price">$500</div>
+              <p>One-shot, scoped to your context. Faster than reading the skill alone.</p>
+              <a href="https://buy.stripe.com/hermosskills-commission">Commission →</a>
+            </div>
+
+            <p style="margin-top:14px; font-size:12px; color:rgba(255,255,255,.7);">Founding sponsor tier — $250/mo, capped at 30 — also available on the <a href="/#commission" style="color:var(--gold);">homepage</a>.</p>
+          </div>
+
+          <div class="rebate">
+            <b>30% of every commission</b> flows to public-good AI projects. Trust-first sponsorship, not extraction.
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><a href="/">Hermesskills</a> · <a href="/skills/">Catalog</a> · <a href="/submit.html">Submit a skill</a> · <a href="/.well-known/openclaw.json">OpenClaw manifest</a></p>
+  </footer>
+</body>
+</html>
