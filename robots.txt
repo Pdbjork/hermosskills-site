@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /skills/
+Allow: /api/v1/
+Allow: /.well-known/
+
+Sitemap: https://hermosskills.com/sitemap.xml

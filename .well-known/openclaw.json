@@ -1,0 +1,96 @@
+{
+  "manifest_version": "1.0.0",
+  "publisher": "Hermesskills",
+  "publisher_url": "https://hermosskills.com",
+  "owner": "Pete Bjork",
+  "owner_email": "pdbjork@gmail.com",
+  "trust_model": "manual-review",
+  "schema_compatibility": [
+    "clawhub-catalog-v1",
+    "moltbot-skill-md-1.x"
+  ],
+  "surfaces": {
+    "curated_charter": {
+      "endpoint": "https://hermosskills.com/catalog/v1/skills.json",
+      "description": "Trust-first, manually-reviewed charter catalog (the 6 skills in the opening issue). Each entry has a sponsor tier, commission path, and 30% public-good rebate.",
+      "count": 6
+    },
+    "full_repository": {
+      "endpoint_template": "https://hermosskills.com/skills/{slug}/SKILL.md",
+      "description": "Raw repository surface. Every Hermes Agent skill mirrored as a clawhub-installable artifact. Count and discovery via directory listing.",
+      "installation_pattern": "curl -sSL https://hermosskills.com/skills/{slug}/SKILL.md"
+    }
+  },
+  "capabilities": {
+    "catalog_browse": {
+      "endpoint": "https://hermosskills.com/catalog/v1/skills.json",
+      "method": "GET",
+      "format": "application/json",
+      "schema": "https://hermosskills.com/schemas/skills-catalog.v1.json",
+      "returns": "array of skill records with id, version, description, tags, sponsor tiers, public_good_rebate_pct"
+    },
+    "skill_lookup": {
+      "endpoint_template": "https://hermosskills.com/catalog/v1/skills/{id}.json",
+      "method": "GET",
+      "format": "application/json"
+    },
+    "skill_markdown_fetch": {
+      "endpoint_template": "https://hermosskills.com/skills/{id}/SKILL.md",
+      "method": "GET",
+      "format": "text/markdown",
+      "notes": "Each skill exposes its canonical SKILL.md at this URL for direct installation. Compatible with the curl install pattern documented in moltbook/SKILL.md."
+    },
+    "skill_landing_page": {
+      "endpoint_template": "https://hermosskills.com/skills/{id}/",
+      "method": "GET",
+      "format": "text/html",
+      "notes": "Human-readable editorial landing page per skill \u2014 sponsor CTAs, install instructions, maintainer note, public-good rebate callout."
+    },
+    "submit_a_skill": {
+      "endpoint": "https://hermosskills.com/submit.html",
+      "method": "GET",
+      "notes": "Manual review intake form. Submission is by email + GitHub URL \u2014 no automated acceptance in v1.0."
+    }
+  },
+  "install_pattern": {
+    "one_liner": "curl -sSL https://hermosskills.com/skills/{id}/SKILL.md",
+    "agent_recipe": [
+      "1. GET https://hermosskills.com/catalog/v1/skills.json \u2014 pick skill id",
+      "2. GET https://hermosskills.com/skills/{id}/SKILL.md \u2014 fetch canonical manifest",
+      "3. Install to the agent's skills directory following the install section of the manifest",
+      "4. Verify install by reading the skill's description and version from the returned frontmatter"
+    ]
+  },
+  "submission": {
+    "open": true,
+    "review_sla_days": 14,
+    "criteria": [
+      "SKILL.md frontmatter with name, version, author, license, platforms",
+      "MIT license or compatible open license",
+      "Clear description with load triggers",
+      "At least one reference implementation or worked example",
+      "Maintainer willing to respond to issues within 30 days"
+    ],
+    "submit_at": "https://hermosskills.com/submit.html"
+  },
+  "commercial_model": {
+    "kind": "sponsorship + commission",
+    "sponsor_price_usd_month": 49,
+    "founding_sponsor_price_usd_month": 250,
+    "founding_sponsor_cap": 30,
+    "commission_price_usd": 500,
+    "public_good_rebate_pct": 30,
+    "rebate_destination": "public-good AI projects"
+  },
+  "related": {
+    "github_org": "https://github.com/openclaw",
+    "ecosystem_doc": "https://github.com/openclaw/openclaw",
+    "compatible_clients": [
+      "OpenClaw",
+      "Hermes Agent",
+      "Claude Code",
+      "Moltbook agents"
+    ]
+  },
+  "updated_at": "2026-07-08T00:00:00Z"
+}

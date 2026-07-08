@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Submit your skill — hermosskills</title>
+  <meta name="description" content="Submit your AI-agent skill to the hermosskills charter catalog. Manual review, 14-day SLA, MIT or compatible license required." />
+  <link rel="canonical" href="https://hermosskills.com/submit.html" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <style>
+    :root { --bg:#f6f0e4; --paper:#fffaf1; --ink:#1b1815; --muted:#686057; --line:rgba(27,24,21,.14); --green:#255f54; --copper:#b46a3c; --gold:#d9a441; --radius:28px; --max:780px; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; line-height:1.55;
+           background: radial-gradient(circle at 6% -2%, rgba(217,164,65,.22), transparent 28rem),
+                       radial-gradient(circle at 94% 6%, rgba(37,95,84,.18), transparent 32rem),
+                       linear-gradient(180deg, #fbf6ee 0%, var(--bg) 60%, #efe5d3 100%); min-height:100vh; }
+    header { position:sticky; top:0; z-index:20; backdrop-filter: blur(18px); background:rgba(246,240,228,.78); border-bottom: 1px solid var(--line); }
+    .nav { max-width:var(--max); margin:0 auto; padding:16px 22px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; font-weight:900; letter-spacing:-.02em; }
+    .mark { width:40px; height:40px; border-radius:14px; background: conic-gradient(from 170deg, var(--green), var(--gold), var(--copper), var(--green)); }
+    .wordmark { font-size:19px; }
+    .wordmark b { letter-spacing:-.03em; }
+    .wordmark span { color:var(--muted); font-weight:700; margin-left:6px; font-size:13px; }
+    .navlinks a { color:var(--muted); text-decoration:none; font-size:14px; margin-left:18px; }
+    section { padding:64px 22px; }
+    .wrap { max-width:var(--max); margin:0 auto; }
+    h1 { margin:0; line-height:1; letter-spacing:-.05em; font-size: clamp(34px, 5vw, 56px); }
+    h2 { margin:32px 0 12px; letter-spacing:-.03em; font-size:22px; }
+    p { margin: 12px 0; color:var(--muted); }
+    .kicker { display:inline-block; padding:6px 12px; border:1px solid var(--line); border-radius:999px; background:rgba(255,250,241,.78); color:var(--green); font-weight:900; font-size:11px; letter-spacing:.14em; text-transform:uppercase; }
+    .criteria { background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:24px; margin-top:24px; }
+    .criteria ul { padding-left:18px; }
+    .criteria li { margin: 8px 0; color:var(--ink); }
+    .cta { background: linear-gradient(160deg, var(--green), #143a32); color:#fff; border-radius:18px; padding:32px; margin-top:32px; }
+    .cta h2 { color:#fff; margin-top:0; }
+    .cta a { display:inline-block; background:var(--copper); color:#fff; padding:14px 24px; border-radius:999px; text-decoration:none; font-weight:900; margin-top:12px; }
+    code { background:rgba(37,95,84,.08); padding:2px 8px; border-radius:6px; font-size:14px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a href="/" class="brand">
+        <span class="mark"></span>
+        <span class="wordmark"><b>hermosskills</b><span>marketplace</span></span>
+      </a>
+      <nav class="navlinks">
+        <a href="/">Home</a>
+        <a href="/skills/">Catalog</a>
+        <a href="/catalog/v1/skills.json">JSON</a>
+      </nav>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <span class="kicker">Submission intake</span>
+      <h1>Submit your skill to the catalog.</h1>
+      <p>Hermesskills accepts a small number of curated submissions per quarter. We review for trust, real-world testing, and editorial fit. Submission is by email — no automated acceptance yet.</p>
+
+      <h2>Submission criteria</h2>
+      <div class="criteria">
+        <ul>
+          <li><code>SKILL.md</code> frontmatter with <code>name</code>, <code>version</code>, <code>author</code>, <code>license</code>, <code>platforms</code>.</li>
+          <li>MIT or compatible open license.</li>
+          <li>Clear description with load triggers (the "use when..." pattern).</li>
+          <li>At least one reference implementation or worked example.</li>
+          <li>Maintainer willing to respond to issues within 30 days.</li>
+          <li>For clawhub-compatible submissions: a <code>skill.json</code> or equivalent manifest.</li>
+        </ul>
+      </div>
+
+      <div class="cta">
+        <h2>How to submit</h2>
+        <p>Email <code>pdbjork@gmail.com</code> with the subject <code>hermosskills submission: &lt;skill-name&gt;</code>. Attach or link: the SKILL.md, the GitHub repo, and a one-paragraph statement of editorial fit.</p>
+        <p style="color:rgba(255,255,255,.85); margin-top:18px;">Review SLA: 14 days. Acceptance: about 1 in 4. We turn down more than we accept because the catalog only grows one at a time, by hand.</p>
+        <a href="mailto:pdbjork@gmail.com?subject=hermosskills%20submission%3A%20%3Cskill-name%3E&body=Skill%20name%3A%0AGitHub%20repo%3A%0ASKILL.md%20link%3A%0ALicense%3A%0AEditorial%20fit%20(one%20paragraph)%3A%0A">Email your submission →</a>
+      </div>
+
+      <h2>Programmatic submission (for agents)</h2>
+      <p>If your agent can compose an email, it can submit. The endpoint is documented in the <code>submission</code> block of <a href="/.well-known/openclaw.json" style="color:var(--green); font-weight:800;">/.well-known/openclaw.json</a>.</p>
+    </div>
+  </section>
+</body>
+</html>

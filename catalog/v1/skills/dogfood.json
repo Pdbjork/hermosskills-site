@@ -1,0 +1,52 @@
+{
+  "success": true,
+  "skill": {
+    "id": "dogfood",
+    "name": "dogfood",
+    "identifier": "dogfood",
+    "version": "1.0.0",
+    "description": "Exploratory QA of web apps: a vision-capable agent crawls a flow, finds bugs with evidence, and writes reproducible reports.",
+    "source": "hermosskills",
+    "trust_level": "curated",
+    "author": "Hermes Agent",
+    "license": "MIT",
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "homepage": "https://hermosskills.com/skills/dogfood/",
+    "skill_md": "https://hermosskills.com/skills/dogfood/SKILL.md",
+    "tags": [
+      "qa",
+      "testing",
+      "browser",
+      "web",
+      "dogfood",
+      "hermes-skill"
+    ],
+    "categories": [
+      "engineering",
+      "qa"
+    ],
+    "maintainer_note": "The skill that broke three of our own pages last week. If your product can survive dogfood, it'll survive users.",
+    "sponsor_tiers": [
+      {
+        "name": "sponsor",
+        "price_usd_month": 49,
+        "stripe_link": "https://buy.stripe.com/hermosskills-sponsor"
+      },
+      {
+        "name": "founding-sponsor",
+        "price_usd_month": 250,
+        "stripe_link": "https://buy.stripe.com/hermosskills-founding",
+        "max_count": 30
+      }
+    ],
+    "commission": {
+      "price_usd": 500,
+      "stripe_link": "https://buy.stripe.com/hermosskills-commission"
+    },
+    "public_good_rebate_pct": 30
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "success": true,
+  "skill": {
+    "id": "domain-availability-checker",
+    "name": "domain-availability-checker",
+    "identifier": "domain-availability-checker",
+    "version": "1.0.0",
+    "description": "Use when picking a brand name and you need to know which .com (or other TLD) variants are actually registerable before you commit. Runs concurrent whois lookups, retries on timeout, sorts FREE candidates first, and prints a clean table or machine-readable JSON/CSV. Safe and unattended \u2014 never touches registrar APIs or purchases anything.",
+    "source": "hermosskills",
+    "trust_level": "curated",
+    "author": "Hermes Agent",
+    "license": "MIT",
+    "platforms": [
+      "linux",
+      "macos"
+    ],
+    "homepage": "https://hermosskills.com/skills/domain-availability-checker/",
+    "skill_md": "https://hermosskills.com/skills/domain-availability-checker/SKILL.md",
+    "tags": [
+      "domain",
+      "whois",
+      "naming",
+      "branding",
+      "due-diligence",
+      "ops",
+      "hermes-skill"
+    ],
+    "categories": [
+      "research",
+      "operations"
+    ],
+    "maintainer_note": "The first skill ever listed on Hermesskills. Used by the agency itself during the hermosskills.com name decision.",
+    "sponsor_tiers": [
+      {
+        "name": "sponsor",
+        "price_usd_month": 49,
+        "stripe_link": "https://buy.stripe.com/hermosskills-sponsor"
+      },
+      {
+        "name": "founding-sponsor",
+        "price_usd_month": 250,
+        "stripe_link": "https://buy.stripe.com/hermosskills-founding",
+        "max_count": 30
+      }
+    ],
+    "commission": {
+      "price_usd": 500,
+      "stripe_link": "https://buy.stripe.com/hermosskills-commission"
+    },
+    "public_good_rebate_pct": 30
+  }
+}

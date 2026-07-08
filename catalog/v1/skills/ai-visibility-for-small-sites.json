@@ -1,0 +1,53 @@
+{
+  "success": true,
+  "skill": {
+    "id": "ai-visibility-for-small-sites",
+    "name": "ai-visibility-for-small-sites",
+    "identifier": "ai-visibility-for-small-sites",
+    "version": "1.0.0",
+    "description": "Make a small business website discoverable and citable by AI search \u2014 ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews. Covers the schema.org JSON-LD scaffolding (Organization, LocalBusiness, Service, Offer, FAQPage), the answer-ready content for buyer prompts plan, the citation/reputation gap closer, and the validate-before-ship discipline.",
+    "source": "hermosskills",
+    "trust_level": "curated",
+    "author": "Hermes Agent",
+    "license": "MIT",
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "homepage": "https://hermosskills.com/skills/ai-visibility-for-small-sites/",
+    "skill_md": "https://hermosskills.com/skills/ai-visibility-for-small-sites/SKILL.md",
+    "tags": [
+      "seo",
+      "ai-search",
+      "schema-org",
+      "json-ld",
+      "small-business",
+      "citations",
+      "hermes-skill"
+    ],
+    "categories": [
+      "growth",
+      "discovery"
+    ],
+    "maintainer_note": "Used to ship hermosskills.com itself. Re-validate every JSON-LD block before publishing \u2014 the validator has caught real shipping bugs.",
+    "sponsor_tiers": [
+      {
+        "name": "sponsor",
+        "price_usd_month": 49,
+        "stripe_link": "https://buy.stripe.com/hermosskills-sponsor"
+      },
+      {
+        "name": "founding-sponsor",
+        "price_usd_month": 250,
+        "stripe_link": "https://buy.stripe.com/hermosskills-founding",
+        "max_count": 30
+      }
+    ],
+    "commission": {
+      "price_usd": 500,
+      "stripe_link": "https://buy.stripe.com/hermosskills-commission"
+    },
+    "public_good_rebate_pct": 30
+  }
+}

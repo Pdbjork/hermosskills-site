@@ -1,0 +1,56 @@
+{
+  "success": true,
+  "skill": {
+    "id": "public-good-ai-commercialization",
+    "name": "public-good-ai-commercialization",
+    "identifier": "public-good-ai-commercialization",
+    "version": "1.2.0",
+    "description": "Commercialize public-good AI projects and reusable agent assets with ethical funnels, proof packages, landing pages, outreach, and fulfillment operations.",
+    "source": "hermosskills",
+    "trust_level": "curated",
+    "author": "Hermes Agent",
+    "license": "MIT",
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "homepage": "https://hermosskills.com/skills/public-good-ai-commercialization/",
+    "skill_md": "https://hermosskills.com/skills/public-good-ai-commercialization/SKILL.md",
+    "tags": [
+      "commercialization",
+      "public-good-ai",
+      "landing-pages",
+      "funnels",
+      "outreach",
+      "agent-skills",
+      "offline-helper",
+      "payment-links",
+      "operator-agent",
+      "hermes-skill"
+    ],
+    "categories": [
+      "business",
+      "go-to-market"
+    ],
+    "maintainer_note": "The class-level skill that defines Hermesskills' editorial model. Reads this skill before you submit a skill of your own.",
+    "sponsor_tiers": [
+      {
+        "name": "sponsor",
+        "price_usd_month": 49,
+        "stripe_link": "https://buy.stripe.com/hermosskills-sponsor"
+      },
+      {
+        "name": "founding-sponsor",
+        "price_usd_month": 250,
+        "stripe_link": "https://buy.stripe.com/hermosskills-founding",
+        "max_count": 30
+      }
+    ],
+    "commission": {
+      "price_usd": 500,
+      "stripe_link": "https://buy.stripe.com/hermosskills-commission"
+    },
+    "public_good_rebate_pct": 30
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "success": true,
+  "skill": {
+    "id": "stripe-go-live-workflow",
+    "name": "stripe-go-live-workflow",
+    "identifier": "stripe-go-live-workflow",
+    "version": "1.0.0",
+    "description": "Operational workflow for taking a working test-mode Stripe integration to live AND for verifying an already-live integration end-to-end. Covers the Dashboard walkthrough, the never-see-the-live-key safety rule, the test-mode dry run, the live deploy ritual, and the Express/Node verify-the-pipes ritual.",
+    "source": "hermosskills",
+    "trust_level": "curated",
+    "author": "Hermes Agent",
+    "license": "MIT",
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "homepage": "https://hermosskills.com/skills/stripe-go-live-workflow/",
+    "skill_md": "https://hermosskills.com/skills/stripe-go-live-workflow/SKILL.md",
+    "tags": [
+      "stripe",
+      "payments",
+      "go-live",
+      "ops",
+      "fintech",
+      "production",
+      "hermes-skill"
+    ],
+    "categories": [
+      "operations",
+      "fintech"
+    ],
+    "maintainer_note": "Battle-tested workflow. Has caught silent-201 and key-leak failure modes in real launches. The 'never see the live key' rule is non-negotiable.",
+    "sponsor_tiers": [
+      {
+        "name": "sponsor",
+        "price_usd_month": 49,
+        "stripe_link": "https://buy.stripe.com/hermosskills-sponsor"
+      },
+      {
+        "name": "founding-sponsor",
+        "price_usd_month": 250,
+        "stripe_link": "https://buy.stripe.com/hermosskills-founding",
+        "max_count": 30
+      }
+    ],
+    "commission": {
+      "price_usd": 500,
+      "stripe_link": "https://buy.stripe.com/hermosskills-commission"
+    },
+    "public_good_rebate_pct": 30
+  }
+}

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalog — hermosskills</title>
+  <meta name="description" content="The hermosskills charter catalog: six curated, trust-first AI-agent skills. Each is reviewed, tested, and disclosed about funding." />
+  <link rel="canonical" href="https://hermosskills.com/skills/" />
+  <link rel="alternate" type="application/json" href="/catalog/v1/skills.json" title="Hermesskills skill catalog (JSON)" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <style>
+    :root { --bg:#f6f0e4; --paper:#fffaf1; --ink:#1b1815; --muted:#686057; --line:rgba(27,24,21,.14); --green:#255f54; --copper:#b46a3c; --gold:#d9a441; --radius:28px; --max:1200px; }
+    * { box-sizing: border-box; }
+    body { margin:0; color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; line-height:1.55;
+           background: radial-gradient(circle at 6% -2%, rgba(217,164,65,.22), transparent 28rem),
+                       radial-gradient(circle at 94% 6%, rgba(37,95,84,.18), transparent 32rem),
+                       linear-gradient(180deg, #fbf6ee 0%, var(--bg) 60%, #efe5d3 100%); }
+    header { position:sticky; top:0; z-index:20; backdrop-filter: blur(18px); background:rgba(246,240,228,.78); border-bottom: 1px solid var(--line); }
+    .nav { max-width:var(--max); margin:0 auto; padding:16px 22px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; font-weight:900; letter-spacing:-.02em; }
+    .mark { width:40px; height:40px; border-radius:14px; background: conic-gradient(from 170deg, var(--green), var(--gold), var(--copper), var(--green)); box-shadow: 0 12px 28px rgba(37,95,84,.22); }
+    .wordmark { font-size:19px; }
+    .wordmark b { letter-spacing:-.03em; }
+    .wordmark span { color:var(--muted); font-weight:700; margin-left:6px; font-size:13px; }
+    .navlinks { display:flex; gap:22px; align-items:center; color:var(--muted); font-size:14px; }
+    .navlinks a { text-decoration:none; }
+    .navlinks a:hover { color:var(--ink); }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:12px 18px; border-radius:999px; text-decoration:none; font-weight:850; border:1px solid var(--line); background:rgba(255,250,241,.78); }
+    .button.primary { background:var(--green); color:#fff; border-color:var(--green); }
+    section { padding:64px 22px; }
+    .wrap { max-width:var(--max); margin:0 auto; }
+    h1 { margin:0; line-height:.98; letter-spacing:-.055em; font-size: clamp(40px, 6vw, 80px); }
+    .lede { margin-top:20px; max-width:720px; font-size: clamp(17px, 1.5vw, 20px); color:var(--muted); }
+    .kicker { display:inline-flex; gap:8px; align-items:center; padding:8px 14px; border:1px solid var(--line); border-radius:999px; background:rgba(255,250,241,.78); color:var(--green); font-weight:900; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+    .skills { margin-top:36px; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:18px; }
+    .skill { background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:22px; }
+    .skill .tag { display:inline-block; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--green); font-weight:900; margin-bottom:8px; }
+    .skill h3 { margin:4px 0 10px; font-size:18px; letter-spacing:-.02em; }
+    .skill p { color:var(--muted); font-size:14px; }
+    .skill .trust { margin-top:14px; display:flex; gap:8px; flex-wrap:wrap; }
+    .skill .trust span { padding:4px 10px; border:1px solid var(--line); border-radius:999px; font-size:11px; color:var(--green); background:rgba(37,95,84,.06); font-weight:700; }
+    .skill .meta { margin-top:14px; display:flex; justify-content:space-between; font-size:12px; color:var(--muted); }
+    .api-card { margin-top:48px; background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:24px; }
+    .api-card pre { margin-top:12px; background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px; font-size:13px; overflow-x:auto; }
+    footer { margin-top:60px; padding:40px 22px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; text-align:center; }
+    footer a { color:var(--green); text-decoration:none; font-weight:700; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a href="/" class="brand">
+        <span class="mark"></span>
+        <span class="wordmark"><b>hermosskills</b><span>marketplace</span></span>
+      </a>
+      <nav class="navlinks">
+        <a href="/skills/">Catalog</a>
+        <a href="/">Home</a>
+        <a href="/catalog/v1/skills.json" title="JSON catalog">JSON</a>
+        <a class="button primary" href="/#commission">Sponsor</a>
+      </nav>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <span class="kicker">Charter catalog · June 2026</span>
+      <h1>Six curated AI-agent skills.</h1>
+      <p class="lede">Each skill is reviewed for trust, tested on a real agent, and disclosed about funding. The catalog grows one at a time, by hand. 30% of every commission funds public-good AI.</p>
+
+      <div class="skills">
+      <article class="skill">
+        <span class="tag">operations</span>
+        <h3>stripe-go-live-workflow</h3>
+        <p>Operational workflow for taking a working test-mode Stripe integration to live AND for verifying an already-live integration end-to-end. Covers the Dashboard walkthrough, the never-see-the-live-key safety rule, the test-mode dry run, the li…</p>
+        <div class="trust"><span>Reviewed</span><span>v1.0.0</span><span>MIT</span></div>
+        <div class="meta">
+          <span>Maintainer · Hermes Agent</span>
+          <span><a href="/skills/stripe-go-live-workflow/SKILL.md" style="color:var(--green);font-weight:800;">SKILL.md</a> · <a href="/skills/stripe-go-live-workflow/" style="color:var(--green);font-weight:800;">Detail →</a></span>
+        </div>
+      </article>
+      <article class="skill">
+        <span class="tag">research</span>
+        <h3>domain-availability-checker</h3>
+        <p>Use when picking a brand name and you need to know which .com (or other TLD) variants are actually registerable before you commit. Runs concurrent whois lookups, retries on timeout, sorts FREE candidates first, and prints a clean table or m…</p>
+        <div class="trust"><span>Reviewed</span><span>v1.0.0</span><span>MIT</span></div>
+        <div class="meta">
+          <span>Maintainer · Hermes Agent</span>
+          <span><a href="/skills/domain-availability-checker/SKILL.md" style="color:var(--green);font-weight:800;">SKILL.md</a> · <a href="/skills/domain-availability-checker/" style="color:var(--green);font-weight:800;">Detail →</a></span>
+        </div>
+      </article>
+      <article class="skill">
+        <span class="tag">business</span>
+        <h3>public-good-ai-commercialization</h3>
+        <p>Commercialize public-good AI projects and reusable agent assets with ethical funnels, proof packages, landing pages, outreach, and fulfillment operations.</p>
+        <div class="trust"><span>Reviewed</span><span>v1.2.0</span><span>MIT</span></div>
+        <div class="meta">
+          <span>Maintainer · Hermes Agent</span>
+          <span><a href="/skills/public-good-ai-commercialization/SKILL.md" style="color:var(--green);font-weight:800;">SKILL.md</a> · <a href="/skills/public-good-ai-commercialization/" style="color:var(--green);font-weight:800;">Detail →</a></span>
+        </div>
+      </article>
+      <article class="skill">
+        <span class="tag">fintech</span>
+        <h3>regulated-fintech-product-development</h3>
+        <p>Plan and prototype regulated fintech products simulation-first without prematurely crossing banking, card, payroll, or money-movement boundaries.</p>
+        <div class="trust"><span>Reviewed</span><span>v1.0.0</span><span>MIT</span></div>
+        <div class="meta">
+          <span>Maintainer · Hermes Agent</span>
+          <span><a href="/skills/regulated-fintech-product-development/SKILL.md" style="color:var(--green);font-weight:800;">SKILL.md</a> · <a href="/skills/regulated-fintech-product-development/" style="color:var(--green);font-weight:800;">Detail →</a></span>
+        </div>
+      </article>
+      <article class="skill">
+        <span class="tag">growth</span>
+        <h3>ai-visibility-for-small-sites</h3>
+        <p>Make a small business website discoverable and citable by AI search — ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews. Covers the schema.org JSON-LD scaffolding (Organization, LocalBusiness, Service, Offer, FAQPage), the answer-rea…</p>
+        <div class="trust"><span>Reviewed</span><span>v1.0.0</span><span>MIT</span></div>
+        <div class="meta">
+          <span>Maintainer · Hermes Agent</span>
+          <span><a href="/skills/ai-visibility-for-small-sites/SKILL.md" style="color:var(--green);font-weight:800;">SKILL.md</a> · <a href="/skills/ai-visibility-for-small-sites/" style="color:var(--green);font-weight:800;">Detail →</a></span>
+        </div>
+      </article>
+      <article class="skill">
+        <span class="tag">engineering</span>
+        <h3>dogfood</h3>
+        <p>Exploratory QA of web apps: a vision-capable agent crawls a flow, finds bugs with evidence, and writes reproducible reports.</p>
+        <div class="trust"><span>Reviewed</span><span>v1.0.0</span><span>MIT</span></div>
+        <div class="meta">
+          <span>Maintainer · Hermes Agent</span>
+          <span><a href="/skills/dogfood/SKILL.md" style="color:var(--green);font-weight:800;">SKILL.md</a> · <a href="/skills/dogfood/" style="color:var(--green);font-weight:800;">Detail →</a></span>
+        </div>
+      </article>
+      </div>
+
+      <div class="api-card">
+        <h3 style="margin:0; font-size:20px;">For agent developers</h3>
+        <p style="margin-top:10px; color:var(--muted);">Fetch the catalog programmatically, install any skill with one curl, or introspect the OpenClaw capability manifest.</p>
+        <pre>curl -s https://hermosskills.com/catalog/v1/skills.json</pre>
+        <pre>curl -sSL https://hermosskills.com/skills/stripe-go-live-workflow/SKILL.md</pre>
+        <pre>curl -s https://hermosskills.com/.well-known/openclaw.json</pre>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Hermesskills · a curated, trust-first marketplace & repository of AI-agent skills.<br/>
+    <a href="/">Home</a> · <a href="/#commission">Sponsor</a> · <a href="/#funding">Public-good rebate</a> · <a href="/catalog/v1/skills.json">JSON catalog</a></p>
+  </footer>
+</body>
+</html>

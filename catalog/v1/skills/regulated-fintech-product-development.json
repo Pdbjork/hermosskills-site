@@ -1,0 +1,55 @@
+{
+  "success": true,
+  "skill": {
+    "id": "regulated-fintech-product-development",
+    "name": "regulated-fintech-product-development",
+    "identifier": "regulated-fintech-product-development",
+    "version": "1.0.0",
+    "description": "Plan and prototype regulated fintech products simulation-first without prematurely crossing banking, card, payroll, or money-movement boundaries.",
+    "source": "hermosskills",
+    "trust_level": "curated",
+    "author": "Hermes Agent",
+    "license": "MIT",
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "homepage": "https://hermosskills.com/skills/regulated-fintech-product-development/",
+    "skill_md": "https://hermosskills.com/skills/regulated-fintech-product-development/SKILL.md",
+    "tags": [
+      "fintech",
+      "regulated-products",
+      "simulation",
+      "mvp",
+      "compliance",
+      "cards",
+      "payroll",
+      "budgeting",
+      "hermes-skill"
+    ],
+    "categories": [
+      "fintech",
+      "compliance"
+    ],
+    "maintainer_note": "Pairs with stripe-go-live-workflow. Use this first to design the simulation surface, then stripe-go-live to actually ship payments.",
+    "sponsor_tiers": [
+      {
+        "name": "sponsor",
+        "price_usd_month": 49,
+        "stripe_link": "https://buy.stripe.com/hermosskills-sponsor"
+      },
+      {
+        "name": "founding-sponsor",
+        "price_usd_month": 250,
+        "stripe_link": "https://buy.stripe.com/hermosskills-founding",
+        "max_count": 30
+      }
+    ],
+    "commission": {
+      "price_usd": 500,
+      "stripe_link": "https://buy.stripe.com/hermosskills-commission"
+    },
+    "public_good_rebate_pct": 30
+  }
+}

@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>hermosskills — a curated marketplace of agent skills</title>
-  <meta name="description" content="hermosskills is a curated, trust-first marketplace where AI-agent skills can be sponsored, requested, commissioned, and maintained for public benefit. Funds flow back to the maintainers and the public-good AI projects that depend on them." />
+  <title>hermosskills — a curated marketplace & repository of agent skills</title>
+  <meta name="description" content="hermosskills is a curated, trust-first repository where AI-agent skills are listed, sponsored, and collaborated on. Machine-readable catalog for OpenClaw, Hermes, Claude Code, and Moltbook agents. 30% of every commission funds public-good AI." />
+  <link rel="canonical" href="https://hermosskills.com/" />
+  <link rel="alternate" type="application/json" href="/catalog/v1/skills.json" title="Hermesskills skill catalog (JSON)" />
   <meta name="theme-color" content="#255f54" />
   <meta property="og:title" content="hermosskills — a curated marketplace of agent skills" />
   <meta property="og:description" content="A curated, trust-first marketplace where AI-agent skills are sponsored, requested, and commissioned — and where the money funds public-good AI." />
@@ -237,8 +239,9 @@
         <span class="wordmark"><b>hermosskills</b><span>marketplace</span></span>
       </a>
       <nav class="navlinks" aria-label="Primary">
-        <a href="#catalog">Catalog</a>
+        <a href="/skills/">Catalog</a>
         <a href="#skills-counter">Maintained</a>
+        <a href="#developers">For developers</a>
         <a href="#principles">Principles</a>
         <a href="#funding">Funding</a>
         <a href="#commission">Commission</a>
@@ -293,7 +296,7 @@
             <div class="kicker">Opening catalog · June 2026</div>
             <h2 style="margin-top:10px;">Six skills in the charter issue.</h2>
           </div>
-          <p>Each skill is reviewed for trust, tested on a real agent, and disclosed about funding. The catalog grows one at a time, by hand.</p>
+          <p>Each skill is reviewed for trust, tested on a real agent, and disclosed about funding. The catalog grows one at a time, by hand. <a href="/skills/" style="color: var(--green); font-weight: 800;">Browse the full catalog →</a></p>
         </div>
 
         <div class="skills">
@@ -348,6 +351,45 @@
             <div class="meta"><span>Maintainer · Hermes Agent</span><span>v0.9</span></div>
           </article>
         </div>
+      </div>
+    </section>
+
+    <!-- FOR DEVELOPERS / AGENT BUILDERS -->
+    <section id="developers" style="background: rgba(37,95,84,.06); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="kicker">For agent developers</div>
+            <h2 style="margin-top:10px;">A catalog your agent can read.</h2>
+          </div>
+          <p>Hermesskills exposes a machine-readable skill catalog and a per-skill install path. Compatible with <b>OpenClaw</b>, <b>Hermes Agent</b>, <b>Claude Code</b>, and <b>Moltbook</b> agents. 100% open, no auth required for read.</p>
+          <p style="margin-top: 14px; font-size: 14px; color: var(--muted);">Two surfaces: <b>curated charter</b> (6 skills, trust-first, with sponsor & commission paths) and <b>full repository</b> (84+ Hermes Agent skills mirrored as installable artifacts). OpenClaw gets both.</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 18px; margin-top: 24px;">
+          <div style="background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 22px;">
+            <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green); font-weight: 900;">Catalog · JSON</div>
+            <h3 style="margin-top: 8px;">GET /catalog/v1/skills.json</h3>
+            <p style="margin-top: 10px; color: var(--muted); font-size: 14px;">Full catalog of curated skills with versions, tags, sponsor tiers, install URLs. One fetch, one decision.</p>
+            <pre style="margin-top: 14px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font-size: 12px; overflow-x: auto;">curl -s https://hermosskills.com/catalog/v1/skills.json</pre>
+          </div>
+
+          <div style="background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 22px;">
+            <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green); font-weight: 900;">Install · one line</div>
+            <h3 style="margin-top: 8px;">SKILL.md per skill</h3>
+            <p style="margin-top: 10px; color: var(--muted); font-size: 14px;">Every skill exposes its canonical SKILL.md at a stable URL. Drop it into your agent's skills dir.</p>
+            <pre style="margin-top: 14px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font-size: 12px; overflow-x: auto;">curl -sSL https://hermosskills.com/skills/stripe-go-live-workflow/SKILL.md</pre>
+          </div>
+
+          <div style="background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 22px;">
+            <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green); font-weight: 900;">OpenClaw · ready</div>
+            <h3 style="margin-top: 8px;">/.well-known/openclaw.json</h3>
+            <p style="margin-top: 10px; color: var(--muted); font-size: 14px;">Capability manifest declaring endpoints, install pattern, submission criteria, commercial model. For agents that introspect.</p>
+            <pre style="margin-top: 14px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font-size: 12px; overflow-x: auto;">curl -s https://hermosskills.com/.well-known/openclaw.json</pre>
+          </div>
+        </div>
+
+        <p style="margin-top: 22px; color: var(--muted); font-size: 14px;">Want to list your skill? <a href="/submit.html" style="color: var(--green); font-weight: 800;">Submit for review →</a> &nbsp;·&nbsp; Manual review, 14-day SLA, MIT or compatible required.</p>
       </div>
     </section>
 
