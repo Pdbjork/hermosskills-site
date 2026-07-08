@@ -27,7 +27,7 @@
         <a class="hover:text-foreground" href="/submit.html">Submit</a>
         <a class="hover:text-foreground" href="/catalog/">Catalog</a>
       </nav>
-      <a href="mailto:hermosskills@polsia.app" class="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Get early access</a>
+      <a href="mailto:team@hermosskills.com" class="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Get early access</a>
     </div>
   </header>
 
@@ -55,7 +55,7 @@
             <h1 class="font-display text-[clamp(2.4rem,5vw,3.8rem)] font-bold tracking-tight text-foreground [line-height:1.06]">The curated marketplace<br />for <span class="text-primary">AI agent skills</span></h1>
             <p class="text-body-lg text-muted-foreground [max-width:46ch]">Every listing reviewed by a human editor and a model before it ships. Every sponsor disclosed. Independent audits found an average of 6.3 security issues per unvetted skill — Hermosskills makes curation the core product, not an afterthought.</p>
             <div class="flex flex-wrap gap-3 pt-2">
-              <a href="mailto:hermosskills@polsia.app" class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Get early access</a>
+              <a href="mailto:team@hermosskills.com" class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Get early access</a>
               <a href="#how-it-works" class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground">How it works</a>
             </div>
           </div>
@@ -173,7 +173,7 @@
             </article>
           </div>
           <p id="checkout-status" class="mt-5 min-h-[1.5rem] text-center text-small text-muted-foreground" role="status" aria-live="polite"></p>
-          <div class="mt-4 text-center"><a href="mailto:hermosskills@polsia.app" class="text-small text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary">Prefer to talk first? Email hermosskills@polsia.app</a></div>
+          <div class="mt-4 text-center"><a href="mailto:team@hermosskills.com" class="text-small text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary">Prefer to talk first? Email team@hermosskills.com</a></div>
         </div>
       </div>
     </section>
@@ -182,7 +182,7 @@
   <footer class="border-t border-border bg-secondary/20 py-8">
     <div class="container-page flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between">
       <div class="flex flex-col gap-1"><span class="font-display text-body font-semibold text-foreground">Hermosskills</span><span class="text-small text-muted-foreground">The curated marketplace for AI agent skills</span></div>
-      <div class="flex flex-col gap-1"><a href="mailto:hermosskills@polsia.app" class="text-small text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary">hermosskills@polsia.app</a><p class="text-small text-muted-foreground">Every listing reviewed · Every sponsor disclosed</p></div>
+      <div class="flex flex-col gap-1"><a href="mailto:team@hermosskills.com" class="text-small text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary">team@hermosskills.com</a><p class="text-small text-muted-foreground">Every listing reviewed · Every sponsor disclosed</p></div>
     </div>
   </footer>
   <script>
@@ -204,7 +204,7 @@
           if (!response.ok || !data.url) throw new Error(data.error || 'Unable to create checkout session.');
           window.location.href = data.url;
         } catch (error) {
-          status.textContent = error.message || 'Checkout is unavailable. Please email hermosskills@polsia.app.';
+          status.textContent = error.message || 'Checkout is unavailable. Please email team@hermosskills.com.';
           button.disabled = false;
           button.textContent = original;
         }
