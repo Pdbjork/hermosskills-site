@@ -5,3 +5,6 @@ node_modules/
 *.log
 orders/
 test-fixtures/
+
+private/**/*.mp4
+private/**/*.mov

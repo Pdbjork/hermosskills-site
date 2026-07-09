@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /private/
 Allow: /skills/
 Allow: /api/v1/
 Allow: /.well-known/
