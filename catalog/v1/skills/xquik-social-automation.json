@@ -1,0 +1,54 @@
+{
+  "success": true,
+  "skill": {
+    "id": "xquik-social-automation",
+    "name": "xquik-social-automation",
+    "identifier": "xquik-social-automation",
+    "version": "1.0.0",
+    "description": "Use Xquik's public API and MCP tools to search X posts, inspect public profile context, monitor timelines, and prepare approval-gated social actions.",
+    "source": "hermosskills",
+    "trust_level": "curated",
+    "author": "Xquik",
+    "license": "MIT",
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "homepage": "https://hermosskills.com/skills/xquik-social-automation/",
+    "skill_md": "https://hermosskills.com/skills/xquik-social-automation/SKILL.md",
+    "tags": [
+      "xquik",
+      "social-media",
+      "x",
+      "twitter",
+      "mcp",
+      "api",
+      "monitoring",
+      "hermes-skill"
+    ],
+    "categories": [
+      "social-media",
+      "automation"
+    ],
+    "maintainer_note": "Use Xquik for read-first social research and approval-gated account actions. Keep API keys in the local agent environment.",
+    "sponsor_tiers": [
+      {
+        "name": "sponsor",
+        "price_usd_month": 49,
+        "stripe_link": "https://buy.stripe.com/hermosskills-sponsor"
+      },
+      {
+        "name": "founding-sponsor",
+        "price_usd_month": 250,
+        "stripe_link": "https://buy.stripe.com/hermosskills-founding",
+        "max_count": 30
+      }
+    ],
+    "commission": {
+      "price_usd": 500,
+      "stripe_link": "https://buy.stripe.com/hermosskills-commission"
+    },
+    "public_good_rebate_pct": 30
+  }
+}
