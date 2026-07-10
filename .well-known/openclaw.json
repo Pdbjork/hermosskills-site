@@ -12,8 +12,8 @@
   "surfaces": {
     "curated_charter": {
       "endpoint": "https://hermosskills.com/catalog/v1/skills.json",
-      "description": "Trust-first, manually-reviewed charter catalog (the 6 skills in the opening issue). Each entry has a sponsor tier, commission path, and 30% public-good rebate.",
-      "count": 6
+      "description": "Trust-first, manually-reviewed charter catalog (the 7 skills in the opening issue). Each entry has a sponsor tier, commission path, and 30% public-good rebate.",
+      "count": 7
     },
     "full_repository": {
       "endpoint_template": "https://hermosskills.com/skills/{slug}/SKILL.md",
@@ -92,5 +92,5 @@
       "Moltbook agents"
     ]
   },
-  "updated_at": "2026-07-08T00:00:00Z"
+  "updated_at": "2026-07-09T00:00:00Z"
 }

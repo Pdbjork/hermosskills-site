@@ -10,7 +10,7 @@ marketplace polish second.
 ## What landed
 
 ### 1. Machine-readable catalog (`/catalog/v1/skills.json`)
-- 6 charter skills in clawhub-compatible schema (name, identifier, version,
+- 7 charter skills in clawhub-compatible schema (name, identifier, version,
   trust_level, source, tags, sponsor_tiers, commission, public_good_rebate_pct).
 - Initial path tried `/api/v1/skills.json` — nginx has an explicit
   `location /api/ { return 404; }` because /api/* is proxied to a Node
@@ -19,7 +19,7 @@ marketplace polish second.
   data, not a runtime API).
 
 ### 2. Per-skill JSON endpoints
-- 6 endpoints at `/catalog/v1/skills/{id}.json`.
+- 7 endpoints at `/catalog/v1/skills/{id}.json`.
 - Built by `build-skills.sh` from `data/skills.json` (single source of truth).
 
 ### 3. OpenClaw capability manifest (`/.well-known/openclaw.json`)
@@ -42,7 +42,7 @@ marketplace polish second.
 
 ### 6. New pages
 - `/skills/` — full catalog index, editorial Pantone-style layout. Renders all
-  6 charter skills with tags, trust badges, version, install link.
+  7 charter skills with tags, trust badges, version, install link.
 - `/submit.html` — manual-review submission intake. Email-based by design
   (no automated acceptance in v1.0). 14-day SLA documented.
 
@@ -90,8 +90,8 @@ Any new endpoint under /api/ returns 404 silently. Either:
 - `.well-known/openclaw.json` — capability manifest.
 - `robots.txt` — agent-friendly crawl rules.
 - `sitemap.xml` — 8 URLs.
-- `catalog/v1/skills.json` — main catalog (6 skills).
-- `catalog/v1/skills/{id}.json` × 6 — per-skill lookup.
+- `catalog/v1/skills.json` — main catalog (7 skills).
+- `catalog/v1/skills/{id}.json` × 7 — per-skill lookup.
 - `skills/index.html` — full catalog browse page.
 - `skills/{slug}/SKILL.md` × 84 — mirrored from ~/.hermes/skills/.
 - `submit.html` — submission intake page.
@@ -116,10 +116,10 @@ for path in / /robots.txt /sitemap.xml /submit.html \
   curl -sS -o /dev/null -w "%{http_code} $path\n" "https://hermosskills.com$path"
 done
 
-# All 6 per-skill catalog JSON endpoints:
+# All 7 per-skill catalog JSON endpoints:
 for s in stripe-go-live-workflow domain-availability-checker \
          public-good-ai-commercialization regulated-fintech-product-development \
-         ai-visibility-for-small-sites dogfood; do
+         ai-visibility-for-small-sites dogfood xquik-social-automation; do
   curl -sS -o /dev/null -w "%{http_code} /catalog/v1/skills/$s.json\n" \
     "https://hermosskills.com/catalog/v1/skills/$s.json"
 done

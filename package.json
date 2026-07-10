@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "scripts": { "start": "node server.mjs" },
+  "scripts": {
+    "start": "node server.mjs",
+    "validate:catalog": "node scripts/validate-catalog.mjs"
+  },
   "dependencies": { "dotenv": "^17.4.2", "express": "^5.2.1", "stripe": "^22.2.3" }
 }
