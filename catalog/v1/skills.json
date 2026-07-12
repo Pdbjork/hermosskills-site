@@ -21,7 +21,7 @@
   },
   "install_verb": "curl",
   "install_example": "curl -s https://hermosskills.com/skills/{id}/SKILL.md",
-  "updated_at": "2026-07-08T00:00:00Z",
+  "updated_at": "2026-07-10T14:15:00Z",
   "skills": [
     {
       "id": "stripe-go-live-workflow",
@@ -71,7 +71,12 @@
         "price_usd": 500,
         "stripe_link": "https://buy.stripe.com/hermosskills-commission"
       },
-      "public_good_rebate_pct": 30
+      "public_good_rebate_pct": 30,
+      "title": "stripe-go-live-workflow",
+      "last_maintained_at": "2026-07-10T14:15:00Z",
+      "maintainer": "Hermosskills editorial desk",
+      "sponsored": false,
+      "rebate_active": true
     },
     {
       "id": "domain-availability-checker",
@@ -120,7 +125,12 @@
         "price_usd": 500,
         "stripe_link": "https://buy.stripe.com/hermosskills-commission"
       },
-      "public_good_rebate_pct": 30
+      "public_good_rebate_pct": 30,
+      "title": "domain-availability-checker",
+      "last_maintained_at": "2026-07-10T14:15:00Z",
+      "maintainer": "Hermosskills editorial desk",
+      "sponsored": false,
+      "rebate_active": true
     },
     {
       "id": "public-good-ai-commercialization",
@@ -173,7 +183,12 @@
         "price_usd": 500,
         "stripe_link": "https://buy.stripe.com/hermosskills-commission"
       },
-      "public_good_rebate_pct": 30
+      "public_good_rebate_pct": 30,
+      "title": "public-good-ai-commercialization",
+      "last_maintained_at": "2026-07-10T14:15:00Z",
+      "maintainer": "Hermosskills editorial desk",
+      "sponsored": false,
+      "rebate_active": true
     },
     {
       "id": "regulated-fintech-product-development",
@@ -225,7 +240,12 @@
         "price_usd": 500,
         "stripe_link": "https://buy.stripe.com/hermosskills-commission"
       },
-      "public_good_rebate_pct": 30
+      "public_good_rebate_pct": 30,
+      "title": "regulated-fintech-product-development",
+      "last_maintained_at": "2026-07-10T14:15:00Z",
+      "maintainer": "Hermosskills editorial desk",
+      "sponsored": false,
+      "rebate_active": true
     },
     {
       "id": "ai-visibility-for-small-sites",
@@ -275,7 +295,12 @@
         "price_usd": 500,
         "stripe_link": "https://buy.stripe.com/hermosskills-commission"
       },
-      "public_good_rebate_pct": 30
+      "public_good_rebate_pct": 30,
+      "title": "ai-visibility-for-small-sites",
+      "last_maintained_at": "2026-07-10T14:15:00Z",
+      "maintainer": "Hermosskills editorial desk",
+      "sponsored": false,
+      "rebate_active": true
     },
     {
       "id": "dogfood",
@@ -324,7 +349,12 @@
         "price_usd": 500,
         "stripe_link": "https://buy.stripe.com/hermosskills-commission"
       },
-      "public_good_rebate_pct": 30
+      "public_good_rebate_pct": 30,
+      "title": "dogfood",
+      "last_maintained_at": "2026-07-10T14:15:00Z",
+      "maintainer": "Hermosskills editorial desk",
+      "sponsored": false,
+      "rebate_active": true
     }
   ]
 }

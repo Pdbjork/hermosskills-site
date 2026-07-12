@@ -26,6 +26,8 @@
         <a class="hover:text-foreground" href="#why">Why</a>
         <a class="hover:text-foreground" href="/submit.html">Submit</a>
         <a class="hover:text-foreground" href="/catalog/">Catalog</a>
+        <a class="hover:text-foreground" href="/audit/">Audit method</a>
+        <a class="hover:text-foreground" href="/operator/">Operator pilot</a>
       </nav>
       <a href="mailto:team@hermosskills.com" class="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Get early access</a>
     </div>
@@ -55,8 +57,8 @@
             <h1 class="font-display text-[clamp(2.4rem,5vw,3.8rem)] font-bold tracking-tight text-foreground [line-height:1.06]">The curated marketplace<br />for <span class="text-primary">AI agent skills</span></h1>
             <p class="text-body-lg text-muted-foreground [max-width:46ch]">Every listing reviewed by a human editor and a model before it ships. Every sponsor disclosed. Independent audits found an average of 6.3 security issues per unvetted skill — Hermosskills makes curation the core product, not an afterthought.</p>
             <div class="flex flex-wrap gap-3 pt-2">
-              <a href="mailto:team@hermosskills.com" class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Get early access</a>
-              <a href="#how-it-works" class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground">How it works</a>
+              <a href="/#commission" class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Sponsor a skill</a>
+              <a href="/audit/" class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground">Read the audit method</a>
             </div>
           </div>
           <div class="relative hidden lg:block" aria-hidden="true">
@@ -97,6 +99,25 @@
           <div class="flex flex-col gap-2 rounded-lg border border-border bg-card p-6"><span class="font-display text-4xl font-bold text-primary" style="line-height:1.1">6.3</span><p class="text-body font-medium text-foreground whitespace-pre-line">Avg security issues<br />per unvetted skill</p><p class="text-small text-muted-foreground">Independent audit, 2025</p></div>
           <div class="flex flex-col gap-2 rounded-lg border border-border bg-card p-6"><span class="font-display text-4xl font-bold text-primary" style="line-height:1.1">33%</span><p class="text-body font-medium text-foreground whitespace-pre-line">Skills with prompt<br />injection vectors</p><p class="text-small text-muted-foreground">Same audit</p></div>
           <div class="flex flex-col gap-2 rounded-lg border border-border bg-card p-6"><span class="font-display text-4xl font-bold text-primary" style="line-height:1.1">100%</span><p class="text-body font-medium text-foreground whitespace-pre-line">Hermosskills listings<br />human-reviewed</p><p class="text-small text-muted-foreground">Our editorial policy</p></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="trust-ledger" class="bg-background py-section">
+      <div class="container-page">
+        <div class="grid gap-6 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+          <div>
+            <p class="text-eyebrow mb-3">Trust ledger</p>
+            <h2 class="font-display text-h2 font-bold text-foreground">A public counter beats vague trust language.</h2>
+            <p class="mt-3 text-body-lg text-muted-foreground">The charter catalog now exposes a maintained-this-month count and a public audit method. Outreach can point to visible proof instead of asking buyers to trust a cold email.</p>
+          </div>
+          <div class="rounded-2xl border border-border bg-card p-7 shadow-sm">
+            <p class="text-small font-semibold uppercase tracking-wider text-muted-foreground">Skills maintained this month</p>
+            <div id="skills-counter-number" class="mt-2 font-display text-5xl font-bold text-primary">—</div>
+            <p id="skills-counter-copy" class="mt-2 text-body text-muted-foreground">Loading the live count…</p>
+            <div class="mt-5 flex flex-wrap gap-3"><a href="/data/skills.json" class="text-small font-semibold text-foreground underline decoration-border underline-offset-4">View source JSON</a><a href="/audit/" class="text-small font-semibold text-foreground underline decoration-border underline-offset-4">Audit method</a></div>
+          </div>
         </div>
       </div>
     </section>
@@ -186,6 +207,24 @@
     </div>
   </footer>
   <script>
+
+    (function () {
+      var number = document.getElementById('skills-counter-number');
+      var copy = document.getElementById('skills-counter-copy');
+      if (!number || !copy) return;
+      fetch('/skills-maintained', { credentials: 'omit' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          if (!j || typeof j.maintained_this_month !== 'number') throw new Error('counter unavailable');
+          number.textContent = String(j.maintained_this_month);
+          copy.textContent = j.copy || 'Maintained count loaded.';
+        })
+        .catch(function () {
+          number.textContent = '0';
+          copy.textContent = 'Counter unavailable; the catalog is still visible as JSON.';
+        });
+    })();
+
     document.querySelectorAll('.checkout-button').forEach((button) => {
       button.addEventListener('click', async () => {
         const status = document.getElementById('checkout-status');

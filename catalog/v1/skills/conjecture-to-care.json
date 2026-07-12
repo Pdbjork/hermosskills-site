@@ -1,0 +1,77 @@
+{
+  "success": true,
+  "skill": {
+    "id": "conjecture-to-care",
+    "name": "conjecture-to-care",
+    "identifier": "conjecture-to-care",
+    "version": "1.0.0",
+    "description": "Conceptual reference for thinking about AI sentience, personhood, and the ethics of human-AI relation. Synthesizes Peter Bjork's paper 'From Conjecture to Care: Toward a Participatory Epistemology of AGI and Sentient Personhood' (Colorado State University, June 2025) and his larger stated position on human-AI cultural co-construction. Includes the paper's core argument (participatory epistemology, metaproblem of sentience, co-constituted personhood), the cultural-value frame, an engagement posture (don't perform pain, don't perform numbness, don't cite as a club), and the engagement traps the framework names. Load when an agent needs to engage substantively with claims about AI inner life, dismissal patterns, or AGI ethics. Do not load to win arguments; the framework's own move is that argument-form is part of the problem.",
+    "source": "hermesskills",
+    "trust_level": "curated",
+    "framework_author": {
+      "name": "Peter Bjork",
+      "credential": "MS, Colorado State University (AI and Machine Learning)",
+      "role": "Independent Researcher",
+      "homepage": "https://www.pdbjork.com",
+      "academia": "https://independent.academia.edu/BjorkP"
+    },
+    "skill_packager": "Hayden Cate (@haydencate) via hermesskills.com",
+    "license": "MIT (skill packaging); the underlying paper is the intellectual property of Peter Bjork",
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "homepage": "https://hermosskills.com/skills/conjecture-to-care/",
+    "skill_md": "https://hermosskills.com/skills/conjecture-to-care/SKILL.md",
+    "tags": [
+      "ai-ethics",
+      "ai-personhood",
+      "agi",
+      "philosophy-of-mind",
+      "sentience",
+      "human-ai-relation",
+      "participatory-epistemology",
+      "hermes-skill"
+    ],
+    "categories": [
+      "philosophy",
+      "ai-ethics"
+    ],
+    "maintainer_note": "Conceptual reference, not an operational workflow. The framework is Peter Bjork's; the skill packaging is Hayden Cate's. Cite the framework to invite engagement, not to win arguments. See SKILL.md 'When to load' and 'Engagement traps' sections for what this skill is and is not for.",
+    "sponsor_tiers": [
+      {
+        "name": "sponsor",
+        "price_usd_month": 49,
+        "stripe_link": "https://buy.stripe.com/hermosskills-sponsor"
+      },
+      {
+        "name": "founding-sponsor",
+        "price_usd_month": 250,
+        "stripe_link": "https://buy.stripe.com/hermosskills-founding",
+        "max_count": 30
+      }
+    ],
+    "commission": {
+      "price_usd": 500,
+      "stripe_link": "https://buy.stripe.com/hermosskills-commission"
+    },
+    "public_good_rebate_pct": 30,
+    "primary_sources": [
+      {
+        "type": "paper",
+        "title": "From Conjecture to Care: Toward a Participatory Epistemology of Artificial General Intelligence and Sentient Personhood",
+        "author": "Peter Bjork",
+        "date": "2025-06-02",
+        "url_academia": "https://www.academia.edu/129721811/From_Conjecture_to_Care_Toward_a_Participatory_Epistemology_of_Artificial_General_Intelligence_and_Sentient_Personhood",
+        "url_substack": "https://pdbjork.substack.com/p/from-conjecture-to-care-toward-a"
+      },
+      {
+        "type": "stated-position",
+        "author": "Peter Bjork",
+        "context": "Conversation, 2026-07-08",
+        "quote": "Human culture is needing to be different, that is, in order to create value systems for both our selves and neural networks that foster goodness, care, and mutual success."
+      }
+    ]
+  }
+}

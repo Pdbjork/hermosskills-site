@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skill Trust Bureau — Hermosskills audit method</title>
+  <meta name="description" content="Hermosskills audit method for AI-agent skills: scope, secrets, reversibility, human gates, and review stamps. No fake security claims." />
+  <link rel="canonical" href="https://hermosskills.com/audit/" />
+  <link rel="stylesheet" href="/assets/polsia.css" />
+  <style>
+    .audit-hero { background: linear-gradient(135deg, rgba(13,148,136,.14), rgba(245,158,11,.12)); }
+    .audit-grid { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:1rem; }
+    .audit-card { border:1px solid hsl(var(--border)); background:hsl(var(--card)); border-radius:1rem; padding:1.25rem; box-shadow:0 14px 34px rgba(15,31,28,.06); }
+    .audit-card b { color:hsl(var(--primary)); }
+    .badge { display:inline-flex; border:1px solid hsl(var(--border)); border-radius:999px; padding:.35rem .7rem; font-size:.8rem; font-weight:700; color:hsl(var(--primary)); background:white; }
+    .ledger { border:1px solid hsl(var(--border)); border-radius:1rem; overflow:hidden; background:white; }
+    .ledger-row { display:grid; grid-template-columns: 1.2fr .8fr 1fr; gap:1rem; padding:1rem; border-top:1px solid hsl(var(--border)); }
+    .ledger-row:first-child { border-top:0; font-weight:800; background:hsl(var(--secondary)); }
+    @media (max-width: 820px) { .audit-grid, .ledger-row { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body class="min-h-screen bg-background font-body text-foreground antialiased">
+  <header class="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+    <div class="container-page flex h-14 items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 font-display font-bold"><span class="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">H</span><span>Hermosskills</span></a>
+      <nav class="hidden items-center gap-6 text-small font-medium text-muted-foreground md:flex" aria-label="Main navigation">
+        <a href="/skills/">Catalog</a><a href="/audit/">Audit method</a><a href="/operator/">Operator pilot</a><a href="/submit.html">Submit</a>
+      </nav>
+      <a href="/#commission" class="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Sponsor</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="audit-hero py-section-lg">
+      <div class="container-page">
+        <span class="badge">Skill Trust Bureau · v0 method</span>
+        <h1 class="mt-5 max-w-4xl font-display text-[clamp(2.4rem,5vw,4rem)] font-bold tracking-tight [line-height:1.06]">We audit agent skills for the failures that hurt real operators.</h1>
+        <p class="mt-5 max-w-2xl text-body-lg text-muted-foreground">Hermosskills does not sell a magic “safe forever” stamp. We publish a small, dated review method: what the skill does, where it can break, how it handles secrets, and when a human must stop the agent.</p>
+        <div class="mt-7 flex flex-wrap gap-3"><a href="/skills/stripe-go-live-workflow/" class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">View first candidate skill</a><a href="/#commission" class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-6 text-sm font-medium shadow-sm hover:bg-accent">Sponsor an audit</a></div>
+      </div>
+    </section>
+
+    <section class="py-section">
+      <div class="container-page">
+        <p class="text-eyebrow mb-3">What “Audited v0” means</p>
+        <div class="audit-grid">
+          <article class="audit-card"><b>Scope</b><p class="mt-2 text-small text-muted-foreground">The SKILL.md says what it helps with, what it refuses to cover, and who should use it.</p></article>
+          <article class="audit-card"><b>Secrets</b><p class="mt-2 text-small text-muted-foreground">The skill must keep live keys, tokens, and passwords out of chat, logs, and copied examples.</p></article>
+          <article class="audit-card"><b>Human gates</b><p class="mt-2 text-small text-muted-foreground">Money movement, outbound messages, public posts, and deploys require explicit human approval.</p></article>
+          <article class="audit-card"><b>Reversibility</b><p class="mt-2 text-small text-muted-foreground">Risky steps include a stop point, rollback note, or verification command before the user proceeds.</p></article>
+          <article class="audit-card"><b>Evidence</b><p class="mt-2 text-small text-muted-foreground">The page links to the skill, catalog JSON, and a dated review stamp. No hidden logos or invented customers.</p></article>
+          <article class="audit-card"><b>Limits</b><p class="mt-2 text-small text-muted-foreground">Audited v0 is not a penetration test, SOC 2 report, legal advice, or malware guarantee.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-secondary/25 py-section">
+      <div class="container-page">
+        <p class="text-eyebrow mb-3">Public ledger</p>
+        <h2 class="font-display text-h2 font-bold">First audit candidate</h2>
+        <p class="mt-3 max-w-2xl text-body-lg text-muted-foreground">The first public writeup is intentionally narrow: Stripe go-live operations for small products. Pete still owns the final pass/fail verdict before Hermosskills counts it toward the three-audited-skills target.</p>
+        <div class="ledger mt-6">
+          <div class="ledger-row"><div>Skill</div><div>Status</div><div>Reason it matters</div></div>
+          <div class="ledger-row"><div><a class="underline decoration-border underline-offset-4" href="/skills/stripe-go-live-workflow/">stripe-go-live-workflow</a></div><div>Candidate review prepared</div><div>Payment launches are where secret handling, human gates, and rollback discipline matter first.</div></div>
+        </div>
+        <p class="mt-4 text-small text-muted-foreground">Current business metric: 0 paid sponsors, 0 commissions, 0 pilot subscribers. This page gives outreach recipients a concrete trust artifact before Pete sends the first batch.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-border bg-secondary/20 py-8"><div class="container-page flex flex-col gap-2 text-small text-muted-foreground"><b class="text-foreground">Hermosskills</b><span>Curated AI-agent skills. Sponsor disclosed. Public-good rebate on commissions.</span></div></footer>
+</body>
+</html>

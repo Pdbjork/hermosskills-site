@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Operator-as-a-Service — Human-gated AI ops for founders | Hermosskills</title>
+  <meta name="description" content="A 4-week pilot: an AI operator that ships work on your live business — and never emails, posts, or deploys without your approval. Measure real fit before you buy." />
+  <link rel="canonical" href="https://hermosskills.com/operator/" />
+  <meta name="theme-color" content="#0f766e" />
+  <meta property="og:title" content="Operator-as-a-Service — Human-gated AI ops" />
+  <meta property="og:description" content="Ship daily. Approve every outbound. 4-week pilot for founders with a live product and no ops bandwidth." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://hermosskills.com/operator/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --ink: #0f1f1c;
+      --muted: #5a6b66;
+      --paper: #f7fbfa;
+      --card: #ffffff;
+      --line: #d5e3df;
+      --teal: #0f766e;
+      --teal-dark: #115e59;
+      --teal-soft: #ccfbf1;
+      --amber: #f59e0b;
+      --amber-soft: #fef3c7;
+      --danger: #b91c1c;
+      --shadow: 0 24px 60px rgba(15, 31, 28, .12);
+      --radius: 20px;
+      --max: 1120px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(15, 118, 110, .14), transparent 32rem),
+        radial-gradient(circle at 90% 10%, rgba(245, 158, 11, .12), transparent 28rem),
+        linear-gradient(180deg, #f3faf8 0%, var(--paper) 45%, #fff 100%);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .skip {
+      position: absolute; left: 1rem; top: -4rem; background: var(--ink); color: #fff;
+      padding: .75rem 1rem; z-index: 50;
+    }
+    .skip:focus { top: 1rem; }
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(16px);
+      background: rgba(247, 251, 250, .9);
+      border-bottom: 1px solid rgba(213, 227, 223, .85);
+    }
+    .nav, .wrap { width: min(var(--max), calc(100% - 2rem)); margin: 0 auto; }
+    .nav {
+      min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: .65rem; font-weight: 800;
+      letter-spacing: -.03em; text-decoration: none;
+    }
+    .mark {
+      width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
+      background: var(--teal); color: #fff; font-weight: 800; font-size: .95rem;
+    }
+    .nav-links { display: flex; gap: 1.1rem; align-items: center; flex-wrap: wrap; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: .95rem; }
+    .nav-links a:hover { color: var(--ink); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
+      min-height: 48px; padding: .85rem 1.15rem; border-radius: 999px; border: 1px solid transparent;
+      font-weight: 760; text-decoration: none; cursor: pointer; font: inherit;
+    }
+    .btn-primary { background: var(--teal); color: #fff; box-shadow: 0 14px 28px rgba(15, 118, 110, .25); }
+    .btn-primary:hover { background: var(--teal-dark); }
+    .btn-secondary { background: #fff; border-color: var(--line); color: var(--ink); }
+    .btn-secondary:hover { border-color: var(--teal); }
+    .btn-block { width: 100%; }
+    main { padding: 3.5rem 0 6rem; }
+    .hero {
+      display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+      gap: clamp(1.75rem, 5vw, 3.5rem); align-items: start;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .45rem;
+      background: var(--teal-soft); color: var(--teal-dark); border: 1px solid rgba(15, 118, 110, .18);
+      border-radius: 999px; padding: .42rem .75rem; font-size: .82rem; font-weight: 800;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    h1, h2, h3 { margin: 0; letter-spacing: -.04em; line-height: 1.08; }
+    h1 { margin-top: 1rem; font-size: clamp(2.4rem, 6.2vw, 4.4rem); max-width: 14ch; }
+    .lede { margin: 1.15rem 0 0; color: var(--muted); font-size: clamp(1.08rem, 2vw, 1.28rem); max-width: 38rem; }
+    .hero-points { margin: 1.5rem 0 0; padding: 0; list-style: none; display: grid; gap: .65rem; }
+    .hero-points li {
+      display: flex; gap: .65rem; align-items: flex-start;
+      background: rgba(255,255,255,.72); border: 1px solid var(--line); border-radius: 14px; padding: .85rem 1rem;
+    }
+    .hero-points li strong { display: block; color: var(--ink); }
+    .check {
+      flex: 0 0 auto; width: 22px; height: 22px; border-radius: 999px; background: var(--teal);
+      color: #fff; display: grid; place-items: center; font-size: .75rem; font-weight: 900; margin-top: .1rem;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: clamp(1.15rem, 3vw, 1.65rem);
+    }
+    .card h2 { font-size: 1.35rem; margin-bottom: .35rem; }
+    .muted { color: var(--muted); }
+    .form { display: grid; gap: .85rem; margin-top: 1rem; }
+    .field { display: grid; gap: .35rem; }
+    .field label { font-weight: 740; font-size: .95rem; }
+    .field span.hint { color: var(--muted); font-size: .86rem; }
+    input, select, textarea {
+      width: 100%; border: 1px solid var(--line); border-radius: 14px; padding: .85rem 1rem;
+      background: #fff; color: var(--ink); font: inherit;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(15, 118, 110, .28); border-color: var(--teal);
+    }
+    textarea { min-height: 88px; resize: vertical; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
+    .score-bar {
+      margin-top: .25rem; padding: .85rem 1rem; border-radius: 14px;
+      background: var(--teal-soft); border: 1px solid rgba(15, 118, 110, .15);
+      display: flex; justify-content: space-between; gap: .75rem; align-items: center; flex-wrap: wrap;
+    }
+    .score-bar strong { color: var(--teal-dark); font-size: 1.05rem; }
+    .consent { display: flex; gap: .55rem; align-items: flex-start; font-size: .92rem; color: var(--muted); }
+    .consent input { width: auto; margin-top: .25rem; }
+    .status {
+      display: none; padding: 1rem; border-radius: 14px; border: 1px solid var(--line); background: #fff;
+    }
+    .status.show { display: block; }
+    .status.ok { border-color: rgba(15, 118, 110, .3); background: rgba(204, 251, 241, .55); }
+    .status.err { border-color: rgba(185, 28, 28, .28); background: rgba(254, 226, 226, .65); color: #7f1d1d; }
+    section.band { margin-top: 4.5rem; }
+    .section-head { max-width: 40rem; margin-bottom: 1.5rem; }
+    .section-head h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+    .section-head p { margin: .75rem 0 0; color: var(--muted); }
+    .cols-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .cols-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .mini {
+      background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 1.15rem 1.2rem;
+    }
+    .mini h3 { font-size: 1.15rem; margin-bottom: .45rem; }
+    .mini p { margin: 0; color: var(--muted); font-size: .98rem; }
+    .steps { counter-reset: step; display: grid; gap: .85rem; }
+    .steps li {
+      list-style: none; counter-increment: step; display: grid; grid-template-columns: auto 1fr; gap: .85rem;
+      background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 1rem 1.1rem;
+    }
+    .steps li::before {
+      content: counter(step); width: 32px; height: 32px; border-radius: 999px;
+      background: var(--teal); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: .9rem;
+    }
+    .pricing { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
+    .price {
+      background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 1.25rem;
+      display: flex; flex-direction: column; gap: .75rem;
+    }
+    .price.featured {
+      border-color: var(--teal); box-shadow: 0 18px 40px rgba(15, 118, 110, .16);
+      position: relative; background: linear-gradient(180deg, #f0fdfa 0%, #fff 40%);
+    }
+    .price .tag {
+      align-self: flex-start; background: var(--amber-soft); color: #92400e;
+      font-size: .78rem; font-weight: 800; padding: .3rem .55rem; border-radius: 999px;
+    }
+    .price .amount { font-size: 2rem; font-weight: 860; letter-spacing: -.04em; }
+    .price ul { margin: 0; padding: 0; list-style: none; display: grid; gap: .45rem; color: var(--muted); flex: 1; }
+    .price ul li::before { content: "→ "; color: var(--teal); font-weight: 800; }
+    .not-list { margin: 0; padding-left: 1.1rem; color: var(--muted); }
+    .proof-bar {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin-top: 1.25rem;
+    }
+    .proof-bar div {
+      background: rgba(255,255,255,.8); border: 1px solid var(--line); border-radius: 14px; padding: .9rem;
+      text-align: center;
+    }
+    .proof-bar strong { display: block; font-size: 1.15rem; letter-spacing: -.03em; }
+    .proof-bar span { color: var(--muted); font-size: .86rem; }
+    .note {
+      margin-top: 1rem; padding: 1rem; border-radius: 14px; background: var(--amber-soft);
+      border: 1px solid rgba(245, 158, 11, .35); color: #78350f; font-size: .95rem;
+    }
+    footer {
+      border-top: 1px solid var(--line); padding: 2rem 0 5.5rem; color: var(--muted); font-size: .95rem;
+    }
+    .footer-row { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
+    .footer-row a { color: var(--teal-dark); font-weight: 650; }
+    .sticky-cta {
+      display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 45;
+      padding: .75rem 1rem calc(.75rem + env(safe-area-inset-bottom));
+      background: rgba(247, 251, 250, .96); border-top: 1px solid var(--line);
+      box-shadow: 0 -10px 30px rgba(15, 31, 28, .08);
+    }
+    .sticky-cta .inner { width: min(var(--max), calc(100% - 0px)); margin: 0 auto; display: flex; gap: .75rem; align-items: center; justify-content: space-between; }
+    .sticky-cta p { margin: 0; font-weight: 700; font-size: .95rem; }
+    @media (max-width: 900px) {
+      .hero, .cols-3, .cols-2, .pricing, .proof-bar, .grid-2 { grid-template-columns: 1fr; }
+      .nav-links .hide-sm { display: none; }
+      .sticky-cta { display: block; }
+      main { padding-bottom: 7.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#apply">Skip to application</a>
+  <header>
+    <div class="nav">
+      <a class="brand" href="https://hermosskills.com/" aria-label="Hermosskills home">
+        <span class="mark">H</span>
+        <span>Hermosskills <span class="muted" style="font-weight:650;font-size:.9rem">· Operator</span></span>
+      </a>
+      <div class="nav-links">
+        <a class="hide-sm" href="#how">How it works</a>
+        <a class="hide-sm" href="#pricing">Pricing</a>
+        <a class="hide-sm" href="#not">Not for you if</a>
+        <a class="btn btn-primary" href="#apply">Apply for pilot</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div>
+        <span class="eyebrow">BO-2 · 4-week pilot · human-gated</span>
+        <h1>An AI operator that never acts without you.</h1>
+        <p class="lede">
+          You already have a live product. You don’t have ops bandwidth.
+          We run a daily agent operator on <em>your</em> business — shipping work,
+          drafting outreach, reporting metrics — and every external action waits on your approval.
+        </p>
+        <ul class="hero-points">
+          <li>
+            <span class="check">✓</span>
+            <div><strong>Ship every day (async)</strong><span class="muted"> Measurable work on your sites, funnels, and checklists — not strategy theater.</span></div>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <div><strong>Approve every outbound</strong><span class="muted"> Emails, posts, deploys, DMs: queued with a full preview. You say yes, no, or yes-run.</span></div>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <div><strong>Prove interest before you buy</strong><span class="muted"> This page is a fit application — not a hard sell. We score readiness and only book if it fits.</span></div>
+          </li>
+        </ul>
+        <div class="proof-bar" aria-label="Proof points">
+          <div><strong id="lead-count">3</strong><span>founding applications</span></div>
+          <div><strong id="avg-fit">81</strong><span>avg fit score</span></div>
+          <div><strong>Approval queue</strong><span>audit log included</span></div>
+          <div><strong>Consent-first</strong><span>no unattended sends</span></div>
+        </div>
+        <p class="note">
+          <strong>What this is not:</strong> a “set and forget AI employee,” a ChatGPT wrapper, or guaranteed revenue.
+          It’s a human-gated operator pilot for founders who will actually approve work.
+        </p>
+      </div>
+
+      <aside class="card" id="apply">
+        <h2>Apply for a founding pilot</h2>
+        <p class="muted" style="margin:0">
+          2-minute form. We use your answers to score fit (not just collect emails).
+          High-fit applicants get a 20-minute call invitation.
+        </p>
+        <form class="form" id="pilot-form" novalidate>
+          <div class="grid-2">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" autocomplete="name" required placeholder="Alex Founder" />
+            </div>
+            <div class="field">
+              <label for="email">Work email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@company.com" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="url">Live product / site URL</label>
+            <input id="url" name="url" type="url" required placeholder="https://…" />
+            <span class="hint">Must be live. Idea-stage without a surface is a no-fit.</span>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="stripe">Payments live?</label>
+              <select id="stripe" name="stripe" required>
+                <option value="">Select…</option>
+                <option value="stripe_live">Yes — Stripe (or similar) live</option>
+                <option value="checkout_other">Yes — other checkout</option>
+                <option value="not_yet">Not yet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="budget">Pilot budget readiness</label>
+              <select id="budget" name="budget" required>
+                <option value="">Select…</option>
+                <option value="1500">Can do $1,500 / 4 weeks</option>
+                <option value="2500">Can do $2,500 / 4 weeks (standard)</option>
+                <option value="5000">Can do $5,000 / 4 weeks</option>
+                <option value="unsure">Need to discuss</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="bottleneck">Biggest bottleneck right now</label>
+            <select id="bottleneck" name="bottleneck" required>
+              <option value="">Select…</option>
+              <option value="distribution">Distribution / no customers yet</option>
+              <option value="ops">Ops / shipping / follow-through</option>
+              <option value="funnel">Funnel / conversion</option>
+              <option value="skills">Agent skills / automation quality</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="hours">Hours you can spend approving work / week</label>
+            <select id="hours" name="hours" required>
+              <option value="">Select…</option>
+              <option value="1">~1 hour</option>
+              <option value="2-3">2–3 hours</option>
+              <option value="4+">4+ hours</option>
+              <option value="0">I want zero involvement</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="goal">What must be true in 4 weeks?</label>
+            <textarea id="goal" name="goal" required maxlength="600" placeholder="e.g. first 5 customers, clean paid funnel, weekly metrics I trust…"></textarea>
+          </div>
+          <div class="score-bar" aria-live="polite">
+            <span class="muted">Fit score (updates as you answer)</span>
+            <strong id="fit-score">— / 100</strong>
+          </div>
+          <label class="consent">
+            <input type="checkbox" id="consent" name="consent" required />
+            <span>I understand this is a fit application, not a purchase. You’ll only email me about this pilot. No spam lists.</span>
+          </label>
+          <button class="btn btn-primary btn-block" type="submit" id="submit-btn">Submit application</button>
+          <p class="muted" style="margin:0;font-size:.88rem;text-align:center">
+            Prefer email? Write <a href="mailto:team@hermosskills.com?subject=Operator%20pilot%20application">team@hermosskills.com</a>
+          </p>
+          <div class="status" id="form-status" role="status"></div>
+        </form>
+      </aside>
+    </div>
+
+    <section class="band wrap" id="how">
+      <div class="section-head">
+        <h2>How the pilot works</h2>
+        <p>Same pattern we use on our own P1 businesses: autonomous prep, human gate on anything external.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <div>
+            <strong>Fit call (20 min)</strong>
+            <p class="muted" style="margin:.35rem 0 0">One income surface. Clear success metric. Go / no-go.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Daily operator work</strong>
+            <p class="muted" style="margin:.35rem 0 0">Ship or prepare: funnel fixes, drafts, checklists, reports on your stack.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>You approve outbounds</strong>
+            <p class="muted" style="margin:.35rem 0 0">Full preview queue. Yes / no / yes-run. Nothing leaves without you.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Weekly metrics + handoff</strong>
+            <p class="muted" style="margin:.35rem 0 0">Revenue signals, funnel health, blockers, kill list. You keep the system.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="band wrap" id="includes">
+      <div class="section-head">
+        <h2>Included vs excluded</h2>
+        <p>Clarity beats hype. Here’s the boundary.</p>
+      </div>
+      <div class="cols-2">
+        <div class="mini">
+          <h3>Included</h3>
+          <ul class="not-list">
+            <li>Daily async operator work on one primary surface</li>
+            <li>Approval queue for external actions</li>
+            <li>Weekly metrics report</li>
+            <li>End-of-pilot written handoff</li>
+            <li>Optional light secondary surface on Standard+</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>Not included</h3>
+          <ul class="not-list">
+            <li>Unattended email / DM / social blasts</li>
+            <li>Legal, tax, or banking advice</li>
+            <li>Guaranteed revenue or paid ads spend</li>
+            <li>Building a brand-new product from zero idea</li>
+            <li>“Set and forget” full autonomy</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="band wrap" id="pricing">
+      <div class="section-head">
+        <h2>Pilot pricing</h2>
+        <p>Founding pilot rates. Pick the intensity that matches how much access and sync you want.</p>
+      </div>
+      <div class="pricing">
+        <div class="price">
+          <div class="amount">$1,500</div>
+          <div class="muted">4 weeks · Focused</div>
+          <ul>
+            <li>One business surface</li>
+            <li>Async only</li>
+            <li>Weekly written report</li>
+          </ul>
+          <a class="btn btn-secondary" href="#apply" data-plan="1500">Apply at this level</a>
+        </div>
+        <div class="price featured">
+          <span class="tag">Recommended</span>
+          <div class="amount">$2,500</div>
+          <div class="muted">4 weeks · Standard</div>
+          <ul>
+            <li>Primary + light secondary</li>
+            <li>Weekly sync call</li>
+            <li>Priority approval queue</li>
+            <li>Full handoff pack</li>
+          </ul>
+          <a class="btn btn-primary" href="#apply" data-plan="2500">Apply at this level</a>
+        </div>
+        <div class="price">
+          <div class="amount">$5,000</div>
+          <div class="muted">4 weeks · Intensive</div>
+          <ul>
+            <li>Two surfaces</li>
+            <li>2× weekly sync</li>
+            <li>Highest priority queue</li>
+          </ul>
+          <a class="btn btn-secondary" href="#apply" data-plan="5000">Apply at this level</a>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:1rem;max-width:40rem">
+        Payment after fit call via invoice or Stripe link. If week 1 ships nothing material, unused weeks are refundable under pilot policy.
+      </p>
+    </section>
+
+    <section class="band wrap" id="not">
+      <div class="section-head">
+        <h2>Not a fit if…</h2>
+        <p>We’d rather score you out than waste a call.</p>
+      </div>
+      <div class="cols-3">
+        <div class="mini">
+          <h3>No live surface</h3>
+          <p>You’re still at pure idea stage with nothing online to operate.</p>
+        </div>
+        <div class="mini">
+          <h3>Zero involvement</h3>
+          <p>You want the agent to email and post without approvals. That’s a hard no.</p>
+        </div>
+        <div class="mini">
+          <h3>Regulated banking</h3>
+          <p>Money transmission, payroll cards, KYC products — out of scope for this pilot.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band wrap" id="trust">
+      <div class="section-head">
+        <h2>Why Hermosskills</h2>
+        <p>Same team building a trust-first agent-skills marketplace — we underwrite capabilities and run operators under human approval.</p>
+      </div>
+      <div class="cols-3">
+        <div class="mini">
+          <h3>Skill Trust Bureau</h3>
+          <p>Curated, reviewed agent skills — not an unmoderated dump of plugins.</p>
+        </div>
+        <div class="mini">
+          <h3>Approval by design</h3>
+          <p>Outbound is a product feature, not a promise we forget under pressure.</p>
+        </div>
+        <div class="mini">
+          <h3>Honest metrics</h3>
+          <p>We report $0 when it’s $0. Same standard on your pilot.</p>
+        </div>
+      </div>
+      <div style="margin-top:1.25rem">
+        <a class="btn btn-secondary" href="https://hermosskills.com/">Explore the skills marketplace</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div>© <span id="y"></span> Hermosskills · Operator-as-a-Service pilot</div>
+      <div>
+        <a href="https://hermosskills.com/privacy/">Privacy</a>
+        ·
+        <a href="https://hermosskills.com/terms/">Terms</a>
+        ·
+        <a href="mailto:team@hermosskills.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" aria-hidden="false">
+    <div class="inner">
+      <p>4-week human-gated operator pilot</p>
+      <a class="btn btn-primary" href="#apply">Apply</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const form = document.getElementById('pilot-form');
+      const statusEl = document.getElementById('form-status');
+      const scoreEl = document.getElementById('fit-score');
+      const submitBtn = document.getElementById('submit-btn');
+      const leadCountEl = document.getElementById('lead-count');
+      const avgFitEl = document.getElementById('avg-fit');
+      document.getElementById('y').textContent = new Date().getFullYear();
+
+      fetch('/api/operator-interest/stats', { credentials: 'omit' })
+        .then((res) => res.ok ? res.json() : null)
+        .then((stats) => {
+          if (!stats || !stats.ok) return;
+          if (leadCountEl && typeof stats.count === 'number') leadCountEl.textContent = String(stats.count);
+          if (avgFitEl && typeof stats.avg_fit_score === 'number') avgFitEl.textContent = String(stats.avg_fit_score);
+        })
+        .catch(() => {});
+
+      // UTM capture
+      const params = new URLSearchParams(location.search);
+      const utm = {
+        source: params.get('utm_source') || '',
+        medium: params.get('utm_medium') || '',
+        campaign: params.get('utm_campaign') || '',
+        content: params.get('utm_content') || ''
+      };
+
+      function scoreFit(data) {
+        let s = 20; // base for completing form intent
+        if (data.url && /^https?:\/\//i.test(data.url)) s += 15;
+        if (data.stripe === 'stripe_live') s += 25;
+        else if (data.stripe === 'checkout_other') s += 18;
+        else if (data.stripe === 'not_yet') s += 5;
+        if (data.budget === '5000') s += 20;
+        else if (data.budget === '2500') s += 18;
+        else if (data.budget === '1500') s += 12;
+        else if (data.budget === 'unsure') s += 4;
+        if (data.hours === '2-3' || data.hours === '4+') s += 15;
+        else if (data.hours === '1') s += 10;
+        else if (data.hours === '0') s -= 30;
+        if (['distribution', 'ops', 'funnel'].includes(data.bottleneck)) s += 10;
+        if ((data.goal || '').trim().length >= 40) s += 10;
+        return Math.max(0, Math.min(100, s));
+      }
+
+      function band(score) {
+        if (score >= 75) return 'Strong fit — priority review';
+        if (score >= 55) return 'Possible fit — needs call';
+        if (score >= 35) return 'Weak fit — maybe later';
+        return 'Poor fit — likely decline';
+      }
+
+      function collect() {
+        return {
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          url: form.url.value.trim(),
+          stripe: form.stripe.value,
+          budget: form.budget.value,
+          bottleneck: form.bottleneck.value,
+          hours: form.hours.value,
+          goal: form.goal.value.trim(),
+          consent: form.consent.checked,
+          utm,
+          page: location.href,
+          ts: new Date().toISOString()
+        };
+      }
+
+      function refreshScore() {
+        const data = collect();
+        const s = scoreFit(data);
+        scoreEl.textContent = Number.isFinite(s) ? s + ' / 100 · ' + band(s) : '— / 100';
+        return s;
+      }
+
+      ['stripe', 'budget', 'bottleneck', 'hours', 'goal', 'url'].forEach((id) => {
+        const el = form.elements[id];
+        if (el) el.addEventListener('change', refreshScore);
+        if (el) el.addEventListener('input', refreshScore);
+      });
+
+      document.querySelectorAll('[data-plan]').forEach((a) => {
+        a.addEventListener('click', () => {
+          const v = a.getAttribute('data-plan');
+          if (form.budget && ['1500', '2500', '5000'].includes(v)) {
+            form.budget.value = v;
+            refreshScore();
+          }
+        });
+      });
+
+      function showStatus(ok, msg) {
+        statusEl.className = 'status show ' + (ok ? 'ok' : 'err');
+        statusEl.textContent = msg;
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = collect();
+        if (!data.consent) {
+          showStatus(false, 'Please confirm consent to continue.');
+          return;
+        }
+        if (!data.email || !/@/.test(data.email)) {
+          showStatus(false, 'Enter a valid email.');
+          return;
+        }
+        const fit_score = scoreFit(data);
+        data.fit_score = fit_score;
+        data.fit_band = band(fit_score);
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+
+        // Persist locally for Pete debugging
+        try {
+          const key = 'oaas_pilot_leads';
+          const prev = JSON.parse(localStorage.getItem(key) || '[]');
+          prev.push(data);
+          localStorage.setItem(key, JSON.stringify(prev.slice(-50)));
+        } catch (_) {}
+
+        let apiOk = false;
+        try {
+          const res = await fetch('/api/operator-interest', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(data)
+          });
+          if (res.ok) {
+            apiOk = true;
+            const body = await res.json().catch(() => ({}));
+            showStatus(true, body.message || 'Application received. We’ll reply if there’s a fit.');
+            form.reset();
+            refreshScore();
+            // Optional thank-you redirect
+            setTimeout(() => { location.href = '/operator/thanks.html?score=' + fit_score; }, 900);
+          } else {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.error || ('HTTP ' + res.status));
+          }
+        } catch (err) {
+          // Fallback: mailto so interest is never lost
+          const subject = encodeURIComponent('Operator pilot application — score ' + fit_score);
+          const body = encodeURIComponent(
+            Object.entries(data).map(([k, v]) => k + ': ' + (typeof v === 'object' ? JSON.stringify(v) : v)).join('\n')
+          );
+          showStatus(
+            true,
+            'Saved locally. Opening email fallback so we still get your application… (' + (err.message || 'API offline') + ')'
+          );
+          window.location.href = 'mailto:team@hermosskills.com?subject=' + subject + '&body=' + body;
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit application';
+        }
+
+        // Analytics hook
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'oaas_pilot_apply', fit_score: fit_score, api_ok: apiOk });
+      });
+
+      refreshScore();
+    })();
+  </script>
+</body>
+</html>

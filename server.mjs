@@ -49,6 +49,72 @@ app.get('/api/health', (_req, res) => {
   res.json({ ok: true, stripeConfigured: Boolean(stripe), publicBaseUrl });
 });
 
+
+app.post('/api/operator-interest', async (req, res) => {
+  try {
+    const body = req.body || {};
+    const email = String(body.email || '').trim().toLowerCase();
+    const name = String(body.name || '').trim().slice(0, 120);
+    const url = String(body.url || '').trim().slice(0, 500);
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ error: 'Valid email required.' });
+    }
+    if (!url || !/^https?:\/\//i.test(url)) {
+      return res.status(400).json({ error: 'Live https URL required.' });
+    }
+    if (!body.consent) {
+      return res.status(400).json({ error: 'Consent required.' });
+    }
+    const lead = {
+      id: `oaas_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
+      received_at: new Date().toISOString(),
+      name,
+      email,
+      url,
+      stripe: String(body.stripe || '').slice(0, 40),
+      budget: String(body.budget || '').slice(0, 20),
+      bottleneck: String(body.bottleneck || '').slice(0, 40),
+      hours: String(body.hours || '').slice(0, 20),
+      goal: String(body.goal || '').trim().slice(0, 600),
+      fit_score: Number(body.fit_score) || null,
+      fit_band: String(body.fit_band || '').slice(0, 80),
+      utm: body.utm && typeof body.utm === 'object' ? body.utm : {},
+      page: String(body.page || '').slice(0, 500),
+      ip: req.headers['x-forwarded-for'] || req.socket?.remoteAddress || '',
+      ua: String(req.headers['user-agent'] || '').slice(0, 240)
+    };
+    const dir = '/var/lib/hermosskills';
+    await fs.mkdir(dir, { recursive: true });
+    const file = path.join(dir, 'operator-leads.jsonl');
+    await fs.appendFile(file, JSON.stringify(lead) + '\n', 'utf8');
+    res.json({
+      ok: true,
+      id: lead.id,
+      fit_score: lead.fit_score,
+      message: 'Application received. We review fit scores and reply only when a pilot makes sense.'
+    });
+  } catch (err) {
+    console.error('operator-interest', err);
+    res.status(500).json({ error: 'Could not save application. Email team@hermosskills.com.' });
+  }
+});
+
+app.get('/api/operator-interest/stats', async (_req, res) => {
+  try {
+    const file = path.join('/var/lib/hermosskills', 'operator-leads.jsonl');
+    let text = '';
+    try { text = await fs.readFile(file, 'utf8'); } catch { /* empty */ }
+    const lines = text.split('\n').filter(Boolean);
+    const scores = lines.map((l) => {
+      try { return JSON.parse(l).fit_score; } catch { return null; }
+    }).filter((n) => typeof n === 'number');
+    const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+    res.json({ ok: true, count: lines.length, avg_fit_score: avg });
+  } catch (err) {
+    res.status(500).json({ error: 'stats unavailable' });
+  }
+});
+
 app.post('/api/create-checkout-session', async (req, res) => {
   try {
     if (!stripe) return res.status(503).json({ error: 'Secure checkout is temporarily unavailable. Please email team@hermosskills.com and we will help.' });
