@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hermosskills sponsor brief — fund maintained AI-agent skills</title>
+  <meta name="description" content="A one-page sponsor brief for Hermosskills: fund maintained AI-agent skills, see the audit method, and choose a transparent sponsor tier." />
+  <link rel="canonical" href="https://hermosskills.com/sponsor/" />
+  <link rel="stylesheet" href="/assets/polsia.css" />
+  <style>
+    .brief-hero { background: linear-gradient(135deg, rgba(13,148,136,.14), rgba(245,158,11,.11)); }
+    .brief-grid { display:grid; grid-template-columns: 1.05fr .95fr; gap:1.25rem; align-items:start; }
+    .brief-card { border:1px solid hsl(var(--border)); background:hsl(var(--card)); border-radius:1rem; padding:1.25rem; box-shadow:0 14px 34px rgba(15,31,28,.06); }
+    .brief-card h3 { margin:0 0 .5rem; font-size:1.05rem; }
+    .brief-card p, .brief-card li { color:hsl(var(--muted-foreground)); }
+    .brief-list { margin:0; padding-left:1.1rem; }
+    .tier { display:flex; justify-content:space-between; gap:1rem; border-top:1px solid hsl(var(--border)); padding:1rem 0; }
+    .tier:first-child { border-top:0; padding-top:0; }
+    .price { font-weight:800; color:hsl(var(--primary)); white-space:nowrap; }
+    .badge { display:inline-flex; border:1px solid hsl(var(--border)); border-radius:999px; padding:.35rem .7rem; font-size:.8rem; font-weight:700; color:hsl(var(--primary)); background:white; }
+    @media (max-width: 860px) { .brief-grid { grid-template-columns:1fr; } .tier { flex-direction:column; } }
+  </style>
+</head>
+<body class="min-h-screen bg-background font-body text-foreground antialiased">
+  <header class="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+    <div class="container-page flex h-14 items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 font-display font-bold"><span class="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">H</span><span>Hermosskills</span></a>
+      <nav class="hidden items-center gap-6 text-small font-medium text-muted-foreground md:flex" aria-label="Main navigation">
+        <a href="/skills/">Catalog</a><a href="/audit/">Audit method</a><a href="/operator/">Operator pilot</a><a href="/submit.html">Submit</a>
+      </nav>
+      <a href="/#commission" class="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Sponsor</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="brief-hero py-section-lg">
+      <div class="container-page">
+        <span class="badge">One-page editorial pitch</span>
+        <h1 class="mt-5 max-w-4xl font-display text-[clamp(2.35rem,5vw,3.9rem)] font-bold tracking-tight [line-height:1.06]">Fund the agent skills people will trust enough to use.</h1>
+        <p class="mt-5 max-w-2xl text-body-lg text-muted-foreground">Hermosskills is a curated marketplace for AI-agent skills. Sponsors fund maintenance, review, and public documentation. Buyers see the sponsor relationship before they install or commission anything.</p>
+        <div class="mt-7 flex flex-wrap gap-3"><a href="/#commission" class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Choose a sponsor tier</a><a href="/audit/" class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-6 text-sm font-medium shadow-sm hover:bg-accent">Read the audit method</a></div>
+      </div>
+    </section>
+
+    <section class="py-section">
+      <div class="container-page brief-grid">
+        <article class="brief-card">
+          <h2 class="font-display text-h2 font-bold">Why this exists</h2>
+          <p class="mt-4 text-body-lg text-muted-foreground">Agent teams keep reusing small operational skills: checkout launch checklists, domain checks, safety gates, browser QA, and deployment runbooks. The tools work only if someone maintains the instructions, tests the failure paths, and names the human stop points.</p>
+          <p class="mt-4 text-body-lg text-muted-foreground">Most marketplaces reward volume. Hermosskills rewards maintained, reviewed, explainable skills.</p>
+        </article>
+
+        <aside class="brief-card">
+          <h2 class="font-display text-h3 font-bold">Sponsor options</h2>
+          <div class="mt-4">
+            <div class="tier"><div><strong>Skill Sponsor</strong><p class="mt-1 text-small">Fund one public skill’s maintenance notes and review queue.</p></div><div class="price">$49/mo</div></div>
+            <div class="tier"><div><strong>Founding Sponsor</strong><p class="mt-1 text-small">Support the opening catalog, audit method, and public-good rebate model.</p></div><div class="price">$250/mo</div></div>
+            <div class="tier"><div><strong>Custom Commission</strong><p class="mt-1 text-small">Scope a new skill, integration, or review package.</p></div><div class="price">$500 deposit</div></div>
+          </div>
+          <a href="/#commission" class="mt-5 inline-flex h-10 w-full items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Open secure checkout</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="bg-secondary/25 py-section">
+      <div class="container-page brief-grid">
+        <article class="brief-card">
+          <h3>What a sponsor funds</h3>
+          <ul class="brief-list">
+            <li>Dated maintenance on SKILL.md files and catalog JSON.</li>
+            <li>Human review for scope, secrets, reversibility, and human gates.</li>
+            <li>Plain-English notes about what the skill can and cannot do.</li>
+            <li>Disclosure of sponsor relationships in the catalog.</li>
+          </ul>
+        </article>
+        <article class="brief-card">
+          <h3>What we will not claim</h3>
+          <ul class="brief-list">
+            <li>No fake logos, invented customers, or hidden placements.</li>
+            <li>No “safe forever” security stamp.</li>
+            <li>No unattended money movement, public posting, email, or deployment.</li>
+            <li>No legal, tax, banking, or compliance advice.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="py-section">
+      <div class="container-page brief-grid">
+        <article class="brief-card">
+          <h3>Current proof</h3>
+          <p>Public audit method: <a class="underline decoration-border underline-offset-4" href="/audit/">/audit/</a></p>
+          <p>Human-readable catalog: <a class="underline decoration-border underline-offset-4" href="/skills/">/skills/</a></p>
+          <p>Machine-readable catalog: <a class="underline decoration-border underline-offset-4" href="/catalog/v1/skills.json">/catalog/v1/skills.json</a></p>
+          <p>Live maintained-skill counter: <a class="underline decoration-border underline-offset-4" href="/skills-maintained">/skills-maintained</a></p>
+        </article>
+        <article class="brief-card">
+          <h3>First reply ask</h3>
+          <p>If this fits your world, reply with the skill category you want maintained first. We will send the exact catalog entry, sponsor disclosure text, and checkout tier before you pay.</p>
+          <p class="mt-3">Prefer email? <a class="underline decoration-border underline-offset-4" href="mailto:team@hermosskills.com?subject=Hermosskills%20sponsor%20brief">team@hermosskills.com</a></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-border bg-secondary/20 py-8"><div class="container-page flex flex-col gap-2 text-small text-muted-foreground"><b class="text-foreground">Hermosskills</b><span>Curated AI-agent skills. Sponsor disclosed. Public-good rebate on commissions.</span></div></footer>
+</body>
+</html>

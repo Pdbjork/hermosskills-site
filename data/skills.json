@@ -2,7 +2,7 @@
   "$schema": "https://hermosskills.com/schemas/skills-catalog.v1.json",
   "catalog_version": "1.0.0",
   "publisher": {
-    "name": "Hermesskills",
+    "name": "Hermosskills",
     "homepage": "https://hermosskills.com",
     "owner": "Pete Bjork",
     "owner_email": "pdbjork@gmail.com",
@@ -107,7 +107,7 @@
         "research",
         "operations"
       ],
-      "maintainer_note": "The first skill ever listed on Hermesskills. Used by the agency itself during the hermosskills.com name decision.",
+      "maintainer_note": "The first skill ever listed on Hermosskills. Used by the agency itself during the hermosskills.com name decision.",
       "sponsor_tiers": [
         {
           "name": "sponsor",
@@ -165,7 +165,7 @@
         "business",
         "go-to-market"
       ],
-      "maintainer_note": "The class-level skill that defines Hermesskills' editorial model. Reads this skill before you submit a skill of your own.",
+      "maintainer_note": "The class-level skill that defines Hermosskills' editorial model. Read this skill before you submit a skill of your own.",
       "sponsor_tiers": [
         {
           "name": "sponsor",
