@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Operator-as-a-Service pilot brief — Hermosskills</title>
+  <meta name="description" content="One-page Operator-as-a-Service pilot brief: approval queue, weekly autonomous report, pilot scope, exclusions, and founding pilot pricing." />
+  <link rel="canonical" href="https://hermosskills.com/operator/brief/" />
+  <meta name="theme-color" content="#0f766e" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root { --ink:#0f1f1c; --muted:#5a6b66; --paper:#f7fbfa; --card:#fff; --line:#d5e3df; --teal:#0f766e; --teal-dark:#115e59; --soft:#ccfbf1; --amber:#f59e0b; --amber-soft:#fef3c7; --radius:22px; --max:1060px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:radial-gradient(circle at 8% 0%, rgba(15,118,110,.16), transparent 30rem), linear-gradient(180deg,#f3faf8 0%, var(--paper) 44%, #fff 100%); line-height:1.55; }
+    a { color:inherit; }
+    .wrap { width:min(var(--max), calc(100% - 2rem)); margin:0 auto; }
+    header { position:sticky; top:0; z-index:10; border-bottom:1px solid rgba(213,227,223,.85); background:rgba(247,251,250,.92); backdrop-filter:blur(14px); }
+    .nav { min-height:66px; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .brand { display:inline-flex; align-items:center; gap:.65rem; text-decoration:none; font-weight:800; letter-spacing:-.03em; }
+    .mark { width:36px; height:36px; border-radius:10px; display:grid; place-items:center; color:#fff; background:var(--teal); font-weight:900; }
+    .links { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; color:var(--muted); font-weight:650; font-size:.94rem; }
+    .links a { text-decoration:none; }
+    .links a:hover { color:var(--ink); }
+    .btn { display:inline-flex; min-height:46px; align-items:center; justify-content:center; border-radius:999px; padding:.8rem 1.1rem; text-decoration:none; font-weight:800; border:1px solid transparent; }
+    .btn-primary { background:var(--teal); color:#fff; box-shadow:0 14px 28px rgba(15,118,110,.22); }
+    .btn-primary:hover { background:var(--teal-dark); }
+    .btn-secondary { background:#fff; border-color:var(--line); }
+    main { padding:3.5rem 0 5rem; }
+    .hero { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr); gap:clamp(1.5rem,5vw,3rem); align-items:start; }
+    .eyebrow { display:inline-flex; border:1px solid rgba(15,118,110,.18); background:var(--soft); color:var(--teal-dark); border-radius:999px; padding:.42rem .75rem; font-size:.8rem; font-weight:900; letter-spacing:.04em; text-transform:uppercase; }
+    h1,h2,h3 { margin:0; line-height:1.08; letter-spacing:-.04em; }
+    h1 { margin-top:1rem; font-size:clamp(2.35rem,6vw,4.25rem); max-width:13ch; }
+    .lede { margin:1.15rem 0 0; max-width:42rem; color:var(--muted); font-size:clamp(1.08rem,2vw,1.25rem); }
+    .card { border:1px solid var(--line); background:var(--card); border-radius:var(--radius); padding:clamp(1.1rem,3vw,1.6rem); box-shadow:0 24px 60px rgba(15,31,28,.10); }
+    .card h2 { font-size:1.35rem; margin-bottom:.45rem; }
+    .muted { color:var(--muted); }
+    .metric { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; margin-top:1.3rem; }
+    .metric div { border:1px solid var(--line); background:rgba(255,255,255,.78); border-radius:16px; padding:.9rem; text-align:center; }
+    .metric strong { display:block; font-size:1.35rem; color:var(--teal-dark); letter-spacing:-.03em; }
+    section.band { margin-top:4rem; }
+    .section-head { max-width:42rem; margin-bottom:1.4rem; }
+    .section-head h2 { font-size:clamp(1.8rem,4vw,2.55rem); }
+    .grid-2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+    .mini { border:1px solid var(--line); background:#fff; border-radius:18px; padding:1.15rem; }
+    .mini h3 { font-size:1.12rem; margin-bottom:.4rem; }
+    .mini p { margin:.35rem 0 0; color:var(--muted); }
+    ul { margin:.65rem 0 0; padding-left:1.1rem; color:var(--muted); }
+    li + li { margin-top:.28rem; }
+    .price { border:1px solid var(--line); background:#fff; border-radius:20px; padding:1.2rem; display:flex; flex-direction:column; gap:.7rem; }
+    .price.featured { border-color:var(--teal); background:linear-gradient(180deg,#f0fdfa 0%,#fff 44%); box-shadow:0 18px 40px rgba(15,118,110,.14); }
+    .amount { font-size:2rem; font-weight:900; color:var(--teal-dark); letter-spacing:-.04em; }
+    .tag { align-self:flex-start; border-radius:999px; background:var(--amber-soft); color:#92400e; padding:.28rem .55rem; font-size:.78rem; font-weight:900; }
+    .note { margin-top:1rem; border:1px solid rgba(245,158,11,.35); background:var(--amber-soft); color:#78350f; border-radius:16px; padding:1rem; }
+    footer { border-top:1px solid var(--line); color:var(--muted); padding:2rem 0; }
+    @media (max-width:860px) { .hero,.grid-2,.grid-3,.metric { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="/"><span class="mark">H</span><span>Hermosskills · Operator brief</span></a>
+      <nav class="links" aria-label="Main navigation">
+        <a class="hide-sm" href="/operator/">Pilot page</a>
+        <a class="hide-sm" href="#scope">Scope</a>
+        <a class="hide-sm" href="#pricing">Pricing</a>
+        <a class="btn btn-primary" href="/operator/#apply">Apply</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div>
+        <span class="eyebrow">One-page pilot brief</span>
+        <h1>Human-gated AI ops for one live business surface.</h1>
+        <p class="lede">Hermosskills runs an AI operator on a founder’s real revenue surface for four weeks. The operator ships or prepares daily work, queues every external action for approval, and reports the numbers without pretending $0 is traction.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.4rem">
+          <a class="btn btn-primary" href="/operator/#apply">Apply for pilot</a>
+          <a class="btn btn-secondary" href="mailto:team@hermosskills.com?subject=Operator%20pilot%20brief">Ask by email</a>
+        </div>
+        <div class="metric" aria-label="Current pilot proof">
+          <div><strong>3</strong><span class="muted">founding applications</span></div>
+          <div><strong>81</strong><span class="muted">avg fit score</span></div>
+          <div><strong>$2,500</strong><span class="muted">recommended pilot</span></div>
+        </div>
+      </div>
+      <aside class="card">
+        <h2>Best fit</h2>
+        <p class="muted">A solo founder or tiny team with a live product, Stripe or checkout enabled, and no time to convert useful agent work into shipped revenue tasks.</p>
+        <ul>
+          <li>One clear metric for four weeks.</li>
+          <li>Founder can approve work 2–3 hours per week.</li>
+          <li>Distribution, funnel, ops, or trust proof is the bottleneck.</li>
+        </ul>
+        <p class="note"><strong>Hard boundary:</strong> no unattended email, DMs, social posts, payment changes, deploys, or regulated advice.</p>
+      </aside>
+    </div>
+
+    <section class="band wrap" id="scope">
+      <div class="section-head">
+        <h2>What the pilot includes</h2>
+        <p class="muted">The buyer pays for shipped operator work plus a reusable approval system, not for a chatbot subscription.</p>
+      </div>
+      <div class="grid-3">
+        <article class="mini"><h3>Daily autonomous prep</h3><p>Landing page edits, lead magnet drafts, funnel checks, backlog cleanup, public proof pages, and small repo/site changes that support revenue.</p></article>
+        <article class="mini"><h3>Approval queue</h3><p>Every outbound send, public post, deploy, or payment mutation sits in a preview queue with yes, no, and yes-run choices.</p></article>
+        <article class="mini"><h3>Weekly autonomous report</h3><p>Revenue, followers, subscribers, leads, changed files, commands run, blockers, and the next best action in plain language.</p></article>
+      </div>
+    </section>
+
+    <section class="band wrap">
+      <div class="grid-2">
+        <article class="mini">
+          <h3>Included</h3>
+          <ul>
+            <li>One primary business surface.</li>
+            <li>Daily async operator pass on weekdays.</li>
+            <li>Human approval queue and audit trail.</li>
+            <li>Weekly metrics report and end-of-pilot handoff.</li>
+            <li>Light secondary surface on Standard or Intensive.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <h3>Excluded</h3>
+          <ul>
+            <li>Cold outbound without explicit approval.</li>
+            <li>Legal, tax, banking, payroll, KYC, or compliance advice.</li>
+            <li>Paid ad spend or guaranteed revenue.</li>
+            <li>Building a brand-new product from a blank idea.</li>
+            <li>Any “set and forget AI employee” claim.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="band wrap" id="pricing">
+      <div class="section-head">
+        <h2>Founding pilot pricing</h2>
+        <p class="muted">Use Standard as the default offer. Focused exists for small scopes. Intensive is for teams that want two surfaces and more sync.</p>
+      </div>
+      <div class="grid-3">
+        <article class="price"><div class="amount">$1,500</div><strong>Focused · 4 weeks</strong><ul><li>One surface</li><li>Async only</li><li>Weekly written report</li></ul><a class="btn btn-secondary" href="/operator/#apply">Apply at this level</a></article>
+        <article class="price featured"><span class="tag">Recommended</span><div class="amount">$2,500</div><strong>Standard · 4 weeks</strong><ul><li>Primary + light secondary</li><li>Weekly sync call</li><li>Priority approval queue</li><li>Full handoff pack</li></ul><a class="btn btn-primary" href="/operator/#apply">Apply at this level</a></article>
+        <article class="price"><div class="amount">$5,000</div><strong>Intensive · 4 weeks</strong><ul><li>Two surfaces</li><li>Two syncs per week</li><li>Highest queue priority</li></ul><a class="btn btn-secondary" href="/operator/#apply">Apply at this level</a></article>
+      </div>
+      <p class="note"><strong>Refund policy:</strong> payment happens after the fit call by invoice or Stripe link. If week 1 ships nothing material, unused weeks are refundable under pilot policy.</p>
+    </section>
+
+    <section class="band wrap">
+      <div class="section-head"><h2>Send this when a founder asks “what do I get?”</h2></div>
+      <div class="card">
+        <p style="margin-top:0">You get four weeks of human-gated AI operations on one live revenue surface: daily prepared or shipped work, an approval queue for anything external, and a weekly report that names revenue, follower, subscriber, and lead movement. The recommended founding pilot is $2,500. If the fit call shows the surface is too early or too regulated, we decline instead of selling you the wrong pilot.</p>
+        <p style="margin-bottom:0"><a class="btn btn-primary" href="/operator/#apply">Start with the fit application</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">Hermosskills Operator-as-a-Service · human-gated, consent-first, metrics-honest.</div></footer>
+</body>
+</html>
