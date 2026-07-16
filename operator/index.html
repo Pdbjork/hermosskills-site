@@ -270,6 +270,10 @@
           2-minute form. We use your answers to score fit (not just collect emails).
           High-fit applicants get a 20-minute call invitation.
         </p>
+        <div class="note" style="margin-top:1rem">
+          <strong>Default offer:</strong> Standard is the $2,500 / 4-week founding pilot.
+          Pick it if you have one live surface, a real checkout, and want a weekly sync plus priority approval queue.
+        </div>
         <form class="form" id="pilot-form" novalidate>
           <div class="grid-2">
             <div class="field">
@@ -540,14 +544,18 @@
         })
         .catch(() => {});
 
-      // UTM capture
+      // UTM + plan capture. Outreach links can preselect the recommended pilot
+      // without hiding the cheaper/larger options from the founder.
       const params = new URLSearchParams(location.search);
+      const requestedPlan = params.get('plan') || params.get('budget') || '';
       const utm = {
         source: params.get('utm_source') || '',
         medium: params.get('utm_medium') || '',
         campaign: params.get('utm_campaign') || '',
-        content: params.get('utm_content') || ''
+        content: params.get('utm_content') || '',
+        plan: ['1500', '2500', '5000'].includes(requestedPlan) ? requestedPlan : ''
       };
+      if (form.budget && utm.plan) form.budget.value = utm.plan;
 
       function scoreFit(data) {
         let s = 20; // base for completing form intent
