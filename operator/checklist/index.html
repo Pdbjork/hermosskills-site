@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Operator pilot readiness checklist — Hermosskills</title>
+  <meta name="description" content="A founder-friendly checklist to decide whether a human-gated AI operator pilot can move revenue, followers, or subscribers in the next four weeks." />
+  <link rel="canonical" href="https://hermosskills.com/operator/checklist/" />
+  <meta name="theme-color" content="#0f766e" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root { --ink:#0f1f1c; --muted:#5a6b66; --paper:#f7fbfa; --card:#fff; --line:#d5e3df; --teal:#0f766e; --teal-dark:#115e59; --soft:#ccfbf1; --amber:#f59e0b; --amber-soft:#fef3c7; --red:#b91c1c; --radius:22px; --max:1060px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:radial-gradient(circle at 8% 0%, rgba(15,118,110,.16), transparent 30rem), radial-gradient(circle at 90% 8%, rgba(245,158,11,.12), transparent 26rem), linear-gradient(180deg,#f3faf8 0%, var(--paper) 44%, #fff 100%); line-height:1.55; }
+    a { color:inherit; }
+    .wrap { width:min(var(--max), calc(100% - 2rem)); margin:0 auto; }
+    header { position:sticky; top:0; z-index:10; border-bottom:1px solid rgba(213,227,223,.85); background:rgba(247,251,250,.92); backdrop-filter:blur(14px); }
+    .nav { min-height:66px; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .brand { display:inline-flex; align-items:center; gap:.65rem; text-decoration:none; font-weight:800; letter-spacing:-.03em; }
+    .mark { width:36px; height:36px; border-radius:10px; display:grid; place-items:center; color:#fff; background:var(--teal); font-weight:900; }
+    .links { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; color:var(--muted); font-weight:650; font-size:.94rem; }
+    .links a { text-decoration:none; }
+    .links a:hover { color:var(--ink); }
+    .btn { display:inline-flex; min-height:46px; align-items:center; justify-content:center; border-radius:999px; padding:.8rem 1.1rem; text-decoration:none; font-weight:800; border:1px solid transparent; }
+    .btn-primary { background:var(--teal); color:#fff; box-shadow:0 14px 28px rgba(15,118,110,.22); }
+    .btn-primary:hover { background:var(--teal-dark); }
+    .btn-secondary { background:#fff; border-color:var(--line); }
+    main { padding:3.5rem 0 5rem; }
+    .hero { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr); gap:clamp(1.5rem,5vw,3rem); align-items:start; }
+    .eyebrow { display:inline-flex; border:1px solid rgba(15,118,110,.18); background:var(--soft); color:var(--teal-dark); border-radius:999px; padding:.42rem .75rem; font-size:.8rem; font-weight:900; letter-spacing:.04em; text-transform:uppercase; }
+    h1,h2,h3 { margin:0; line-height:1.08; letter-spacing:-.04em; }
+    h1 { margin-top:1rem; font-size:clamp(2.35rem,6vw,4.25rem); max-width:13ch; }
+    .lede { margin:1.15rem 0 0; max-width:42rem; color:var(--muted); font-size:clamp(1.08rem,2vw,1.25rem); }
+    .card { border:1px solid var(--line); background:var(--card); border-radius:var(--radius); padding:clamp(1.1rem,3vw,1.6rem); box-shadow:0 24px 60px rgba(15,31,28,.10); }
+    .card h2 { font-size:1.35rem; margin-bottom:.45rem; }
+    .muted { color:var(--muted); }
+    .score { display:grid; gap:.7rem; margin-top:1rem; }
+    .score div { border:1px solid var(--line); background:rgba(255,255,255,.82); border-radius:16px; padding:.9rem; }
+    .score strong { color:var(--teal-dark); }
+    section.band { margin-top:4rem; }
+    .section-head { max-width:44rem; margin-bottom:1.4rem; }
+    .section-head h2 { font-size:clamp(1.8rem,4vw,2.55rem); }
+    .grid-2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+    .mini { border:1px solid var(--line); background:#fff; border-radius:18px; padding:1.15rem; }
+    .mini h3 { font-size:1.12rem; margin-bottom:.4rem; }
+    .mini p { margin:.35rem 0 0; color:var(--muted); }
+    .checklist { display:grid; gap:.85rem; }
+    .check { display:grid; grid-template-columns:auto 1fr auto; gap:.85rem; align-items:start; border:1px solid var(--line); background:#fff; border-radius:18px; padding:1rem; }
+    .check input { width:1.15rem; height:1.15rem; margin-top:.2rem; accent-color:var(--teal); }
+    .check strong { display:block; }
+    .check span { color:var(--muted); }
+    .points { border-radius:999px; padding:.25rem .55rem; background:var(--soft); color:var(--teal-dark); font-weight:900; font-size:.82rem; white-space:nowrap; }
+    .result { margin-top:1rem; border:1px solid rgba(15,118,110,.25); background:rgba(204,251,241,.6); border-radius:18px; padding:1rem; }
+    .result.warn { border-color:rgba(245,158,11,.38); background:var(--amber-soft); color:#78350f; }
+    .result.no { border-color:rgba(185,28,28,.28); background:#fee2e2; color:#7f1d1d; }
+    .note { margin-top:1rem; border:1px solid rgba(245,158,11,.35); background:var(--amber-soft); color:#78350f; border-radius:16px; padding:1rem; }
+    .copybox { width:100%; min-height:210px; border:1px solid var(--line); border-radius:16px; padding:1rem; font:inherit; color:var(--ink); background:#fff; }
+    footer { border-top:1px solid var(--line); color:var(--muted); padding:2rem 0; }
+    @media print { header, .no-print, footer { display:none; } main { padding:0; } body { background:#fff; } .card, .mini, .check { box-shadow:none; } }
+    @media (max-width:860px) { .hero,.grid-2,.grid-3 { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } .check { grid-template-columns:auto 1fr; } .points { grid-column:2; width:max-content; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="/"><span class="mark">H</span><span>Hermosskills · Operator checklist</span></a>
+      <nav class="links" aria-label="Main navigation">
+        <a class="hide-sm" href="/operator/">Pilot page</a>
+        <a class="hide-sm" href="/operator/brief/">Pilot brief</a>
+        <a class="hide-sm" href="#checklist">Checklist</a>
+        <a class="btn btn-primary" href="/operator/?plan=2500&utm_source=operator_checklist&utm_medium=internal&utm_campaign=standard_pilot#apply">Apply</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div>
+        <span class="eyebrow">Founder pre-call tool · 5 minutes</span>
+        <h1>Should you buy an AI operator pilot right now?</h1>
+        <p class="lede">Use this checklist before booking. The goal is not to sell every founder. It is to find the few live surfaces where a human-gated operator can move revenue, followers, subscribers, or qualified leads in four weeks.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.4rem" class="no-print">
+          <a class="btn btn-primary" href="#checklist">Score my surface</a>
+          <a class="btn btn-secondary" href="/operator/brief/">Read the one-page brief</a>
+        </div>
+      </div>
+      <aside class="card">
+        <h2>Fast scoring guide</h2>
+        <div class="score" aria-label="Score bands">
+          <div><strong>75–100:</strong> Strong fit. Book the fit call and bring one surface.</div>
+          <div><strong>55–74:</strong> Possible fit. Narrow scope before buying.</div>
+          <div><strong>35–54:</strong> Prep first. Fix checkout, analytics, or approval bandwidth.</div>
+          <div><strong>0–34:</strong> Not yet. You need a live surface before an operator helps.</div>
+        </div>
+        <p class="note"><strong>Boundary:</strong> the pilot never includes unattended email, DMs, posts, deploys, payment changes, legal advice, tax advice, banking/KYC work, or guaranteed revenue.</p>
+      </aside>
+    </div>
+
+    <section class="band wrap" id="checklist">
+      <div class="section-head">
+        <h2>The 10-point readiness checklist</h2>
+        <p class="muted">Check what is true today. The score updates in your browser only; nothing is sent unless you choose to apply.</p>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="checklist">
+            <label class="check"><input type="checkbox" data-points="15" data-key="live_surface" /><span><strong>I have a live product, site, funnel, or offer page.</strong><span>There is something real for the operator to improve this week.</span></span><span class="points">15</span></label>
+            <label class="check"><input type="checkbox" data-points="15" data-key="payment_path" /><span><strong>A payment path or booking path already exists.</strong><span>Stripe, invoice, checkout, booking link, or a clear human close path.</span></span><span class="points">15</span></label>
+            <label class="check"><input type="checkbox" data-points="10" data-key="one_metric" /><span><strong>I can name one four-week success metric.</strong><span>Revenue, paid pilots, subscribers, qualified calls, or follower growth.</span></span><span class="points">10</span></label>
+            <label class="check"><input type="checkbox" data-points="10" data-key="approval_time" /><span><strong>I can approve work 2–3 hours per week.</strong><span>The operator can prepare, but you still own the human gate.</span></span><span class="points">10</span></label>
+            <label class="check"><input type="checkbox" data-points="10" data-key="access" /><span><strong>I can safely share non-secret access or screenshots.</strong><span>No passwords in chat; use least-privilege accounts or redacted exports.</span></span><span class="points">10</span></label>
+            <label class="check"><input type="checkbox" data-points="10" data-key="backlog" /><span><strong>I already have a backlog of obvious revenue/follower/subscriber work.</strong><span>Drafts, page fixes, list cleanup, offer copy, proof assets, or follow-ups.</span></span><span class="points">10</span></label>
+            <label class="check"><input type="checkbox" data-points="10" data-key="consent" /><span><strong>I want human-gated outbound, not an unattended bot.</strong><span>Every email, post, DM, deploy, and payment change waits for approval.</span></span><span class="points">10</span></label>
+            <label class="check"><input type="checkbox" data-points="8" data-key="non_regulated" /><span><strong>The first surface is not legal, banking, KYC, payroll, or medical advice.</strong><span>Regulated products need different governance before ops automation.</span></span><span class="points">8</span></label>
+            <label class="check"><input type="checkbox" data-points="7" data-key="budget" /><span><strong>I can fund at least the focused pilot if fit is strong.</strong><span>Founding pilot levels are $1,500, $2,500, or $5,000 for four weeks.</span></span><span class="points">7</span></label>
+            <label class="check"><input type="checkbox" data-points="5" data-key="honest_metrics" /><span><strong>I am willing to see honest numbers, including $0.</strong><span>The report names reality so the next week gets sharper.</span></span><span class="points">5</span></label>
+          </div>
+          <div id="result" class="result" aria-live="polite"><strong>Score: 0 / 100.</strong> Check the boxes that are true today.</div>
+        </div>
+        <aside class="card">
+          <h2>Your copy/paste fit-call brief</h2>
+          <p class="muted">Use this to apply or to brief your cofounder before deciding.</p>
+          <textarea id="brief" class="copybox" readonly></textarea>
+          <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem" class="no-print">
+            <button class="btn btn-secondary" type="button" id="copy">Copy brief</button>
+            <button class="btn btn-secondary" type="button" onclick="window.print()">Print / save PDF</button>
+            <a class="btn btn-primary" id="apply-link" href="/operator/?plan=2500&utm_source=operator_checklist&utm_medium=internal&utm_campaign=standard_pilot#apply">Apply with this score</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="band wrap">
+      <div class="section-head"><h2>What to fix before applying if your score is low</h2></div>
+      <div class="grid-3">
+        <article class="mini"><h3>No live surface?</h3><p>Publish one plain offer page with a clear CTA before buying operations help.</p></article>
+        <article class="mini"><h3>No payment path?</h3><p>Create a Stripe link, invoice flow, or booking path so operator work can produce a measurable close.</p></article>
+        <article class="mini"><h3>No approval time?</h3><p>Block one 30-minute review window three times per week. Human-gated work needs a human gate.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">Hermosskills Operator-as-a-Service · checklist only, not a purchase or guarantee.</div></footer>
+  <script>
+    (function () {
+      const checks = Array.from(document.querySelectorAll('[data-points]'));
+      const result = document.getElementById('result');
+      const brief = document.getElementById('brief');
+      const copy = document.getElementById('copy');
+      const apply = document.getElementById('apply-link');
+
+      function band(score) {
+        if (score >= 75) return 'Strong fit — apply for the Standard pilot if the surface is revenue-relevant.';
+        if (score >= 55) return 'Possible fit — narrow the scope before the call.';
+        if (score >= 35) return 'Prep first — fix the missing surface, checkout, metric, or approval time.';
+        return 'Not yet — publish a live surface before buying operator help.';
+      }
+
+      function update() {
+        const selected = checks.filter(c => c.checked);
+        const score = selected.reduce((sum, c) => sum + Number(c.dataset.points || 0), 0);
+        const missing = checks.filter(c => !c.checked).slice(0, 4).map(c => c.dataset.key.replaceAll('_', ' '));
+        result.className = 'result' + (score >= 75 ? '' : score >= 35 ? ' warn' : ' no');
+        result.innerHTML = '<strong>Score: ' + score + ' / 100.</strong> ' + band(score);
+        brief.value = [
+          'Operator pilot readiness score: ' + score + '/100',
+          'Band: ' + band(score),
+          'Ready signals: ' + (selected.map(c => c.dataset.key.replaceAll('_', ' ')).join(', ') || 'none yet'),
+          'Top gaps to resolve: ' + (missing.join(', ') || 'none'),
+          'One surface I want operated for four weeks: ',
+          'Metric I want moved: ',
+          'Approval windows I can commit to: '
+        ].join('\n');
+        apply.href = '/operator/?plan=2500&utm_source=operator_checklist&utm_medium=internal&utm_campaign=standard_pilot&utm_content=score_' + score + '#apply';
+      }
+
+      checks.forEach(c => c.addEventListener('change', update));
+      copy.addEventListener('click', async () => {
+        brief.select();
+        try { await navigator.clipboard.writeText(brief.value); copy.textContent = 'Copied'; }
+        catch (_) { document.execCommand('copy'); copy.textContent = 'Copied'; }
+        setTimeout(() => { copy.textContent = 'Copy brief'; }, 1400);
+      });
+      update();
+    })();
+  </script>
+</body>
+</html>
