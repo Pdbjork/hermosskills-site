@@ -12,6 +12,57 @@ const publicBaseUrl = process.env.PUBLIC_BASE_URL || 'https://hermosskills.com';
 const stripeSecret = process.env.STRIPE_SECRET_KEY || '';
 const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
 const stripe = stripeSecret ? new Stripe(stripeSecret, { apiVersion: '2025-11-17.clover' }) : null;
+const fulfillmentDataDir = process.env.HERMOSSKILLS_FULFILLMENT_DIR || '/var/lib/hermosskills';
+
+export function buildFulfillmentTask(session, event = {}) {
+  const metadata = session?.metadata && typeof session.metadata === 'object' ? session.metadata : {};
+  const customerEmail = String(session?.customer_details?.email || session?.customer_email || '').trim().toLowerCase();
+  const amountTotal = typeof session?.amount_total === 'number' ? session.amount_total : null;
+  const currency = String(session?.currency || '').toLowerCase();
+  const plan = String(metadata.plan || session?.mode || 'unknown').slice(0, 80);
+  const eventId = String(event?.id || '').slice(0, 120);
+  const sessionId = String(session?.id || '').slice(0, 120);
+
+  return {
+    id: `hs_fulfill_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
+    created_at: new Date().toISOString(),
+    source: 'stripe.checkout.session.completed',
+    status: 'needs_human_review',
+    priority: amountTotal && amountTotal >= 50000 ? 'high' : 'normal',
+    event_id: eventId,
+    checkout_session_id: sessionId,
+    customer_email: customerEmail,
+    plan,
+    mode: String(session?.mode || '').slice(0, 40),
+    amount_total: amountTotal,
+    currency,
+    next_actions: [
+      'Verify Stripe payment in dashboard before starting work.',
+      'Create or update the customer record without exposing private data in chat.',
+      'Send Pete an approval-gated fulfillment draft: thank-you, scope-confirmation, and first next step.',
+      'Do not perform outbound customer email until Pete approves the exact message.'
+    ]
+  };
+}
+
+export async function recordCheckoutFulfillment(session, event = {}, options = {}) {
+  const repoDir = options.repoDir || __dirname;
+  const dataDir = options.dataDir || fulfillmentDataDir;
+  await fs.mkdir(path.join(repoDir, 'orders'), { recursive: true });
+  await fs.appendFile(path.join(repoDir, 'orders/stripe-checkouts.jsonl'), JSON.stringify(session) + '\n');
+
+  await fs.mkdir(dataDir, { recursive: true });
+  const task = buildFulfillmentTask(session, event);
+  await fs.appendFile(path.join(dataDir, 'fulfillment-tasks.jsonl'), JSON.stringify(task) + '\n', 'utf8');
+  await fs.appendFile(path.join(dataDir, 'fulfillment-alerts.jsonl'), JSON.stringify({
+    created_at: task.created_at,
+    level: 'action_required',
+    message: `Hermosskills checkout completed: ${task.plan} ${task.amount_total ?? 'unknown'} ${task.currency || ''}. Human fulfillment review required.`,
+    task_id: task.id,
+    checkout_session_id: task.checkout_session_id
+  }) + '\n', 'utf8');
+  return task;
+}
 
 const plans = {
   sponsor: {
@@ -157,8 +208,7 @@ app.post('/api/stripe-webhook', express.raw({ type: 'application/json' }), async
     const sig = req.headers['stripe-signature'];
     const event = stripe.webhooks.constructEvent(req.body, sig, stripeWebhookSecret);
     if (event.type === 'checkout.session.completed') {
-      await fs.mkdir(path.join(__dirname, 'orders'), { recursive: true });
-      await fs.appendFile(path.join(__dirname, 'orders/stripe-checkouts.jsonl'), JSON.stringify(event.data.object) + '\n');
+      await recordCheckoutFulfillment(event.data.object, event);
     }
     res.json({ received: true });
   } catch (error) {
@@ -167,6 +217,10 @@ app.post('/api/stripe-webhook', express.raw({ type: 'application/json' }), async
   }
 });
 
-app.listen(port, '127.0.0.1', () => {
-  console.log(`hermosskills server listening on http://127.0.0.1:${port}`);
-});
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  app.listen(port, '127.0.0.1', () => {
+    console.log(`hermosskills server listening on http://127.0.0.1:${port}`);
+  });
+}
+
+export { app };
