@@ -64,6 +64,48 @@ export async function recordCheckoutFulfillment(session, event = {}, options = {
   return task;
 }
 
+export function buildOperatorLeadTask(lead) {
+  const fitScore = typeof lead?.fit_score === 'number' ? lead.fit_score : null;
+  const email = String(lead?.email || '').trim().toLowerCase();
+  const budget = String(lead?.budget || '').slice(0, 20);
+  const url = String(lead?.url || '').slice(0, 500);
+
+  return {
+    id: `hs_operator_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
+    created_at: new Date().toISOString(),
+    source: 'operator-interest',
+    status: 'needs_human_review',
+    priority: fitScore !== null && fitScore >= 75 ? 'high' : 'normal',
+    lead_id: String(lead?.id || '').slice(0, 120),
+    customer_email: email,
+    url,
+    budget,
+    fit_score: fitScore,
+    fit_band: String(lead?.fit_band || '').slice(0, 80),
+    next_actions: [
+      'Review the lead against the live site and fit score before replying.',
+      'Draft a short approval-gated fit-call invitation only if the lead is high-fit.',
+      'Do not send outbound email until Pete approves the exact message.',
+      'If the lead is low-fit, prepare a polite decline or prep-first note rather than pushing a sale.'
+    ]
+  };
+}
+
+export async function recordOperatorLeadTask(lead, options = {}) {
+  const dataDir = options.dataDir || fulfillmentDataDir;
+  await fs.mkdir(dataDir, { recursive: true });
+  const task = buildOperatorLeadTask(lead);
+  await fs.appendFile(path.join(dataDir, 'operator-lead-tasks.jsonl'), JSON.stringify(task) + '\n', 'utf8');
+  await fs.appendFile(path.join(dataDir, 'fulfillment-alerts.jsonl'), JSON.stringify({
+    created_at: task.created_at,
+    level: task.priority === 'high' ? 'action_required' : 'review',
+    message: `Hermosskills operator lead: score ${task.fit_score ?? 'unknown'} (${task.fit_band || 'unbanded'}). Human review required before any reply.`,
+    task_id: task.id,
+    lead_id: task.lead_id
+  }) + '\n', 'utf8');
+  return task;
+}
+
 const plans = {
   sponsor: {
     mode: 'subscription',
@@ -138,9 +180,11 @@ app.post('/api/operator-interest', async (req, res) => {
     await fs.mkdir(dir, { recursive: true });
     const file = path.join(dir, 'operator-leads.jsonl');
     await fs.appendFile(file, JSON.stringify(lead) + '\n', 'utf8');
+    const task = await recordOperatorLeadTask(lead, { dataDir: dir });
     res.json({
       ok: true,
       id: lead.id,
+      task_id: task.id,
       fit_score: lead.fit_score,
       message: 'Application received. We review fit scores and reply only when a pilot makes sense.'
     });
