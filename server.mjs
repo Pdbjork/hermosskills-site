@@ -106,6 +106,37 @@ export async function recordOperatorLeadTask(lead, options = {}) {
   return task;
 }
 
+const testLeadDomains = new Set(['example.com', 'example.org', 'example.net', 'y.com', 'z.com', 'test.com', 'localhost']);
+
+export function isLikelyTestOperatorLead(lead) {
+  const email = String(lead?.email || '').trim().toLowerCase();
+  const name = String(lead?.name || '').trim().toLowerCase();
+  const urlText = String(lead?.url || '').trim().toLowerCase();
+  let urlHost = '';
+  try { urlHost = new URL(urlText).hostname.replace(/^www\./, ''); } catch { /* ignore malformed URL */ }
+  const emailDomain = email.includes('@') ? email.split('@').pop() : '';
+  if (testLeadDomains.has(emailDomain) || testLeadDomains.has(urlHost)) return true;
+  if (/^(test|testing|x|final|demo|sample|asdf|qwerty)$/.test(name)) return true;
+  if (/^(test|demo|sample|x)(\+[^@]+)?@/.test(email)) return true;
+  return false;
+}
+
+export function buildOperatorLeadStats(leads) {
+  const raw_count = leads.length;
+  const realLeads = leads.filter((lead) => !isLikelyTestOperatorLead(lead));
+  const scores = realLeads
+    .map((lead) => lead.fit_score)
+    .filter((score) => typeof score === 'number' && Number.isFinite(score));
+  const avg_fit_score = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+  return {
+    ok: true,
+    count: realLeads.length,
+    raw_count,
+    excluded_test_count: raw_count - realLeads.length,
+    avg_fit_score
+  };
+}
+
 const plans = {
   sponsor: {
     mode: 'subscription',
@@ -199,12 +230,10 @@ app.get('/api/operator-interest/stats', async (_req, res) => {
     const file = path.join('/var/lib/hermosskills', 'operator-leads.jsonl');
     let text = '';
     try { text = await fs.readFile(file, 'utf8'); } catch { /* empty */ }
-    const lines = text.split('\n').filter(Boolean);
-    const scores = lines.map((l) => {
-      try { return JSON.parse(l).fit_score; } catch { return null; }
-    }).filter((n) => typeof n === 'number');
-    const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
-    res.json({ ok: true, count: lines.length, avg_fit_score: avg });
+    const leads = text.split('\n').filter(Boolean).map((line) => {
+      try { return JSON.parse(line); } catch { return null; }
+    }).filter(Boolean);
+    res.json(buildOperatorLeadStats(leads));
   } catch (err) {
     res.status(500).json({ error: 'stats unavailable' });
   }

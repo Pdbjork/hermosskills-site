@@ -107,8 +107,8 @@
             </div>
           </div>
           <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-            <div class="rounded-xl border border-border bg-background p-5"><p class="text-small font-semibold uppercase tracking-wider text-muted-foreground">Current signal</p><p class="mt-1 font-display text-3xl font-bold text-primary">3</p><p class="text-small text-muted-foreground">operator applications captured</p></div>
-            <div class="rounded-xl border border-border bg-background p-5"><p class="text-small font-semibold uppercase tracking-wider text-muted-foreground">Fit quality</p><p class="mt-1 font-display text-3xl font-bold text-primary">81</p><p class="text-small text-muted-foreground">average readiness score</p></div>
+            <div class="rounded-xl border border-border bg-background p-5"><p class="text-small font-semibold uppercase tracking-wider text-muted-foreground">Current signal</p><p id="operator-leads-count" class="mt-1 font-display text-3xl font-bold text-primary">—</p><p class="text-small text-muted-foreground">qualified operator applications captured</p></div>
+            <div class="rounded-xl border border-border bg-background p-5"><p class="text-small font-semibold uppercase tracking-wider text-muted-foreground">Fit quality</p><p id="operator-avg-fit" class="mt-1 font-display text-3xl font-bold text-primary">—</p><p class="text-small text-muted-foreground">average readiness score when available</p></div>
             <div class="rounded-xl border border-border bg-background p-5"><p class="text-small font-semibold uppercase tracking-wider text-muted-foreground">Guardrail</p><p class="mt-1 font-display text-2xl font-bold text-foreground">Approval queue</p><p class="text-small text-muted-foreground">no blind sends, no surprise posts</p></div>
           </div>
         </div>
@@ -245,6 +245,23 @@
         .catch(function () {
           number.textContent = '0';
           copy.textContent = 'Counter unavailable; the catalog is still visible as JSON.';
+        });
+    })();
+
+    (function () {
+      var count = document.getElementById('operator-leads-count');
+      var avg = document.getElementById('operator-avg-fit');
+      if (!count && !avg) return;
+      fetch('/api/operator-interest/stats', { credentials: 'omit' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          if (!j || !j.ok) throw new Error('operator stats unavailable');
+          if (count && typeof j.count === 'number') count.textContent = String(j.count);
+          if (avg) avg.textContent = typeof j.avg_fit_score === 'number' ? String(j.avg_fit_score) : '—';
+        })
+        .catch(function () {
+          if (count) count.textContent = '0';
+          if (avg) avg.textContent = '—';
         });
     })();
 

@@ -7,6 +7,8 @@ import test from 'node:test';
 import {
   buildFulfillmentTask,
   buildOperatorLeadTask,
+  buildOperatorLeadStats,
+  isLikelyTestOperatorLead,
   recordCheckoutFulfillment,
   recordOperatorLeadTask
 } from '../server.mjs';
@@ -108,4 +110,27 @@ test('recordOperatorLeadTask writes review task and alert without sending email'
   assert.equal(alert.level, 'review');
   assert.equal(alert.task_id, task.id);
   assert.equal(alert.lead_id, 'oaas_test_456');
+});
+
+test('isLikelyTestOperatorLead identifies seed and smoke-test submissions', () => {
+  assert.equal(isLikelyTestOperatorLead({ email: 'test@example.com', url: 'https://example.com', name: 'Test' }), true);
+  assert.equal(isLikelyTestOperatorLead({ email: 'x@y.com', url: 'https://z.com', name: 'X' }), true);
+  assert.equal(isLikelyTestOperatorLead({ email: 'founder@realbusiness.com', url: 'https://realbusiness.com', name: 'Rae Founder' }), false);
+});
+
+test('buildOperatorLeadStats excludes likely test leads from public proof metrics', () => {
+  const stats = buildOperatorLeadStats([
+    { email: 'test@example.com', url: 'https://example.com', name: 'Test', fit_score: 82 },
+    { email: 'x@y.com', url: 'https://z.com', name: 'X', fit_score: null },
+    { email: 'founder@realbusiness.com', url: 'https://realbusiness.com', name: 'Rae Founder', fit_score: 91 },
+    { email: 'ops@careco.org', url: 'https://careco.org', name: 'Care Co', fit_score: 73 }
+  ]);
+
+  assert.deepEqual(stats, {
+    ok: true,
+    count: 2,
+    raw_count: 4,
+    excluded_test_count: 2,
+    avg_fit_score: 82
+  });
 });

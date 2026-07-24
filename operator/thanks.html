@@ -22,10 +22,13 @@
     }
     h1 { margin: 0 0 .75rem; letter-spacing: -.04em; font-size: 1.85rem; }
     p { color: var(--muted); line-height: 1.55; }
+    ul { color: var(--muted); line-height: 1.55; padding-left: 1.2rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
     a {
-      display: inline-flex; margin-top: 1rem; padding: .85rem 1.1rem; border-radius: 999px;
+      display: inline-flex; padding: .85rem 1.1rem; border-radius: 999px;
       background: var(--teal); color: #fff; text-decoration: none; font-weight: 750;
     }
+    a.secondary { background: #fff; color: var(--teal); border: 1px solid var(--line); }
     .score { font-weight: 800; color: var(--teal); }
   </style>
 </head>
@@ -38,7 +41,17 @@
       and only reach out if a pilot makes sense for both sides.
     </p>
     <p>No spam list. No auto-sequence. Human review.</p>
-    <a href="https://hermosskills.com/">Back to Hermosskills</a>
+    <p><strong>Before the fit review, have these ready:</strong></p>
+    <ul>
+      <li>One live surface you want operated for four weeks.</li>
+      <li>One metric you want moved: revenue, qualified calls, subscribers, followers, or lead quality.</li>
+      <li>Two or three approval windows each week so outbound work never becomes unattended automation.</li>
+    </ul>
+    <div class="actions">
+      <a href="https://hermosskills.com/operator/brief/">Read the pilot brief</a>
+      <a class="secondary" href="https://hermosskills.com/operator/checklist/">Re-run checklist</a>
+      <a class="secondary" href="https://hermosskills.com/">Back to Hermosskills</a>
+    </div>
   </div>
   <script>
     const s = new URLSearchParams(location.search).get('score');

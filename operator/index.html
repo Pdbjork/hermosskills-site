@@ -255,8 +255,8 @@
           <a class="btn btn-secondary" href="/operator/checklist/">Score readiness first</a>
         </div>
         <div class="proof-bar" aria-label="Proof points">
-          <div><strong id="lead-count">3</strong><span>founding applications</span></div>
-          <div><strong id="avg-fit">81</strong><span>avg fit score</span></div>
+          <div><strong id="lead-count">—</strong><span>qualified applications</span></div>
+          <div><strong id="avg-fit">—</strong><span>avg fit score</span></div>
           <div><strong>Approval queue</strong><span>audit log included</span></div>
           <div><strong>Consent-first</strong><span>no unattended sends</span></div>
         </div>
@@ -543,7 +543,7 @@
         .then((stats) => {
           if (!stats || !stats.ok) return;
           if (leadCountEl && typeof stats.count === 'number') leadCountEl.textContent = String(stats.count);
-          if (avgFitEl && typeof stats.avg_fit_score === 'number') avgFitEl.textContent = String(stats.avg_fit_score);
+          if (avgFitEl) avgFitEl.textContent = typeof stats.avg_fit_score === 'number' ? String(stats.avg_fit_score) : '—';
         })
         .catch(() => {});
 
