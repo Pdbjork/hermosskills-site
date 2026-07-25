@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0d9488" />
+  <title>Contact Hermosskills — Human-reviewed requests</title>
+  <meta name="description" content="Contact Hermosskills about operator pilots, sponsorships, commissions, skill submissions, refunds, or privacy requests. Every request is human-reviewed before reply." />
+  <link rel="canonical" href="https://hermosskills.com/contact/" />
+  <link rel="stylesheet" href="/assets/polsia.css" />
+</head>
+<body class="min-h-screen bg-background font-body text-foreground antialiased">
+  <header class="border-b border-border bg-background/95">
+    <div class="container-page flex h-14 items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 font-display font-bold text-foreground" aria-label="Hermosskills home">
+        <span class="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">H</span>
+        <span>Hermosskills</span>
+      </a>
+      <nav class="hidden items-center gap-6 text-small font-medium text-muted-foreground md:flex" aria-label="Main navigation">
+        <a class="hover:text-foreground" href="/operator/">Operator pilot</a>
+        <a class="hover:text-foreground" href="/sponsor/">Sponsor brief</a>
+        <a class="hover:text-foreground" href="/catalog/">Catalog</a>
+        <a class="hover:text-foreground" href="/privacy/">Privacy</a>
+      </nav>
+      <a href="/operator/?utm_source=contact&utm_medium=header&utm_campaign=pilot#apply" class="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Apply for pilot</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="bg-secondary/30 py-section-lg">
+      <div class="container-page grid gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
+        <div>
+          <p class="text-eyebrow mb-3">Form-first contact</p>
+          <h1 class="font-display text-[clamp(2.2rem,5vw,3.6rem)] font-bold tracking-tight text-foreground [line-height:1.08]">Tell us what you need. Pete reviews before anyone replies.</h1>
+          <p class="mt-5 max-w-xl text-body-lg text-muted-foreground">This replaces the old mailto-first path so requests do not vanish into an unverified inbox. It creates a local human-review task, not an automated email blast.</p>
+          <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-xl border border-border bg-card p-5 shadow-sm">
+              <p class="font-semibold text-foreground">Best for revenue</p>
+              <p class="mt-2 text-small text-muted-foreground">Operator pilot questions, sponsorship, or custom commission scoping.</p>
+            </div>
+            <div class="rounded-xl border border-border bg-card p-5 shadow-sm">
+              <p class="font-semibold text-foreground">Best for trust</p>
+              <p class="mt-2 text-small text-muted-foreground">Privacy, refund, and support requests are flagged high-priority for human review.</p>
+            </div>
+          </div>
+        </div>
+
+        <section class="rounded-2xl border border-border bg-card p-6 shadow-sm" aria-labelledby="contact-heading">
+          <h2 id="contact-heading" class="font-display text-h3 font-bold text-foreground">Contact form</h2>
+          <p class="mt-2 text-small text-muted-foreground">We store your submission only to reply to this request. No scraped lists, no resale, no automated outbound.</p>
+          <form id="contact-form" class="mt-6 grid gap-4" novalidate>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="grid gap-1 text-small font-semibold text-foreground">Name
+                <input class="h-11 rounded-md border border-input bg-background px-3 text-base font-normal" name="name" autocomplete="name" placeholder="Alex Founder" />
+              </label>
+              <label class="grid gap-1 text-small font-semibold text-foreground">Email
+                <input class="h-11 rounded-md border border-input bg-background px-3 text-base font-normal" name="email" type="email" autocomplete="email" required placeholder="you@company.com" />
+              </label>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="grid gap-1 text-small font-semibold text-foreground">Request type
+                <select class="h-11 rounded-md border border-input bg-background px-3 text-base font-normal" name="intent" required>
+                  <option value="operator">Operator pilot question</option>
+                  <option value="sponsor">Sponsorship question</option>
+                  <option value="commission">Commission question</option>
+                  <option value="skill">Skill submission question</option>
+                  <option value="refund">Refund/support question</option>
+                  <option value="privacy">Privacy/data request</option>
+                  <option value="other">General question</option>
+                </select>
+              </label>
+              <label class="grid gap-1 text-small font-semibold text-foreground">Urgency
+                <select class="h-11 rounded-md border border-input bg-background px-3 text-base font-normal" name="urgency">
+                  <option value="normal">Normal</option>
+                  <option value="urgent">Urgent: payment, privacy, or access issue</option>
+                </select>
+              </label>
+            </div>
+            <label class="grid gap-1 text-small font-semibold text-foreground">Subject
+              <input class="h-11 rounded-md border border-input bg-background px-3 text-base font-normal" name="subject" maxlength="160" placeholder="Founding sponsor question" />
+            </label>
+            <label class="grid gap-1 text-small font-semibold text-foreground">Relevant URL, if any
+              <input class="h-11 rounded-md border border-input bg-background px-3 text-base font-normal" name="url" type="url" placeholder="https://…" />
+            </label>
+            <label class="grid gap-1 text-small font-semibold text-foreground">Message
+              <textarea class="min-h-36 rounded-md border border-input bg-background p-3 text-base font-normal" name="message" required maxlength="1200" placeholder="What should Pete review? Include the offer, skill, site, charge, or question you want handled."></textarea>
+            </label>
+            <label class="flex gap-3 rounded-lg border border-border bg-secondary/30 p-4 text-small text-muted-foreground">
+              <input class="mt-1" type="checkbox" name="consent" required />
+              <span>I consent to Hermosskills storing this submission so Pete can review and reply. I understand this does not sign me up for a list.</span>
+            </label>
+            <button id="submit-btn" class="inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90" type="submit">Send for human review</button>
+            <p id="status" class="min-h-[1.5rem] text-small text-muted-foreground" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-border bg-secondary/20 py-8">
+    <div class="container-page flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between">
+      <span class="text-small text-muted-foreground">© 2026 hermosskills · A Peter Bjork project · Built in the open.</span>
+      <span class="text-small text-muted-foreground"><a class="underline decoration-border underline-offset-4" href="/terms/">Terms</a> · <a class="underline decoration-border underline-offset-4" href="/privacy/">Privacy</a> · <a class="underline decoration-border underline-offset-4" href="/refund-policy/">Refunds</a></span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('status');
+      const submit = document.getElementById('submit-btn');
+      const params = new URLSearchParams(location.search);
+      const intent = params.get('intent');
+      if (intent && form.intent && Array.from(form.intent.options).some((o) => o.value === intent)) {
+        form.intent.value = intent;
+      }
+      const subject = params.get('subject');
+      if (subject && form.subject) form.subject.value = subject.slice(0, 160);
+
+      function setStatus(kind, message) {
+        status.textContent = message;
+        status.className = 'min-h-[1.5rem] text-small ' + (kind === 'error' ? 'text-red-700' : 'text-muted-foreground');
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        data.consent = form.consent.checked;
+        data.page = location.href;
+        data.utm = {
+          source: params.get('utm_source') || '',
+          medium: params.get('utm_medium') || '',
+          campaign: params.get('utm_campaign') || '',
+          content: params.get('utm_content') || ''
+        };
+
+        if (!data.email || !/@/.test(data.email)) return setStatus('error', 'Please enter a valid email.');
+        if (!data.message || data.message.trim().length < 10) return setStatus('error', 'Please include at least 10 characters.');
+        if (!data.consent) return setStatus('error', 'Please confirm consent so Pete can review and reply.');
+
+        submit.disabled = true;
+        submit.textContent = 'Sending…';
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const body = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(body.error || 'Could not save your message.');
+          form.reset();
+          setStatus('ok', body.message || 'Message received for human review.');
+        } catch (error) {
+          setStatus('error', error.message || 'Could not save your message. Please try again later.');
+        } finally {
+          submit.disabled = false;
+          submit.textContent = 'Send for human review';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -5,12 +5,15 @@ import path from 'node:path';
 import test from 'node:test';
 
 import {
+  buildContactLeadTask,
   buildFulfillmentTask,
   buildOperatorLeadTask,
   buildOperatorLeadStats,
   isLikelyTestOperatorLead,
   recordCheckoutFulfillment,
-  recordOperatorLeadTask
+  recordContactLeadTask,
+  recordOperatorLeadTask,
+  sanitizeContactLead
 } from '../server.mjs';
 
 test('buildFulfillmentTask creates a human-gated task from a checkout session', () => {
@@ -110,6 +113,73 @@ test('recordOperatorLeadTask writes review task and alert without sending email'
   assert.equal(alert.level, 'review');
   assert.equal(alert.task_id, task.id);
   assert.equal(alert.lead_id, 'oaas_test_456');
+});
+
+test('sanitizeContactLead bounds user input and normalizes contact intent', () => {
+  const lead = sanitizeContactLead({
+    name: '  Revenue Founder  ',
+    email: 'FOUNDER@REALBUSINESS.COM ',
+    intent: 'sponsor',
+    subject: 'Founding sponsorship',
+    message: 'I want to ask about sponsoring a public skill.'.repeat(40),
+    url: 'https://realbusiness.com',
+    urgency: 'urgent',
+    consent: 'true',
+    utm: { source: 'homepage' }
+  }, { ip: '127.0.0.1', ua: 'node-test' });
+
+  assert.equal(lead.name, 'Revenue Founder');
+  assert.equal(lead.email, 'founder@realbusiness.com');
+  assert.equal(lead.intent, 'sponsor');
+  assert.equal(lead.urgency, 'urgent');
+  assert.equal(lead.consent, true);
+  assert.equal(lead.message.length, 1200);
+  assert.equal(lead.ip, '127.0.0.1');
+});
+
+test('buildContactLeadTask prioritizes refund and privacy requests for human review', () => {
+  const task = buildContactLeadTask({
+    id: 'hs_contact_test_123',
+    email: 'customer@example.com',
+    intent: 'refund',
+    subject: 'Need help with a charge',
+    urgency: 'normal'
+  });
+
+  assert.equal(task.source, 'contact-form');
+  assert.equal(task.status, 'needs_human_review');
+  assert.equal(task.priority, 'high');
+  assert.equal(task.customer_email, 'customer@example.com');
+  assert.equal(task.label, 'Refund/support question');
+  assert.ok(task.next_actions.some((line) => line.includes('Do not send outbound email')));
+});
+
+test('recordContactLeadTask writes contact review task and alert without sending email', async () => {
+  const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), 'hermosskills-contact-lead-'));
+  const lead = {
+    id: 'hs_contact_test_456',
+    email: 'founder@example.com',
+    intent: 'commission',
+    subject: 'Custom agent skill',
+    message: 'Could you scope a custom agent skill for my site?',
+    urgency: 'normal'
+  };
+
+  const task = await recordContactLeadTask(lead, { dataDir });
+
+  const taskLines = (await fs.readFile(path.join(dataDir, 'contact-lead-tasks.jsonl'), 'utf8')).trim().split('\n');
+  const alertLines = (await fs.readFile(path.join(dataDir, 'fulfillment-alerts.jsonl'), 'utf8')).trim().split('\n');
+  const writtenTask = JSON.parse(taskLines[0]);
+  const alert = JSON.parse(alertLines[0]);
+
+  assert.equal(taskLines.length, 1);
+  assert.equal(writtenTask.id, task.id);
+  assert.equal(writtenTask.status, 'needs_human_review');
+  assert.equal(writtenTask.customer_email, 'founder@example.com');
+  assert.equal(alertLines.length, 1);
+  assert.equal(alert.level, 'review');
+  assert.equal(alert.task_id, task.id);
+  assert.equal(alert.lead_id, 'hs_contact_test_456');
 });
 
 test('isLikelyTestOperatorLead identifies seed and smoke-test submissions', () => {

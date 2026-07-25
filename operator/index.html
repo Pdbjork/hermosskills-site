@@ -349,7 +349,7 @@
           </label>
           <button class="btn btn-primary btn-block" type="submit" id="submit-btn">Submit application</button>
           <p class="muted" style="margin:0;font-size:.88rem;text-align:center">
-            Prefer email? Write <a href="mailto:team@hermosskills.com?subject=Operator%20pilot%20application">team@hermosskills.com</a>
+            Prefer a shorter note? Use the <a href="/contact/?intent=operator&utm_source=operator&utm_medium=application_form&utm_campaign=form_first">human-reviewed contact form</a>.
           </p>
           <div class="status" id="form-status" role="status"></div>
         </form>
@@ -516,7 +516,7 @@
         ·
         <a href="https://hermosskills.com/terms/">Terms</a>
         ·
-        <a href="mailto:team@hermosskills.com">Contact</a>
+        <a href="/contact/?intent=other&utm_source=operator&utm_medium=footer&utm_campaign=form_first">Contact</a>
       </div>
     </div>
   </footer>
@@ -676,16 +676,14 @@
             throw new Error(err.error || ('HTTP ' + res.status));
           }
         } catch (err) {
-          // Fallback: mailto so interest is never lost
+          // Fallback: keep the lead in the browser and route to the same human-reviewed intake path.
           const subject = encodeURIComponent('Operator pilot application — score ' + fit_score);
-          const body = encodeURIComponent(
-            Object.entries(data).map(([k, v]) => k + ': ' + (typeof v === 'object' ? JSON.stringify(v) : v)).join('\n')
-          );
+          const contactUrl = '/contact/?intent=operator&subject=' + subject + '&utm_source=operator&utm_medium=fallback&utm_campaign=form_first';
           showStatus(
             true,
-            'Saved locally. Opening email fallback so we still get your application… (' + (err.message || 'API offline') + ')'
+            'Saved locally in this browser. Opening the human-reviewed contact form as a backup… (' + (err.message || 'API offline') + ')'
           );
-          window.location.href = 'mailto:team@hermosskills.com?subject=' + subject + '&body=' + body;
+          window.location.href = contactUrl;
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Submit application';

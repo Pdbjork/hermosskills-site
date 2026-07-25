@@ -106,6 +106,104 @@ export async function recordOperatorLeadTask(lead, options = {}) {
   return task;
 }
 
+const contactIntentLabels = new Map([
+  ['operator', 'Operator pilot question'],
+  ['sponsor', 'Sponsorship question'],
+  ['commission', 'Commission question'],
+  ['skill', 'Skill submission question'],
+  ['refund', 'Refund/support question'],
+  ['privacy', 'Privacy/data request'],
+  ['other', 'General question']
+]);
+
+const writeRateBuckets = new Map();
+
+function getClientKey(req) {
+  return String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim().slice(0, 80) || 'unknown';
+}
+
+function isRateLimited(key, { limit = 12, windowMs = 15 * 60 * 1000 } = {}) {
+  const now = Date.now();
+  const bucket = writeRateBuckets.get(key) || [];
+  const recent = bucket.filter((ts) => now - ts < windowMs);
+  if (recent.length >= limit) {
+    writeRateBuckets.set(key, recent);
+    return true;
+  }
+  recent.push(now);
+  writeRateBuckets.set(key, recent);
+  return false;
+}
+
+export function buildContactLeadTask(lead) {
+  const intent = String(lead?.intent || 'other').slice(0, 40);
+  const urgency = String(lead?.urgency || 'normal').slice(0, 20);
+  const email = String(lead?.email || '').trim().toLowerCase();
+  const priority = urgency === 'urgent' || ['refund', 'privacy'].includes(intent) ? 'high' : 'normal';
+
+  return {
+    id: `hs_contact_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
+    created_at: new Date().toISOString(),
+    source: 'contact-form',
+    status: 'needs_human_review',
+    priority,
+    lead_id: String(lead?.id || '').slice(0, 120),
+    customer_email: email,
+    intent,
+    label: contactIntentLabels.get(intent) || contactIntentLabels.get('other'),
+    subject: String(lead?.subject || '').slice(0, 160),
+    next_actions: [
+      'Review the contact record locally before replying.',
+      'Draft a short approval-gated response that matches the request intent.',
+      'Do not send outbound email until Pete approves the exact message.',
+      'For refund, privacy, legal, or payment issues, verify the relevant source of truth before promising an outcome.'
+    ]
+  };
+}
+
+export async function recordContactLeadTask(lead, options = {}) {
+  const dataDir = options.dataDir || fulfillmentDataDir;
+  await fs.mkdir(dataDir, { recursive: true });
+  const task = buildContactLeadTask(lead);
+  await fs.appendFile(path.join(dataDir, 'contact-lead-tasks.jsonl'), JSON.stringify(task) + '\n', 'utf8');
+  await fs.appendFile(path.join(dataDir, 'fulfillment-alerts.jsonl'), JSON.stringify({
+    created_at: task.created_at,
+    level: task.priority === 'high' ? 'action_required' : 'review',
+    message: `Hermosskills contact form: ${task.label}. Human review required before any reply.`,
+    task_id: task.id,
+    lead_id: task.lead_id
+  }) + '\n', 'utf8');
+  return task;
+}
+
+export function sanitizeContactLead(body = {}, requestMeta = {}) {
+  const email = String(body.email || '').trim().toLowerCase();
+  const name = String(body.name || '').trim().slice(0, 120);
+  const rawIntent = String(body.intent || 'other').trim().toLowerCase();
+  const intent = contactIntentLabels.has(rawIntent) ? rawIntent : 'other';
+  const subject = String(body.subject || '').trim().slice(0, 160);
+  const message = String(body.message || '').trim().slice(0, 1200);
+  const url = String(body.url || '').trim().slice(0, 500);
+  const consent = body.consent === true || body.consent === 'true' || body.consent === 'on';
+
+  return {
+    id: `hs_contact_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
+    received_at: new Date().toISOString(),
+    name,
+    email,
+    intent,
+    subject,
+    message,
+    url,
+    urgency: ['urgent', 'normal'].includes(String(body.urgency || '').trim().toLowerCase()) ? String(body.urgency).trim().toLowerCase() : 'normal',
+    consent,
+    page: String(body.page || '').slice(0, 500),
+    utm: body.utm && typeof body.utm === 'object' ? body.utm : {},
+    ip: requestMeta.ip || '',
+    ua: String(requestMeta.ua || '').slice(0, 240)
+  };
+}
+
 const testLeadDomains = new Set(['example.com', 'example.org', 'example.net', 'y.com', 'z.com', 'test.com', 'localhost']);
 
 export function isLikelyTestOperatorLead(lead) {
@@ -239,9 +337,50 @@ app.get('/api/operator-interest/stats', async (_req, res) => {
   }
 });
 
+app.post('/api/contact', async (req, res) => {
+  try {
+    const clientKey = getClientKey(req);
+    if (isRateLimited(`contact:${clientKey}`, { limit: 8, windowMs: 15 * 60 * 1000 })) {
+      return res.status(429).json({ error: 'Too many contact attempts. Please wait a few minutes and try again.' });
+    }
+    const lead = sanitizeContactLead(req.body || {}, {
+      ip: clientKey,
+      ua: req.headers['user-agent'] || ''
+    });
+
+    if (!lead.email || !lead.email.includes('@')) {
+      return res.status(400).json({ error: 'Valid email required.' });
+    }
+    if (!lead.consent) {
+      return res.status(400).json({ error: 'Consent required.' });
+    }
+    if (!lead.message || lead.message.length < 10) {
+      return res.status(400).json({ error: 'Please include at least 10 characters so we understand the request.' });
+    }
+    if (lead.url && !/^https?:\/\//i.test(lead.url)) {
+      return res.status(400).json({ error: 'If you include a URL, it must start with http:// or https://.' });
+    }
+
+    const dir = '/var/lib/hermosskills';
+    await fs.mkdir(dir, { recursive: true });
+    const file = path.join(dir, 'contact-leads.jsonl');
+    await fs.appendFile(file, JSON.stringify(lead) + '\n', 'utf8');
+    const task = await recordContactLeadTask(lead, { dataDir: dir });
+    res.json({
+      ok: true,
+      id: lead.id,
+      task_id: task.id,
+      message: 'Message received. Pete reviews contact requests before any reply is sent.'
+    });
+  } catch (err) {
+    console.error('contact form', err);
+    res.status(500).json({ error: 'Could not save your message. Please try again later.' });
+  }
+});
+
 app.post('/api/create-checkout-session', async (req, res) => {
   try {
-    if (!stripe) return res.status(503).json({ error: 'Secure checkout is temporarily unavailable. Please email team@hermosskills.com and we will help.' });
+    if (!stripe) return res.status(503).json({ error: 'Secure checkout is temporarily unavailable. Please use the contact form and we will help.' });
     const planKey = String(req.body?.plan || '').toLowerCase();
     const plan = plans[planKey];
     if (!plan) return res.status(400).json({ error: 'Unknown checkout option.' });
@@ -264,7 +403,7 @@ app.post('/api/create-checkout-session', async (req, res) => {
       billing_address_collection: 'auto',
       phone_number_collection: { enabled: true },
       custom_text: {
-        submit: { message: plan.mode === 'subscription' ? 'You can manage or cancel sponsorship by contacting team@hermosskills.com.' : 'After payment, we will email you to scope the custom skill work.' }
+        submit: { message: plan.mode === 'subscription' ? 'You can manage or cancel sponsorship through the Hermosskills contact form.' : 'After payment, we will follow up to scope the custom skill work.' }
       },
       metadata: { plan: planKey, note }
     });
