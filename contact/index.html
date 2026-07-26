@@ -116,6 +116,8 @@
       }
       const subject = params.get('subject');
       if (subject && form.subject) form.subject.value = subject.slice(0, 160);
+      const message = params.get('message');
+      if (message && form.message) form.message.value = message.slice(0, 1200);
 
       function setStatus(kind, message) {
         status.textContent = message;

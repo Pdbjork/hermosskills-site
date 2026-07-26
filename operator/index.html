@@ -270,12 +270,12 @@
         <h2>Apply for a founding pilot</h2>
         <p class="muted" style="margin:0">
           2-minute form. We use your answers to score fit (not just collect emails).
-          High-fit applicants get a 20-minute call invitation. Not sure yet?
+          High-fit applicants get a 20-minute call invitation. No card is charged from this form. Not sure yet?
           <a href="/operator/checklist/">Run the 5-minute readiness checklist first.</a>
         </p>
         <div class="note" style="margin-top:1rem">
           <strong>Default offer:</strong> Standard is the $2,500 / 4-week founding pilot.
-          Pick it if you have one live surface, a real checkout, and want a weekly sync plus priority approval queue.
+          Pick it if you have one live surface, a real checkout, and want a weekly sync plus priority approval queue. Payment only happens after the fit call and an approved scope.
         </div>
         <form class="form" id="pilot-form" novalidate>
           <div class="grid-2">
@@ -678,7 +678,24 @@
         } catch (err) {
           // Fallback: keep the lead in the browser and route to the same human-reviewed intake path.
           const subject = encodeURIComponent('Operator pilot application — score ' + fit_score);
-          const contactUrl = '/contact/?intent=operator&subject=' + subject + '&utm_source=operator&utm_medium=fallback&utm_campaign=form_first';
+          const message = encodeURIComponent([
+            'Operator pilot fallback application (API did not complete).',
+            '',
+            'Name: ' + (data.name || ''),
+            'Email: ' + (data.email || ''),
+            'Site: ' + (data.url || ''),
+            'Payments: ' + (data.stripe || ''),
+            'Budget readiness: ' + (data.budget || ''),
+            'Bottleneck: ' + (data.bottleneck || ''),
+            'Approval hours/week: ' + (data.hours || ''),
+            'Fit score: ' + fit_score + ' / 100 · ' + data.fit_band,
+            '',
+            '4-week goal:',
+            data.goal || '',
+            '',
+            'Consent confirmed on operator form: ' + (data.consent ? 'yes' : 'no')
+          ].join('\n'));
+          const contactUrl = '/contact/?intent=operator&subject=' + subject + '&message=' + message + '&utm_source=operator&utm_medium=fallback&utm_campaign=form_first';
           showStatus(
             true,
             'Saved locally in this browser. Opening the human-reviewed contact form as a backup… (' + (err.message || 'API offline') + ')'
