@@ -29,3 +29,12 @@ test('operator form clarifies no card is charged before fit approval', async () 
   assert.match(html, /No card is charged from this form\./);
   assert.match(html, /Payment only happens after the fit call and an approved scope\./);
 });
+
+test('operator page names concrete week-one deliverables above the application', async () => {
+  const html = await readFile(path.join(repoDir, 'operator/index.html'), 'utf8');
+
+  assert.match(html, /What ships in week one/);
+  assert.match(html, /One live checkout, CTA, or subscriber-flow fix with before\/after proof\./);
+  assert.match(html, /Three approval-ready outreach or follow-up drafts queued for your yes\/no\./);
+  assert.match(html, /A daily revenue command report: profit, followers\/subscribers, leads, blockers, next action\./);
+});
