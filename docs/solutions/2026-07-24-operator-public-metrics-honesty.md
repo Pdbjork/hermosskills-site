@@ -18,8 +18,9 @@ For a trust-first agent-operations offer, inflated proof is worse than a low num
   - `avg_fit_score`: qualified leads only, or `null` when none are available
 - Updated `/api/operator-interest/stats` to use the filtered stats builder.
 - Changed homepage and operator-page proof counters from hard-coded `3` / `81` to loading states populated by the filtered API.
+- Updated the operator brief proof counters from hard-coded `3` / `81` to the same filtered stats endpoint.
 - Updated the operator thank-you page with concrete fit-review prep steps and links back to the pilot brief/checklist.
-- Added Node tests covering test-lead detection and filtered public stats.
+- Added Node tests covering test-lead detection, filtered public stats, and brief-page seeded-proof regression.
 
 ## Verification
 

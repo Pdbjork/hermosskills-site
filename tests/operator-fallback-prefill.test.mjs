@@ -38,3 +38,14 @@ test('operator page names concrete week-one deliverables above the application',
   assert.match(html, /Three approval-ready outreach or follow-up drafts queued for your yes\/no\./);
   assert.match(html, /A daily revenue command report: profit, followers\/subscribers, leads, blockers, next action\./);
 });
+
+test('operator brief does not hard-code seeded application proof', async () => {
+  const html = await readFile(path.join(repoDir, 'operator/brief/index.html'), 'utf8');
+
+  assert.match(html, /id="brief-leads-count">—<\/strong><span class="muted">qualified applications/);
+  assert.match(html, /fetch\('\/api\/operator-interest\/stats'/);
+  assert.match(html, /stats\.excluded_test_count > 0/);
+  assert.match(html, /We do not show seeded traction/);
+  assert.doesNotMatch(html, /<strong>3<\/strong><span class="muted">founding applications/);
+  assert.doesNotMatch(html, /<strong>81<\/strong><span class="muted">avg fit score/);
+});

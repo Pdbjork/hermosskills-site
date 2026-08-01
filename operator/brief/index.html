@@ -82,10 +82,11 @@
           <a class="btn btn-secondary" href="/contact/?intent=operator&subject=Operator%20pilot%20brief&utm_source=operator_brief&utm_medium=brief&utm_campaign=form_first">Ask through contact form</a>
         </div>
         <div class="metric" aria-label="Current pilot proof">
-          <div><strong>3</strong><span class="muted">founding applications</span></div>
-          <div><strong>81</strong><span class="muted">avg fit score</span></div>
+          <div><strong id="brief-leads-count">—</strong><span class="muted">qualified applications</span></div>
+          <div><strong id="brief-avg-fit">—</strong><span class="muted">avg fit score</span></div>
           <div><strong>$2,500</strong><span class="muted">recommended pilot</span></div>
         </div>
+        <p id="brief-metrics-note" class="muted" style="margin:.65rem 0 0;font-size:.92rem">Loading filtered application stats. Test submissions do not count as traction.</p>
       </div>
       <aside class="card">
         <h2>Best fit</h2>
@@ -159,5 +160,29 @@
   </main>
 
   <footer><div class="wrap">Hermosskills Operator-as-a-Service · human-gated, consent-first, metrics-honest.</div></footer>
+  <script>
+    (function () {
+      const leads = document.getElementById('brief-leads-count');
+      const avg = document.getElementById('brief-avg-fit');
+      const note = document.getElementById('brief-metrics-note');
+      if (!leads || !avg || !note) return;
+
+      fetch('/api/operator-interest/stats', { credentials: 'omit' })
+        .then((res) => res.ok ? res.json() : null)
+        .then((stats) => {
+          if (!stats || stats.ok !== true) throw new Error('stats unavailable');
+          leads.textContent = String(stats.count ?? 0);
+          avg.textContent = stats.avg_fit_score == null ? '—' : String(Math.round(stats.avg_fit_score));
+          note.textContent = stats.excluded_test_count > 0
+            ? stats.excluded_test_count + ' smoke-test submissions filtered from public proof.'
+            : 'Filtered application stats, excluding smoke tests.';
+        })
+        .catch(() => {
+          leads.textContent = '0';
+          avg.textContent = '—';
+          note.textContent = 'Application stats unavailable. We do not show seeded traction.';
+        });
+    })();
+  </script>
 </body>
 </html>
