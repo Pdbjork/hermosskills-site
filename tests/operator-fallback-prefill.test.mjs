@@ -39,6 +39,22 @@ test('operator page names concrete week-one deliverables above the application',
   assert.match(html, /A daily revenue command report: profit, followers\/subscribers, leads, blockers, next action\./);
 });
 
+test('operator sample report is linked from the operator funnel and names honest metrics', async () => {
+  const operator = await readFile(path.join(repoDir, 'operator/index.html'), 'utf8');
+  const brief = await readFile(path.join(repoDir, 'operator/brief/index.html'), 'utf8');
+  const checklist = await readFile(path.join(repoDir, 'operator/checklist/index.html'), 'utf8');
+  const sample = await readFile(path.join(repoDir, 'operator/sample-report/index.html'), 'utf8');
+
+  assert.match(operator, /href="\/operator\/sample-report\/">See a sample daily report/);
+  assert.match(brief, /href="\/operator\/sample-report\/">See a sample daily report/);
+  assert.match(checklist, /href="\/operator\/sample-report\/">Sample report/);
+  assert.match(sample, /Sample daily revenue command report/);
+  assert.match(sample, /Profit today: \$0 confirmed from Stripe\./);
+  assert.match(sample, /Subscribers: 0 confirmed from list system\./);
+  assert.match(sample, /nothing sent without approval/i);
+  assert.match(sample, /\/operator\/\?plan=2500&utm_source=sample_report/);
+});
+
 test('operator brief does not hard-code seeded application proof', async () => {
   const html = await readFile(path.join(repoDir, 'operator/brief/index.html'), 'utf8');
 
