@@ -55,6 +55,18 @@ test('operator sample report is linked from the operator funnel and names honest
   assert.match(sample, /\/operator\/\?plan=2500&utm_source=sample_report/);
 });
 
+test('operator funnel offers a low-friction weekly teardown lead magnet', async () => {
+  const operator = await readFile(path.join(repoDir, 'operator/index.html'), 'utf8');
+  const sample = await readFile(path.join(repoDir, 'operator/sample-report/index.html'), 'utf8');
+
+  assert.match(operator, /Weekly operator teardown lead magnet/);
+  assert.match(operator, /Get the weekly operator teardown/);
+  assert.match(operator, /utm_campaign=weekly_teardown/);
+  assert.match(sample, /Want the low-friction proof trail\?/);
+  assert.match(sample, /Get the weekly teardown/);
+  assert.match(sample, /utm_campaign=weekly_teardown/);
+});
+
 test('operator brief does not hard-code seeded application proof', async () => {
   const html = await readFile(path.join(repoDir, 'operator/brief/index.html'), 'utf8');
 
