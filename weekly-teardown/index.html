@@ -95,9 +95,10 @@
         <p class="muted">The operator funnel had a high-intent application and a sample report, but no direct public page for the lower-commitment request. This page turns a 404 into a trackable lead path.</p>
         <div class="metric-grid" aria-label="Current baseline">
           <div class="metric"><strong>$0</strong><span>current confirmed revenue</span></div>
-          <div class="metric"><strong>0</strong><span>qualified teardown requests</span></div>
-          <div class="metric"><strong>1</strong><span>clear request path</span></div>
+          <div class="metric"><strong id="teardown-count">0</strong><span>qualified teardown requests</span></div>
+          <div class="metric"><strong id="contact-count">0</strong><span>qualified contact leads</span></div>
         </div>
+        <p id="metrics-note" class="muted" style="margin:.75rem 0 0;font-size:.92rem">Loading live contact stats. Test submissions do not count as traction.</p>
       </aside>
     </div>
 
@@ -145,5 +146,27 @@
   </main>
 
   <footer><div class="wrap">Hermosskills Operator-as-a-Service · human-gated proof before the pilot.</div></footer>
+  <script>
+    (function () {
+      const teardown = document.getElementById('teardown-count');
+      const contact = document.getElementById('contact-count');
+      const note = document.getElementById('metrics-note');
+      fetch('/api/contact/stats', { credentials: 'omit' })
+        .then((res) => res.ok ? res.json() : null)
+        .then((stats) => {
+          if (!stats || stats.ok !== true) throw new Error('stats unavailable');
+          teardown.textContent = String(stats.weekly_teardown_count ?? 0);
+          contact.textContent = String(stats.count ?? 0);
+          if ((stats.excluded_test_count ?? 0) > 0) {
+            note.textContent = `${stats.excluded_test_count} test contact ${stats.excluded_test_count === 1 ? 'submission is' : 'submissions are'} excluded from public proof metrics.`;
+          } else {
+            note.textContent = 'Live contact stats loaded. Test submissions do not count as traction.';
+          }
+        })
+        .catch(() => {
+          note.textContent = 'Live contact stats unavailable. Use the contact form; Pete reviews requests locally.';
+        });
+    })();
+  </script>
 </body>
 </html>

@@ -70,6 +70,9 @@ test('operator funnel offers a low-friction weekly teardown landing page', async
   assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage/);
   assert.match(teardown, /Get one operator teardown before you apply/);
   assert.match(teardown, /0<\/strong><span>qualified teardown requests/);
+  assert.match(teardown, /fetch\('\/api\/contact\/stats'/);
+  assert.match(teardown, /stats\.weekly_teardown_count/);
+  assert.match(teardown, /stats\.excluded_test_count/);
   assert.match(teardown, /Do not send passwords, tokens, private customer exports/);
   assert.match(teardown, /utm_source=weekly_teardown&amp;utm_medium=landing_page&amp;utm_campaign=weekly_teardown/);
 });

@@ -235,6 +235,55 @@ export function buildOperatorLeadStats(leads) {
   };
 }
 
+export function isLikelyTestContactLead(lead) {
+  const email = String(lead?.email || '').trim().toLowerCase();
+  const name = String(lead?.name || '').trim().toLowerCase();
+  const subject = String(lead?.subject || '').trim().toLowerCase();
+  const message = String(lead?.message || '').trim().toLowerCase();
+  const urlText = String(lead?.url || '').trim().toLowerCase();
+  let urlHost = '';
+  try { urlHost = new URL(urlText).hostname.replace(/^www\./, ''); } catch { /* ignore malformed URL */ }
+  const emailDomain = email.includes('@') ? email.split('@').pop() : '';
+  if (testLeadDomains.has(emailDomain) || testLeadDomains.has(urlHost)) return true;
+  if (/^(test|testing|x|final|demo|sample|asdf|qwerty)$/.test(name)) return true;
+  if (/^(test|demo|sample|x)(\+[^@]+)?@/.test(email)) return true;
+  if (/\b(smoke test|test submission|bot-field-test)\b/.test(`${subject} ${message}`)) return true;
+  return false;
+}
+
+export function isWeeklyTeardownContactLead(lead) {
+  const utm = lead?.utm && typeof lead.utm === 'object' ? lead.utm : {};
+  const source = String(utm.source || '').toLowerCase();
+  const campaign = String(utm.campaign || '').toLowerCase();
+  const subject = String(lead?.subject || '').toLowerCase();
+  const message = String(lead?.message || '').toLowerCase();
+  return source === 'weekly_teardown'
+    || campaign === 'weekly_teardown'
+    || subject.includes('weekly operator teardown')
+    || message.includes('weekly operator teardown');
+}
+
+export function buildContactLeadStats(leads) {
+  const raw_count = leads.length;
+  const realLeads = leads.filter((lead) => !isLikelyTestContactLead(lead));
+  const weeklyRaw = leads.filter(isWeeklyTeardownContactLead).length;
+  const weeklyQualified = realLeads.filter(isWeeklyTeardownContactLead).length;
+  const by_intent = Object.fromEntries([...contactIntentLabels.keys()].map((intent) => [intent, 0]));
+  for (const lead of realLeads) {
+    const intent = contactIntentLabels.has(String(lead?.intent || '')) ? String(lead.intent) : 'other';
+    by_intent[intent] = (by_intent[intent] || 0) + 1;
+  }
+  return {
+    ok: true,
+    count: realLeads.length,
+    raw_count,
+    excluded_test_count: raw_count - realLeads.length,
+    weekly_teardown_count: weeklyQualified,
+    weekly_teardown_raw_count: weeklyRaw,
+    by_intent
+  };
+}
+
 const plans = {
   sponsor: {
     mode: 'subscription',
@@ -375,6 +424,21 @@ app.post('/api/contact', async (req, res) => {
   } catch (err) {
     console.error('contact form', err);
     res.status(500).json({ error: 'Could not save your message. Please try again later.' });
+  }
+});
+
+app.get(['/api/contact/stats', '/api/weekly-teardown/stats'], async (_req, res) => {
+  try {
+    const file = path.join('/var/lib/hermosskills', 'contact-leads.jsonl');
+    let text = '';
+    try { text = await fs.readFile(file, 'utf8'); } catch { /* empty */ }
+    const leads = text.split('\n').filter(Boolean).map((line) => {
+      try { return JSON.parse(line); } catch { return null; }
+    }).filter(Boolean);
+    const stats = buildContactLeadStats(leads);
+    res.json(stats);
+  } catch (err) {
+    res.status(500).json({ error: 'stats unavailable' });
   }
 });
 
