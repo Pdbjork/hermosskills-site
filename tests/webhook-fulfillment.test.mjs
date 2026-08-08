@@ -5,11 +5,14 @@ import path from 'node:path';
 import test from 'node:test';
 
 import {
+  buildContactLeadStats,
   buildContactLeadTask,
   buildFulfillmentTask,
   buildOperatorLeadTask,
   buildOperatorLeadStats,
+  isLikelyTestContactLead,
   isLikelyTestOperatorLead,
+  isWeeklyTeardownContactLead,
   recordCheckoutFulfillment,
   recordContactLeadTask,
   recordOperatorLeadTask,
@@ -180,6 +183,55 @@ test('recordContactLeadTask writes contact review task and alert without sending
   assert.equal(alert.level, 'review');
   assert.equal(alert.task_id, task.id);
   assert.equal(alert.lead_id, 'hs_contact_test_456');
+});
+
+test('buildContactLeadStats excludes test contacts and counts weekly teardown requests', () => {
+  const leads = [
+    {
+      name: 'Test',
+      email: 'test@example.com',
+      intent: 'operator',
+      subject: 'Send me the weekly operator teardown',
+      message: 'smoke test submission for the weekly operator teardown',
+      utm: { source: 'weekly_teardown', campaign: 'weekly_teardown' }
+    },
+    {
+      name: 'Rae Founder',
+      email: 'rae@realbusiness.com',
+      intent: 'operator',
+      subject: 'Send me the weekly operator teardown',
+      message: 'Please send me the weekly operator teardown for my live site.',
+      utm: { source: 'weekly_teardown', campaign: 'weekly_teardown' }
+    },
+    {
+      name: 'Mina Sponsor',
+      email: 'mina@trustco.org',
+      intent: 'sponsor',
+      subject: 'Sponsorship question',
+      message: 'I want to ask about a founding sponsorship.'
+    }
+  ];
+
+  assert.equal(isLikelyTestContactLead(leads[0]), true);
+  assert.equal(isLikelyTestContactLead(leads[1]), false);
+  assert.equal(isWeeklyTeardownContactLead(leads[1]), true);
+  assert.deepEqual(buildContactLeadStats(leads), {
+    ok: true,
+    count: 2,
+    raw_count: 3,
+    excluded_test_count: 1,
+    weekly_teardown_count: 1,
+    weekly_teardown_raw_count: 2,
+    by_intent: {
+      operator: 1,
+      sponsor: 1,
+      commission: 0,
+      skill: 0,
+      refund: 0,
+      privacy: 0,
+      other: 0
+    }
+  });
 });
 
 test('isLikelyTestOperatorLead identifies seed and smoke-test submissions', () => {

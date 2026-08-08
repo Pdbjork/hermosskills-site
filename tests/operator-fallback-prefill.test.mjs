@@ -55,6 +55,28 @@ test('operator sample report is linked from the operator funnel and names honest
   assert.match(sample, /\/operator\/\?plan=2500&utm_source=sample_report/);
 });
 
+test('operator funnel offers a low-friction weekly teardown landing page', async () => {
+  const operator = await readFile(path.join(repoDir, 'operator/index.html'), 'utf8');
+  const sample = await readFile(path.join(repoDir, 'operator/sample-report/index.html'), 'utf8');
+  const home = await readFile(path.join(repoDir, 'index.html'), 'utf8');
+  const teardown = await readFile(path.join(repoDir, 'weekly-teardown/index.html'), 'utf8');
+
+  assert.match(operator, /Weekly operator teardown lead magnet/);
+  assert.match(operator, /Get the weekly operator teardown/);
+  assert.match(operator, /href="\/weekly-teardown\/\?utm_source=operator/);
+  assert.match(sample, /Want the low-friction proof trail\?/);
+  assert.match(sample, /Get the weekly teardown/);
+  assert.match(sample, /href="\/weekly-teardown\/\?utm_source=sample_report_close/);
+  assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage/);
+  assert.match(teardown, /Get one operator teardown before you apply/);
+  assert.match(teardown, /0<\/strong><span>qualified teardown requests/);
+  assert.match(teardown, /fetch\('\/api\/contact\/stats'/);
+  assert.match(teardown, /stats\.weekly_teardown_count/);
+  assert.match(teardown, /stats\.excluded_test_count/);
+  assert.match(teardown, /Do not send passwords, tokens, private customer exports/);
+  assert.match(teardown, /utm_source=weekly_teardown&amp;utm_medium=landing_page&amp;utm_campaign=weekly_teardown/);
+});
+
 test('operator brief does not hard-code seeded application proof', async () => {
   const html = await readFile(path.join(repoDir, 'operator/brief/index.html'), 'utf8');
 
