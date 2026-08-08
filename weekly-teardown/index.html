@@ -59,9 +59,17 @@
     .proof article { border:1px solid var(--line); background:#fff; border-radius:18px; padding:1.15rem; }
     .proof h3 { font-size:1.12rem; margin-bottom:.45rem; }
     .proof p { margin:0; color:var(--muted); }
+    .sample { display:grid; grid-template-columns:minmax(0,.82fr) minmax(280px,1fr); gap:1rem; align-items:stretch; }
+    .sample-card { border:1px solid var(--line); background:#fff; border-radius:20px; padding:1.25rem; }
+    .sample-card h3 { font-size:1.15rem; margin-bottom:.5rem; }
+    .sample-card p { margin:.45rem 0 0; color:var(--muted); }
+    .sample-card ol { margin:.75rem 0 0; padding-left:1.25rem; color:var(--muted); }
+    .sample-card li + li { margin-top:.35rem; }
+    .deal-strip { margin-top:1rem; border:1px solid rgba(15,118,110,.22); background:linear-gradient(135deg, rgba(204,251,241,.72), rgba(255,255,255,.92)); border-radius:18px; padding:1rem; }
+    .deal-strip strong { color:var(--teal-dark); }
     .notice { border-color:rgba(245,158,11,.35); background:var(--amber-soft); color:#78350f; }
     footer { border-top:1px solid var(--line); color:var(--muted); padding:2rem 0; }
-    @media (max-width:860px) { .hero,.grid-3,.metric-grid { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } }
+    @media (max-width:860px) { .hero,.grid-3,.metric-grid,.sample { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } }
   </style>
 </head>
 <body>
@@ -119,6 +127,32 @@
         <article class="mini">
           <h3>Next action</h3>
           <p>You get the next best move: apply, run the readiness checklist, or fix a missing surface first.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="band wrap">
+      <div class="section-head">
+        <h2>What the teardown looks like</h2>
+        <p class="muted">Founders convert faster when they can see the operator habit before they book a call. This is the format Pete sends after review.</p>
+      </div>
+      <div class="sample">
+        <article class="sample-card">
+          <h3>Mini teardown template</h3>
+          <ol>
+            <li><strong>Surface:</strong> one public page, checkout, waitlist, catalog, or support path.</li>
+            <li><strong>Change:</strong> the exact CTA, copy, route, metric, or follow-up asset the operator would touch first.</li>
+            <li><strong>Proof:</strong> current baseline, live URL or file path, and one check that says whether the work moved anything.</li>
+            <li><strong>Approval gate:</strong> what Pete can prepare alone, and what waits for your yes before it leaves your account.</li>
+          </ol>
+        </article>
+        <article class="sample-card">
+          <h3>Example request that gets a useful reply</h3>
+          <p>“My site is example.com. We have a Stripe checkout and a dormant subscriber form. I want one weekly operator teardown before I consider the pilot. Please look for the fastest safe path to one real lead or one checkout attempt.”</p>
+          <div class="deal-strip"><strong>Best fit:</strong> founder with one live business surface, access to approve deploys or copy changes, and appetite for a small measured revenue loop this week.</div>
+          <div class="actions" style="margin-top:1rem">
+            <a class="btn btn-primary" href="/contact/?intent=operator&amp;subject=Send%20me%20the%20weekly%20operator%20teardown&amp;message=Please%20send%20me%20the%20weekly%20operator%20teardown.%20My%20site%20or%20business%20surface%20is:%20%0A%0AThe%20metric%20I%20care%20about%20first%20is:%20&amp;utm_source=weekly_teardown&amp;utm_medium=sample_section&amp;utm_campaign=weekly_teardown">Send my surface</a>
+          </div>
         </article>
       </div>
     </section>
