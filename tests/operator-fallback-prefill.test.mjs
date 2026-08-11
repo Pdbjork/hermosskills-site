@@ -67,6 +67,11 @@ test('operator funnel offers a low-friction weekly teardown landing page', async
   assert.match(sample, /Want the low-friction proof trail\?/);
   assert.match(sample, /Get the weekly teardown/);
   assert.match(sample, /href="\/weekly-teardown\/\?utm_source=sample_report_close/);
+  assert.match(home, /Weekly operator teardown now open/);
+  assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage&utm_medium=hero&utm_campaign=weekly_teardown/);
+  assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage&utm_medium=nav&utm_campaign=weekly_teardown/);
+  assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage&utm_medium=hero_strip&utm_campaign=weekly_teardown/);
+  assert.match(home, /See the operator loop before you apply/);
   assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage/);
   assert.match(teardown, /Get one operator teardown before you apply/);
   assert.match(teardown, /0<\/strong><span>qualified teardown requests/);
