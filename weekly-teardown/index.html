@@ -67,9 +67,14 @@
     .sample-card li + li { margin-top:.35rem; }
     .deal-strip { margin-top:1rem; border:1px solid rgba(15,118,110,.22); background:linear-gradient(135deg, rgba(204,251,241,.72), rgba(255,255,255,.92)); border-radius:18px; padding:1rem; }
     .deal-strip strong { color:var(--teal-dark); }
+    .template-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+    .template-card { border:1px solid var(--line); background:#fff; border-radius:18px; padding:1.15rem; display:flex; flex-direction:column; gap:.75rem; }
+    .template-card h3 { font-size:1.12rem; }
+    .template-card p { margin:0; color:var(--muted); }
+    .template-card .btn { align-self:flex-start; margin-top:auto; }
     .notice { border-color:rgba(245,158,11,.35); background:var(--amber-soft); color:#78350f; }
     footer { border-top:1px solid var(--line); color:var(--muted); padding:2rem 0; }
-    @media (max-width:860px) { .hero,.grid-3,.metric-grid,.sample { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } }
+    @media (max-width:860px) { .hero,.grid-3,.metric-grid,.sample,.template-grid { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } }
   </style>
 </head>
 <body>
@@ -153,6 +158,30 @@
           <div class="actions" style="margin-top:1rem">
             <a class="btn btn-primary" href="/contact/?intent=operator&amp;subject=Send%20me%20the%20weekly%20operator%20teardown&amp;message=Please%20send%20me%20the%20weekly%20operator%20teardown.%20My%20site%20or%20business%20surface%20is:%20%0A%0AThe%20metric%20I%20care%20about%20first%20is:%20&amp;utm_source=weekly_teardown&amp;utm_medium=sample_section&amp;utm_campaign=weekly_teardown">Send my surface</a>
           </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="band wrap" id="request-templates">
+      <div class="section-head">
+        <h2>Pick the teardown that matches the metric.</h2>
+        <p class="muted">Founder attention is scarce, so the page now routes prospects into three concrete requests instead of one vague “contact me” ask.</p>
+      </div>
+      <div class="template-grid" aria-label="Weekly teardown request templates">
+        <article class="template-card">
+          <h3>Checkout or pricing page</h3>
+          <p>Best when revenue is the bottleneck and the prospect wants a first safe CTA, trust, or checkout-friction read.</p>
+          <a class="btn btn-primary" href="/contact/?intent=operator&amp;subject=Teardown%20my%20checkout%20or%20pricing%20page&amp;message=Please%20send%20me%20a%20weekly%20operator%20teardown%20of%20my%20checkout%20or%20pricing%20page.%0A%0ARelevant%20URL:%20%0A%0AMetric%20I%20care%20about:%20checkout%20attempts%20or%20paid%20conversions.%0A%0APlease%20look%20for%20the%20fastest%20safe%20CTA,%20trust,%20or%20friction%20fix%20before%20I%20consider%20the%20pilot.&amp;utm_source=weekly_teardown&amp;utm_medium=request_template&amp;utm_campaign=weekly_teardown&amp;utm_content=checkout_pricing">Request checkout teardown</a>
+        </article>
+        <article class="template-card">
+          <h3>Subscriber or waitlist path</h3>
+          <p>Best when the next win is one more qualified subscriber, reply, or opt-in instead of a direct sale today.</p>
+          <a class="btn btn-primary" href="/contact/?intent=operator&amp;subject=Teardown%20my%20subscriber%20or%20waitlist%20path&amp;message=Please%20send%20me%20a%20weekly%20operator%20teardown%20of%20my%20subscriber%20or%20waitlist%20path.%0A%0ARelevant%20URL:%20%0A%0AMetric%20I%20care%20about:%20qualified%20subscribers,%20replies,%20or%20opt-ins.%0A%0APlease%20look%20for%20the%20fastest%20safe%20copy,%20offer,%20or%20follow-up%20fix%20before%20I%20consider%20the%20pilot.&amp;utm_source=weekly_teardown&amp;utm_medium=request_template&amp;utm_campaign=weekly_teardown&amp;utm_content=subscriber_waitlist">Request subscriber teardown</a>
+        </article>
+        <article class="template-card">
+          <h3>Homepage or offer page</h3>
+          <p>Best when the surface exists but visitors may not understand the offer, proof, promise, or next action.</p>
+          <a class="btn btn-primary" href="/contact/?intent=operator&amp;subject=Teardown%20my%20homepage%20or%20offer%20page&amp;message=Please%20send%20me%20a%20weekly%20operator%20teardown%20of%20my%20homepage%20or%20offer%20page.%0A%0ARelevant%20URL:%20%0A%0AMetric%20I%20care%20about:%20clearer%20qualified%20interest.%0A%0APlease%20look%20for%20the%20fastest%20safe%20positioning,%20proof,%20or%20CTA%20fix%20before%20I%20consider%20the%20pilot.&amp;utm_source=weekly_teardown&amp;utm_medium=request_template&amp;utm_campaign=weekly_teardown&amp;utm_content=homepage_offer">Request offer teardown</a>
         </article>
       </div>
     </section>

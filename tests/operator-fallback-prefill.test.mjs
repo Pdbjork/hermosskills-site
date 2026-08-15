@@ -80,6 +80,15 @@ test('operator funnel offers a low-friction weekly teardown landing page', async
   assert.match(teardown, /stats\.excluded_test_count/);
   assert.match(teardown, /Do not send passwords, tokens, private customer exports/);
   assert.match(teardown, /utm_source=weekly_teardown&amp;utm_medium=landing_page&amp;utm_campaign=weekly_teardown/);
+  assert.match(teardown, /Pick the teardown that matches the metric/);
+  assert.match(teardown, /Request checkout teardown/);
+  assert.match(teardown, /utm_content=checkout_pricing/);
+  assert.match(teardown, /Request subscriber teardown/);
+  assert.match(teardown, /utm_content=subscriber_waitlist/);
+  assert.match(teardown, /Request offer teardown/);
+  assert.match(teardown, /utm_content=homepage_offer/);
+  assert.match(home, /choose a checkout, subscriber, or homepage teardown template/);
+  assert.match(home, /weekly-teardown\/\?utm_source=homepage&utm_medium=hero_strip&utm_campaign=weekly_teardown#request-templates/);
 });
 
 test('operator brief does not hard-code seeded application proof', async () => {
