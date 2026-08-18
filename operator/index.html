@@ -198,6 +198,16 @@
     .teardown-card h2 { margin: 0; font-size: 1.05rem; letter-spacing: -.02em; }
     .teardown-card p { margin: 0; color: var(--muted); }
     .teardown-card .btn { justify-self: start; }
+    .template-picker {
+      margin-top: 1rem; display: grid; gap: .7rem;
+    }
+    .template-button {
+      width: 100%; text-align: left; border: 1px solid var(--line); background: #fff;
+      border-radius: 16px; padding: .9rem 1rem; color: var(--ink); cursor: pointer; font: inherit;
+    }
+    .template-button:hover, .template-button:focus-visible { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(15, 118, 110, .12); outline: none; }
+    .template-button strong { display: block; letter-spacing: -.02em; }
+    .template-button span { display: block; margin-top: .2rem; color: var(--muted); font-size: .9rem; }
     .note {
       margin-top: 1rem; padding: 1rem; border-radius: 14px; background: var(--amber-soft);
       border: 1px solid rgba(245, 158, 11, .35); color: #78350f; font-size: .95rem;
@@ -307,6 +317,20 @@
         <div class="note" style="margin-top:1rem">
           <strong>Default offer:</strong> Standard is the $2,500 / 4-week founding pilot.
           Pick it if you have one live surface, a real checkout, and want a weekly sync plus priority approval queue. Payment only happens after the fit call and an approved scope.
+        </div>
+        <div class="template-picker" aria-label="Application templates">
+          <button class="template-button" type="button" data-application-template="checkout">
+            <strong>Use the checkout rescue template</strong>
+            <span>For founders with Stripe or another checkout live, but no reliable purchase attempts yet.</span>
+          </button>
+          <button class="template-button" type="button" data-application-template="subscriber">
+            <strong>Use the subscriber-growth template</strong>
+            <span>For newsletters, waitlists, communities, or lead magnets where the first metric is qualified opt-ins.</span>
+          </button>
+          <button class="template-button" type="button" data-application-template="ops">
+            <strong>Use the ops follow-through template</strong>
+            <span>For founders with scattered tasks, stalled launches, and approval bandwidth for daily operator work.</span>
+          </button>
         </div>
         <form class="form" id="pilot-form" novalidate>
           <div class="grid-2">
@@ -590,6 +614,46 @@
         plan: ['1500', '2500', '5000'].includes(requestedPlan) ? requestedPlan : ''
       };
       if (form.budget && utm.plan) form.budget.value = utm.plan;
+
+      const applicationTemplates = {
+        checkout: {
+          stripe: 'stripe_live',
+          budget: '2500',
+          bottleneck: 'funnel',
+          hours: '2-3',
+          goal: 'In four weeks, I want one checkout or pricing surface cleaned up, the first qualified purchase attempts measured, and three approval-ready follow-up drafts for people who show buying intent.'
+        },
+        subscriber: {
+          stripe: 'not_yet',
+          budget: '1500',
+          bottleneck: 'distribution',
+          hours: '2-3',
+          goal: 'In four weeks, I want one subscriber or waitlist path made clearer, one distribution asset prepared for approval, and a weekly report that separates real opt-ins from test traffic.'
+        },
+        ops: {
+          stripe: 'checkout_other',
+          budget: '2500',
+          bottleneck: 'ops',
+          hours: '4+',
+          goal: 'In four weeks, I want my daily operator loop working: revenue-command reports, approval-ready outbound drafts, and one shipped improvement on the business surface that is blocking growth.'
+        }
+      };
+
+      function applyTemplate(kind) {
+        const template = applicationTemplates[kind];
+        if (!template) return;
+        ['stripe', 'budget', 'bottleneck', 'hours', 'goal'].forEach((field) => {
+          if (form.elements[field] && template[field]) form.elements[field].value = template[field];
+        });
+        form.dataset.template = kind;
+        if (!utm.content) utm.content = 'application_template_' + kind;
+        refreshScore();
+        if (form.url) form.url.focus();
+      }
+
+      document.querySelectorAll('[data-application-template]').forEach((button) => {
+        button.addEventListener('click', () => applyTemplate(button.getAttribute('data-application-template')));
+      });
 
       function scoreFit(data) {
         let s = 20; // base for completing form intent

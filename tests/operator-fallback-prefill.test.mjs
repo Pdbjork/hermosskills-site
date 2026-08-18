@@ -91,6 +91,22 @@ test('operator funnel offers a low-friction weekly teardown landing page', async
   assert.match(home, /weekly-teardown\/\?utm_source=homepage&utm_medium=hero_strip&utm_campaign=weekly_teardown#request-templates/);
 });
 
+test('operator application offers one-click templates for high-intent founders', async () => {
+  const html = await readFile(path.join(repoDir, 'operator/index.html'), 'utf8');
+
+  assert.match(html, /aria-label="Application templates"/);
+  assert.match(html, /data-application-template="checkout"/);
+  assert.match(html, /Use the checkout rescue template/);
+  assert.match(html, /data-application-template="subscriber"/);
+  assert.match(html, /Use the subscriber-growth template/);
+  assert.match(html, /data-application-template="ops"/);
+  assert.match(html, /Use the ops follow-through template/);
+  assert.match(html, /const applicationTemplates = {/);
+  assert.match(html, /application_template_' \+ kind/);
+  assert.match(html, /form\.elements\[field\]\.value = template\[field\]/);
+  assert.match(html, /first qualified purchase attempts measured/);
+});
+
 test('operator brief does not hard-code seeded application proof', async () => {
   const html = await readFile(path.join(repoDir, 'operator/brief/index.html'), 'utf8');
 
