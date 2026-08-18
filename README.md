@@ -22,8 +22,15 @@ Then open http://localhost:8001/
 ## Deploy
 
 ```
-sudo rsync -av --delete /root/repos/hermosskills-site/ /var/www/hermosskills.com/
+sudo rsync -av --delete \
+  --exclude '.git/' \
+  --exclude 'node_modules/' \
+  --exclude '.env' \
+  --exclude 'orders/' \
+  /root/repos/hermosskills-site/ /var/www/hermosskills.com/
 sudo nginx -t && sudo systemctl reload nginx
+
+The nginx vhost should return 404 for dotfiles plus repo-only files such as `server.mjs`, `package.json`, `tests/`, `docs/`, `todos/`, and `orders/`.
 ```
 
 ## Status

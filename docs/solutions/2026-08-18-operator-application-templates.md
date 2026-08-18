@@ -28,6 +28,9 @@ Operator page changes:
 - `npm test` should pass.
 - Static HTML parser should parse `operator/index.html`.
 - Static content checks should find all three `data-application-template` buttons and the `applicationTemplates` JS object.
+- Before/after public source exposure probes should verify repo internals are not web-accessible:
+  - `/.git/HEAD` returns 404.
+  - `/server.mjs`, `/tests/...`, and `/docs/...` return 404.
 - Public smoke after deploy should verify:
   - `https://hermosskills.com/operator/` returns 200.
   - Public HTML contains `Use the checkout rescue template`, `Use the subscriber-growth template`, and `Use the ops follow-through template`.
