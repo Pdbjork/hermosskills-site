@@ -87,6 +87,11 @@ test('operator funnel offers a low-friction weekly teardown landing page', async
   assert.match(teardown, /utm_content=subscriber_waitlist/);
   assert.match(teardown, /Request offer teardown/);
   assert.match(teardown, /utm_content=homepage_offer/);
+  assert.match(teardown, /id="teardown-inline-form"/);
+  assert.match(teardown, /Public URL to inspect/);
+  assert.match(teardown, /fetch\('\/api\/contact'/);
+  assert.match(teardown, /medium: 'inline_form'/);
+  assert.match(teardown, /content: 'quick_request'/);
   assert.match(home, /choose a checkout, subscriber, or homepage teardown template/);
   assert.match(home, /weekly-teardown\/\?utm_source=homepage&utm_medium=hero_strip&utm_campaign=weekly_teardown#request-templates/);
 });

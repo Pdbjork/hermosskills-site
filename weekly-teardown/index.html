@@ -73,6 +73,15 @@
     .template-card p { margin:0; color:var(--muted); }
     .template-card .btn { align-self:flex-start; margin-top:auto; }
     .notice { border-color:rgba(245,158,11,.35); background:var(--amber-soft); color:#78350f; }
+    .quick-form { display:grid; gap:.75rem; margin-top:1rem; }
+    .quick-form label { display:grid; gap:.3rem; font-weight:800; font-size:.92rem; }
+    .quick-form input, .quick-form textarea { width:100%; border:1px solid var(--line); border-radius:14px; padding:.8rem .9rem; background:#fff; color:var(--ink); font:inherit; }
+    .quick-form textarea { min-height:78px; resize:vertical; }
+    .quick-form input:focus, .quick-form textarea:focus { outline:3px solid rgba(15,118,110,.14); border-color:var(--teal); }
+    .consent-row { display:flex; gap:.55rem; align-items:flex-start; color:var(--muted); font-size:.9rem; }
+    .consent-row input { width:auto; margin-top:.25rem; }
+    .form-status { min-height:1.4rem; margin:0; color:var(--muted); font-size:.92rem; }
+    .form-status.err { color:#991b1b; }
     footer { border-top:1px solid var(--line); color:var(--muted); padding:2rem 0; }
     @media (max-width:860px) { .hero,.grid-3,.metric-grid,.sample,.template-grid { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } }
   </style>
@@ -112,6 +121,23 @@
           <div class="metric"><strong id="contact-count">0</strong><span>qualified contact leads</span></div>
         </div>
         <p id="metrics-note" class="muted" style="margin:.75rem 0 0;font-size:.92rem">Loading live contact stats. Test submissions do not count as traction.</p>
+        <form class="quick-form" id="teardown-inline-form" novalidate>
+          <label>Email
+            <input name="email" type="email" autocomplete="email" required placeholder="you@company.com" />
+          </label>
+          <label>Public URL to inspect
+            <input name="url" type="url" required placeholder="https://your-site.com/pricing" />
+          </label>
+          <label>First metric you care about
+            <textarea name="metric" required maxlength="360" placeholder="Checkout attempts, paid conversions, qualified subscribers, or replies."></textarea>
+          </label>
+          <label class="consent-row">
+            <input name="consent" type="checkbox" required />
+            <span>I consent to storing this request so Pete can send one human-reviewed teardown. No list signup.</span>
+          </label>
+          <button class="btn btn-primary" type="submit" id="teardown-submit">Request teardown</button>
+          <p class="form-status" id="teardown-form-status" role="status" aria-live="polite"></p>
+        </form>
       </aside>
     </div>
 
@@ -210,6 +236,65 @@
 
   <footer><div class="wrap">Hermosskills Operator-as-a-Service · human-gated proof before the pilot.</div></footer>
   <script>
+    (function () {
+      const form = document.getElementById('teardown-inline-form');
+      const status = document.getElementById('teardown-form-status');
+      const submit = document.getElementById('teardown-submit');
+      if (!form || !status || !submit) return;
+
+      function setStatus(kind, message) {
+        status.textContent = message;
+        status.className = 'form-status' + (kind === 'error' ? ' err' : '');
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        const email = String(data.email || '').trim();
+        const url = String(data.url || '').trim();
+        const metric = String(data.metric || '').trim();
+        const consent = form.elements.consent.checked;
+        if (!email || !/@/.test(email)) return setStatus('error', 'Please enter a valid email.');
+        if (!/^https?:\/\//i.test(url)) return setStatus('error', 'Please enter a public URL starting with https:// or http://.');
+        if (metric.length < 10) return setStatus('error', 'Please name the metric you care about first.');
+        if (!consent) return setStatus('error', 'Please confirm consent so Pete can review and reply.');
+
+        submit.disabled = true;
+        submit.textContent = 'Sending…';
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({
+              email,
+              url,
+              intent: 'operator',
+              urgency: 'normal',
+              subject: 'Send me the weekly operator teardown',
+              message: 'Please send me the weekly operator teardown.\n\nPublic URL: ' + url + '\n\nMetric I care about first: ' + metric,
+              consent,
+              page: location.href,
+              utm: {
+                source: 'weekly_teardown',
+                medium: 'inline_form',
+                campaign: 'weekly_teardown',
+                content: 'quick_request'
+              }
+            })
+          });
+          const body = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(body.error || 'Could not save your teardown request.');
+          form.reset();
+          setStatus('ok', body.message || 'Teardown request received for human review.');
+        } catch (error) {
+          setStatus('error', error.message || 'Could not save your teardown request. Please try the contact form link.');
+        } finally {
+          submit.disabled = false;
+          submit.textContent = 'Request teardown';
+        }
+      });
+    })();
+
     (function () {
       const teardown = document.getElementById('teardown-count');
       const contact = document.getElementById('contact-count');
