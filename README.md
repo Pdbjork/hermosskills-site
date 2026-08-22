@@ -35,10 +35,10 @@ The nginx vhost should return 404 for dotfiles plus repo-only files such as `ser
 
 ## Status
 
-2026-06-22 — v0.1 landing page shipped:
+2026-06-22 - v0.1 landing page shipped:
 - Editorial hero (publication framing, not app-store)
 - Funding-transparency card (3 streams: sponsorships, commissions, public-good rebate)
-- 5-skill charter catalog (real, installed local skills — not invented)
+- 7-skill charter catalog (real, installed local skills, not invented)
 - 4 editorial principles
 - Sponsor / Commission / Submit CTA → team@hermosskills.com → admin@bjorked.com
 
