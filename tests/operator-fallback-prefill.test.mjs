@@ -112,6 +112,22 @@ test('operator application offers one-click templates for high-intent founders',
   assert.match(html, /first qualified purchase attempts measured/);
 });
 
+test('sponsor brief offers an inline sponsor question form before checkout', async () => {
+  const html = await readFile(path.join(repoDir, 'sponsor/index.html'), 'utf8');
+
+  assert.match(html, /id="sponsor-question"/);
+  assert.match(html, /Two-minute sponsor fit check/);
+  assert.match(html, /id="sponsor-fit-form"/);
+  assert.match(html, /Skill Sponsor — \$49\/mo/);
+  assert.match(html, /Founding Sponsor — \$250\/mo/);
+  assert.match(html, /Custom commission — \$500 deposit/);
+  assert.match(html, /fetch\('\/api\/contact'/);
+  assert.match(html, /intent: 'sponsor'/);
+  assert.match(html, /campaign: 'sponsor_fit'/);
+  assert.match(html, /medium: 'inline_form'/);
+  assert.match(html, /No automated outbound or newsletter signup/);
+});
+
 test('operator brief does not hard-code seeded application proof', async () => {
   const html = await readFile(path.join(repoDir, 'operator/brief/index.html'), 'utf8');
 

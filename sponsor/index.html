@@ -14,6 +14,14 @@
     .brief-card h3 { margin:0 0 .5rem; font-size:1.05rem; }
     .brief-card p, .brief-card li { color:hsl(var(--muted-foreground)); }
     .brief-list { margin:0; padding-left:1.1rem; }
+    .sponsor-form { display:grid; gap:1rem; }
+    .sponsor-form label { display:grid; gap:.35rem; font-size:.9rem; font-weight:700; color:hsl(var(--foreground)); }
+    .sponsor-form input, .sponsor-form select, .sponsor-form textarea { width:100%; border:1px solid hsl(var(--input)); border-radius:.7rem; background:hsl(var(--background)); padding:.75rem .85rem; font:inherit; color:hsl(var(--foreground)); }
+    .sponsor-form textarea { min-height:8rem; resize:vertical; }
+    .consent-line { display:flex; gap:.75rem; align-items:flex-start; border:1px solid hsl(var(--border)); border-radius:.85rem; background:hsl(var(--secondary) / .35); padding:1rem; font-size:.88rem; font-weight:500; color:hsl(var(--muted-foreground)); }
+    .consent-line input { width:auto; margin-top:.2rem; }
+    .form-status { min-height:1.4rem; font-size:.9rem; color:hsl(var(--muted-foreground)); }
+    .form-status.error { color:#b91c1c; }
     .tier { display:flex; justify-content:space-between; gap:1rem; border-top:1px solid hsl(var(--border)); padding:1rem 0; }
     .tier:first-child { border-top:0; padding-top:0; }
     .price { font-weight:800; color:hsl(var(--primary)); white-space:nowrap; }
@@ -85,6 +93,47 @@
       </div>
     </section>
 
+
+    <section class="py-section" id="sponsor-question">
+      <div class="container-page brief-grid">
+        <article class="brief-card">
+          <span class="badge">Two-minute sponsor fit check</span>
+          <h2 class="mt-4 font-display text-h2 font-bold">Not ready to check out? Send the one question a sponsor actually needs answered.</h2>
+          <p class="mt-4 text-body-lg text-muted-foreground">The fastest path is a tiny human-reviewed note: name the skill category, the tier you are considering, and what proof would make sponsorship feel credible. Pete can reply with the exact catalog entry, disclosure language, and whether the ask belongs in $49/mo, $250/mo, or a custom commission.</p>
+          <ul class="brief-list mt-4">
+            <li>Good fit: maintainers, AI operators, civic-tech teams, small businesses using agent workflows.</li>
+            <li>Not a fit: hidden placements, fake endorsements, private-data scraping, or unattended money movement.</li>
+            <li>No list signup. This creates a local human-review task only.</li>
+          </ul>
+        </article>
+        <article class="brief-card">
+          <h3>Sponsor question form</h3>
+          <form id="sponsor-fit-form" class="sponsor-form mt-4" novalidate>
+            <label>Email
+              <input name="email" type="email" autocomplete="email" required placeholder="you@organization.com" />
+            </label>
+            <label>Which tier are you considering?
+              <select name="tier" required>
+                <option value="skill-sponsor-49">Skill Sponsor — $49/mo</option>
+                <option value="founding-sponsor-250">Founding Sponsor — $250/mo</option>
+                <option value="custom-commission-500">Custom commission — $500 deposit</option>
+                <option value="not-sure">Not sure yet</option>
+              </select>
+            </label>
+            <label>Skill category or proof question
+              <textarea name="message" required maxlength="900" placeholder="Example: I maintain deployment/runbook skills. What would the sponsor disclosure look like, and where would the 30% public-good rebate show up?"></textarea>
+            </label>
+            <label class="consent-line">
+              <input type="checkbox" name="consent" required />
+              <span>I consent to Hermosskills storing this sponsor question so Pete can review and reply. No automated outbound or newsletter signup.</span>
+            </label>
+            <button id="sponsor-fit-submit" type="submit" class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90">Send sponsor question</button>
+            <p id="sponsor-fit-status" class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </article>
+      </div>
+    </section>
+
     <section class="py-section">
       <div class="container-page brief-grid">
         <article class="brief-card">
@@ -97,12 +146,64 @@
         <article class="brief-card">
           <h3>First reply ask</h3>
           <p>If this fits your world, reply with the skill category you want maintained first. We will send the exact catalog entry, sponsor disclosure text, and checkout tier before you pay.</p>
-          <p class="mt-3">Prefer a form-first note? <a class="underline decoration-border underline-offset-4" href="/contact/?intent=sponsor&subject=Hermosskills%20sponsor%20brief&utm_source=sponsor&utm_medium=brief&utm_campaign=form_first">Contact Hermosskills</a></p>
+          <p class="mt-3">Prefer a form-first note? <a class="underline decoration-border underline-offset-4" href="#sponsor-question">Send the two-minute sponsor question</a> or <a class="underline decoration-border underline-offset-4" href="/contact/?intent=sponsor&subject=Hermosskills%20sponsor%20brief&utm_source=sponsor&utm_medium=brief&utm_campaign=form_first">use the general contact form</a>.</p>
         </article>
       </div>
     </section>
   </main>
 
   <footer class="border-t border-border bg-secondary/20 py-8"><div class="container-page flex flex-col gap-2 text-small text-muted-foreground"><b class="text-foreground">Hermosskills</b><span>Curated AI-agent skills. Sponsor disclosed. Public-good rebate on commissions.</span></div></footer>
+
+  <script>
+    (function () {
+      const form = document.getElementById('sponsor-fit-form');
+      if (!form) return;
+      const status = document.getElementById('sponsor-fit-status');
+      const submit = document.getElementById('sponsor-fit-submit');
+      function setStatus(kind, message) {
+        status.textContent = message;
+        status.className = 'form-status' + (kind === 'error' ? ' error' : '');
+      }
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        const tier = data.tier || 'not-sure';
+        const note = String(data.message || '').trim();
+        const consent = form.consent.checked;
+        if (!data.email || !/@/.test(data.email)) return setStatus('error', 'Please enter a valid email.');
+        if (note.length < 20) return setStatus('error', 'Please include the skill category or proof question.');
+        if (!consent) return setStatus('error', 'Please confirm consent so Pete can review and reply.');
+        submit.disabled = true;
+        submit.textContent = 'Sending…';
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({
+              email: data.email,
+              name: '',
+              intent: 'sponsor',
+              urgency: 'normal',
+              subject: 'Sponsor fit question: ' + tier,
+              message: 'Sponsor tier considered: ' + tier + '\n\n' + note,
+              url: '',
+              consent,
+              page: location.href,
+              utm: { source: 'sponsor', medium: 'inline_form', campaign: 'sponsor_fit', content: tier }
+            })
+          });
+          const body = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(body.error || 'Could not save your sponsor question.');
+          form.reset();
+          setStatus('ok', body.message || 'Sponsor question received for human review.');
+        } catch (error) {
+          setStatus('error', error.message || 'Could not save your sponsor question. Please try again later.');
+        } finally {
+          submit.disabled = false;
+          submit.textContent = 'Send sponsor question';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
