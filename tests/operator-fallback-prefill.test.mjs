@@ -128,6 +128,22 @@ test('sponsor brief offers an inline sponsor question form before checkout', asy
   assert.match(html, /No automated outbound or newsletter signup/);
 });
 
+test('sponsor funnel has a forwardable maintainer-economics pitch', async () => {
+  const home = await readFile(path.join(repoDir, 'index.html'), 'utf8');
+  const sponsor = await readFile(path.join(repoDir, 'sponsor/index.html'), 'utf8');
+  const pitch = await readFile(path.join(repoDir, 'sponsor/maintainer-economics/index.html'), 'utf8');
+
+  assert.match(home, /\/sponsor\/maintainer-economics\/\?utm_source=homepage&utm_medium=commission_panel&utm_campaign=maintainer_pitch/);
+  assert.match(sponsor, /Read the maintainer-economics pitch/);
+  assert.match(sponsor, /\/sponsor\/maintainer-economics\/\?utm_source=sponsor&utm_medium=hero&utm_campaign=maintainer_pitch/);
+  assert.match(pitch, /Maintainer economics for agent skills/);
+  assert.match(pitch, /Forwardable 1-page pitch/);
+  assert.match(pitch, /30% public-good rebate/);
+  assert.match(pitch, /https:\/\/hermosskills.com\/sponsor\/maintainer-economics\//);
+  assert.match(pitch, /No hidden placement or fake endorsement/);
+  assert.match(pitch, /Approval-gated: review the actual thread before sending/);
+});
+
 test('operator brief does not hard-code seeded application proof', async () => {
   const html = await readFile(path.join(repoDir, 'operator/brief/index.html'), 'utf8');
 
