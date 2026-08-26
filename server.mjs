@@ -11,7 +11,7 @@ const port = Number(process.env.PORT || 3019);
 const publicBaseUrl = process.env.PUBLIC_BASE_URL || 'https://hermosskills.com';
 const stripeSecret = process.env.STRIPE_SECRET_KEY || '';
 const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
-const stripe = stripeSecret ? new Stripe(stripeSecret, { apiVersion: '2025-11-17.clover' }) : null;
+const stripe = stripeSecret ? new Stripe(stripeSecret, { apiVersion: '2026-04-22.dahlia' }) : null;
 const fulfillmentDataDir = process.env.HERMOSSKILLS_FULFILLMENT_DIR || '/var/lib/hermosskills';
 
 export function buildFulfillmentTask(session, event = {}) {
@@ -20,6 +20,7 @@ export function buildFulfillmentTask(session, event = {}) {
   const amountTotal = typeof session?.amount_total === 'number' ? session.amount_total : null;
   const currency = String(session?.currency || '').toLowerCase();
   const plan = String(metadata.plan || session?.mode || 'unknown').slice(0, 80);
+  const sponsorNote = String(metadata.note || '').trim().slice(0, 400);
   const eventId = String(event?.id || '').slice(0, 120);
   const sessionId = String(session?.id || '').slice(0, 120);
 
@@ -33,11 +34,13 @@ export function buildFulfillmentTask(session, event = {}) {
     checkout_session_id: sessionId,
     customer_email: customerEmail,
     plan,
+    sponsor_note: sponsorNote,
     mode: String(session?.mode || '').slice(0, 40),
     amount_total: amountTotal,
     currency,
     next_actions: [
       'Verify Stripe payment in dashboard before starting work.',
+      sponsorNote ? `Use sponsor note for initial fit: ${sponsorNote}` : 'Ask which skill/category or proof question the sponsor wants handled first.',
       'Create or update the customer record without exposing private data in chat.',
       'Send Pete an approval-gated fulfillment draft: thank-you, scope-confirmation, and first next step.',
       'Do not perform outbound customer email until Pete approves the exact message.'

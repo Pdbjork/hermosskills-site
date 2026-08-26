@@ -26,7 +26,7 @@ test('buildFulfillmentTask creates a human-gated task from a checkout session', 
     amount_total: 50000,
     currency: 'usd',
     customer_details: { email: 'FOUNDER@EXAMPLE.COM' },
-    metadata: { plan: 'commission' }
+    metadata: { plan: 'commission', note: 'MCP conformance checks for public catalog skills' }
   }, { id: 'evt_test_123' });
 
   assert.equal(task.source, 'stripe.checkout.session.completed');
@@ -34,8 +34,10 @@ test('buildFulfillmentTask creates a human-gated task from a checkout session', 
   assert.equal(task.priority, 'high');
   assert.equal(task.customer_email, 'founder@example.com');
   assert.equal(task.plan, 'commission');
+  assert.equal(task.sponsor_note, 'MCP conformance checks for public catalog skills');
   assert.equal(task.checkout_session_id, 'cs_test_123');
   assert.equal(task.event_id, 'evt_test_123');
+  assert.ok(task.next_actions.some((line) => line.includes('Use sponsor note for initial fit')));
   assert.ok(task.next_actions.some((line) => line.includes('Do not perform outbound customer email')));
 });
 
@@ -49,7 +51,7 @@ test('recordCheckoutFulfillment writes order, fulfillment task, and local alert'
     amount_total: 25000,
     currency: 'usd',
     customer_email: 'sponsor@example.com',
-    metadata: { plan: 'founding' }
+    metadata: { plan: 'founding', note: 'Sponsor deployment runbooks first' }
   };
 
   const task = await recordCheckoutFulfillment(session, { id: 'evt_test_456' }, { repoDir, dataDir });
@@ -66,6 +68,7 @@ test('recordCheckoutFulfillment writes order, fulfillment task, and local alert'
   assert.equal(writtenTask.id, task.id);
   assert.equal(writtenTask.status, 'needs_human_review');
   assert.equal(writtenTask.customer_email, 'sponsor@example.com');
+  assert.equal(writtenTask.sponsor_note, 'Sponsor deployment runbooks first');
   assert.equal(alertLines.length, 1);
   assert.equal(alert.level, 'action_required');
   assert.equal(alert.task_id, task.id);

@@ -144,6 +144,18 @@ test('sponsor funnel has a forwardable maintainer-economics pitch', async () => 
   assert.match(pitch, /Approval-gated: review the actual thread before sending/);
 });
 
+test('homepage checkout asks for sponsor skill intent before Stripe', async () => {
+  const html = await readFile(path.join(repoDir, 'index.html'), 'utf8');
+
+  assert.match(html, /id="checkout-intent-form"/);
+  assert.match(html, /Skill\/category to sponsor first/);
+  assert.match(html, /human-reviewed sponsor\/commission task/);
+  assert.match(html, /const note = intentForm \? String\(intentForm\.elements\.note\.value \|\| ''\)\.trim\(\) : '';/);
+  assert.match(html, /Please name the skill, category, or proof question before opening checkout\./);
+  assert.match(html, /Please confirm the human-review boundary before checkout\./);
+  assert.match(html, /body: JSON\.stringify\(\{ plan, email, note \}\)/);
+});
+
 test('operator brief does not hard-code seeded application proof', async () => {
   const html = await readFile(path.join(repoDir, 'operator/brief/index.html'), 'utf8');
 
