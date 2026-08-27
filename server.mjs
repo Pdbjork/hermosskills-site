@@ -67,6 +67,56 @@ export async function recordCheckoutFulfillment(session, event = {}, options = {
   return task;
 }
 
+function safeParseJsonLine(line) {
+  try { return JSON.parse(line); } catch { return null; }
+}
+
+async function readJsonl(file) {
+  let text = '';
+  try { text = await fs.readFile(file, 'utf8'); } catch { return []; }
+  return text.split('\n').filter(Boolean).map(safeParseJsonLine).filter(Boolean);
+}
+
+function increment(bucket, key) {
+  const safeKey = String(key || 'unknown').slice(0, 80) || 'unknown';
+  bucket[safeKey] = (bucket[safeKey] || 0) + 1;
+}
+
+export async function buildFulfillmentStats(options = {}) {
+  const dataDir = options.dataDir || fulfillmentDataDir;
+  const [checkoutTasks, operatorTasks, contactTasks, alerts] = await Promise.all([
+    readJsonl(path.join(dataDir, 'fulfillment-tasks.jsonl')),
+    readJsonl(path.join(dataDir, 'operator-lead-tasks.jsonl')),
+    readJsonl(path.join(dataDir, 'contact-lead-tasks.jsonl')),
+    readJsonl(path.join(dataDir, 'fulfillment-alerts.jsonl'))
+  ]);
+  const by_status = {};
+  const by_priority = {};
+  const by_source = {};
+  const by_plan = {};
+  for (const task of [...checkoutTasks, ...operatorTasks, ...contactTasks]) {
+    increment(by_status, task.status);
+    increment(by_priority, task.priority);
+    increment(by_source, task.source);
+    if (task.plan) increment(by_plan, task.plan);
+  }
+  return {
+    ok: true,
+    redacted: true,
+    totals: {
+      checkout_fulfillment_tasks: checkoutTasks.length,
+      operator_lead_tasks: operatorTasks.length,
+      contact_lead_tasks: contactTasks.length,
+      fulfillment_alerts: alerts.length,
+      open_human_review_tasks: [...checkoutTasks, ...operatorTasks, ...contactTasks].filter((task) => String(task.status || '').startsWith('needs_')).length
+    },
+    by_status,
+    by_priority,
+    by_source,
+    by_plan
+  };
+}
+
 export function buildOperatorLeadTask(lead) {
   const fitScore = typeof lead?.fit_score === 'number' ? lead.fit_score : null;
   const email = String(lead?.email || '').trim().toLowerCase();
@@ -320,9 +370,22 @@ app.use((req, res, next) => {
 app.use(express.static(__dirname, { extensions: ['html'] }));
 
 app.get('/api/health', (_req, res) => {
-  res.json({ ok: true, stripeConfigured: Boolean(stripe), publicBaseUrl });
+  res.json({
+    ok: true,
+    stripeConfigured: Boolean(stripe),
+    webhookConfigured: Boolean(stripeWebhookSecret),
+    fulfillmentQueueConfigured: Boolean(fulfillmentDataDir),
+    publicBaseUrl
+  });
 });
 
+app.get('/api/fulfillment/stats', async (_req, res) => {
+  try {
+    res.json(await buildFulfillmentStats());
+  } catch (err) {
+    res.status(500).json({ error: 'fulfillment stats unavailable' });
+  }
+});
 
 app.post('/api/operator-interest', async (req, res) => {
   try {

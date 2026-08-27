@@ -7,6 +7,7 @@ import test from 'node:test';
 import {
   buildContactLeadStats,
   buildContactLeadTask,
+  buildFulfillmentStats,
   buildFulfillmentTask,
   buildOperatorLeadTask,
   buildOperatorLeadStats,
@@ -72,6 +73,50 @@ test('recordCheckoutFulfillment writes order, fulfillment task, and local alert'
   assert.equal(alertLines.length, 1);
   assert.equal(alert.level, 'action_required');
   assert.equal(alert.task_id, task.id);
+});
+
+test('buildFulfillmentStats reports redacted queue totals for ops review', async () => {
+  const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), 'hermosskills-fulfillment-stats-'));
+  await fs.writeFile(path.join(dataDir, 'fulfillment-tasks.jsonl'), JSON.stringify({
+    status: 'needs_human_review',
+    priority: 'normal',
+    source: 'stripe.checkout.session.completed',
+    plan: 'sponsor',
+    customer_email: 'sponsor@example.com'
+  }) + '\n', 'utf8');
+  await fs.writeFile(path.join(dataDir, 'operator-lead-tasks.jsonl'), JSON.stringify({
+    status: 'needs_human_review',
+    priority: 'high',
+    source: 'operator-interest',
+    customer_email: 'operator@example.com'
+  }) + '\n', 'utf8');
+  await fs.writeFile(path.join(dataDir, 'contact-lead-tasks.jsonl'), JSON.stringify({
+    status: 'closed',
+    priority: 'normal',
+    source: 'contact-form',
+    customer_email: 'contact@example.com'
+  }) + '\n', 'utf8');
+  await fs.writeFile(path.join(dataDir, 'fulfillment-alerts.jsonl'), '{"level":"review"}\n', 'utf8');
+
+  assert.deepEqual(await buildFulfillmentStats({ dataDir }), {
+    ok: true,
+    redacted: true,
+    totals: {
+      checkout_fulfillment_tasks: 1,
+      operator_lead_tasks: 1,
+      contact_lead_tasks: 1,
+      fulfillment_alerts: 1,
+      open_human_review_tasks: 2
+    },
+    by_status: { needs_human_review: 2, closed: 1 },
+    by_priority: { normal: 2, high: 1 },
+    by_source: {
+      'stripe.checkout.session.completed': 1,
+      'operator-interest': 1,
+      'contact-form': 1
+    },
+    by_plan: { sponsor: 1 }
+  });
 });
 
 test('buildOperatorLeadTask prioritizes high-fit operator applications', () => {
