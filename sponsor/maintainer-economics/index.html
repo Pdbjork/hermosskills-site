@@ -17,7 +17,11 @@
     .note-box { border:1px solid hsl(var(--primary) / .28); background:hsl(var(--primary) / .07); border-radius:1rem; padding:1rem; }
     .badge { display:inline-flex; border:1px solid hsl(var(--border)); border-radius:999px; padding:.35rem .7rem; font-size:.8rem; font-weight:700; color:hsl(var(--primary)); background:white; }
     .copy-box { white-space:pre-wrap; font:inherit; color:hsl(var(--foreground)); background:white; border:1px solid hsl(var(--border)); border-radius:1rem; padding:1rem; }
-    @media (max-width: 860px) { .pitch-grid { grid-template-columns:1fr; } }
+    .reply-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.85rem; margin-top:1rem; }
+    .reply-card { border:1px solid hsl(var(--border)); background:white; border-radius:1rem; padding:1rem; display:flex; flex-direction:column; gap:.7rem; }
+    .reply-card p { margin:0; color:hsl(var(--muted-foreground)); font-size:.95rem; }
+    .reply-card a { margin-top:auto; }
+    @media (max-width: 860px) { .pitch-grid, .reply-grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body class="min-h-screen bg-background font-body text-foreground antialiased">
@@ -90,6 +94,27 @@ https://hermosskills.com/sponsor/maintainer-economics/
 
 The question is whether sponsor-funded maintenance can support the agent skills your community already relies on, without hidden placements or fake trust marks. If it is worth a look, the lowest-friction reply is simply the skill category you think should be maintained first.</div>
           <p class="mt-4 text-small text-muted-foreground">Approval-gated: review the actual thread before sending. Do not paste this into private communities without permission.</p>
+        </article>
+        <article class="pitch-card" id="reply-paths">
+          <h2 class="font-display text-h2 font-bold">Fast reply paths for the current outreach wave</h2>
+          <p class="text-body text-muted-foreground">The August 28 revenue report surfaced maintainer-economics, MCP-conformance, and founding-sponsor follow-ups. These links turn each thread into a structured, human-reviewed reply instead of asking a busy maintainer to compose a full response from scratch.</p>
+          <div class="reply-grid" aria-label="Maintainer outreach reply paths">
+            <div class="reply-card">
+              <strong>Suggest the first skill</strong>
+              <p>For maintainers who agree the funding model is worth testing but only have one category in mind.</p>
+              <a class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90" href="/contact/?intent=sponsor&amp;subject=Skill%20category%20to%20maintain%20first&amp;message=I%20read%20the%20maintainer-economics%20pitch.%20The%20first%20skill%20category%20Hermosskills%20should%20maintain%20is:%20&amp;utm_source=maintainer_economics&amp;utm_medium=reply_path&amp;utm_campaign=maintainer_followup&amp;utm_content=first_skill">Name first skill</a>
+            </div>
+            <div class="reply-card">
+              <strong>Critique the audit method</strong>
+              <p>For technical reviewers, MCP people, and safety-minded operators who can strengthen the review workflow.</p>
+              <a class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-4 text-sm font-medium shadow-sm hover:bg-accent" href="/contact/?intent=sponsor&amp;subject=Critique%20the%20Hermosskills%20audit%20workflow&amp;message=I%20can%20critique%20the%20Hermosskills%20audit%20workflow%20from%20this%20angle:%20&amp;utm_source=maintainer_economics&amp;utm_medium=reply_path&amp;utm_campaign=maintainer_followup&amp;utm_content=audit_critique">Offer critique</a>
+            </div>
+            <div class="reply-card">
+              <strong>Ask for proof before sponsoring</strong>
+              <p>For potential sponsors who need one public evidence point before considering $49 or $250/month.</p>
+              <a class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-4 text-sm font-medium shadow-sm hover:bg-accent" href="/contact/?intent=sponsor&amp;subject=Proof%20needed%20before%20sponsoring%20Hermosskills&amp;message=Before%20I%20consider%20sponsoring,%20the%20proof%20that%20would%20make%20Hermosskills%20credible%20is:%20&amp;utm_source=maintainer_economics&amp;utm_medium=reply_path&amp;utm_campaign=maintainer_followup&amp;utm_content=proof_request">Ask for proof</a>
+            </div>
+          </div>
         </article>
       </div>
     </section>

@@ -144,6 +144,20 @@ test('sponsor funnel has a forwardable maintainer-economics pitch', async () => 
   assert.match(pitch, /Approval-gated: review the actual thread before sending/);
 });
 
+test('maintainer economics pitch has structured reply paths for outreach follow-up', async () => {
+  const pitch = await readFile(path.join(repoDir, 'sponsor/maintainer-economics/index.html'), 'utf8');
+
+  assert.match(pitch, /id="reply-paths"/);
+  assert.match(pitch, /Fast reply paths for the current outreach wave/);
+  assert.match(pitch, /utm_campaign=maintainer_followup/);
+  assert.match(pitch, /utm_content=first_skill/);
+  assert.match(pitch, /utm_content=audit_critique/);
+  assert.match(pitch, /utm_content=proof_request/);
+  assert.match(pitch, /Skill%20category%20to%20maintain%20first/);
+  assert.match(pitch, /Critique%20the%20Hermosskills%20audit%20workflow/);
+  assert.match(pitch, /Proof%20needed%20before%20sponsoring%20Hermosskills/);
+});
+
 test('homepage checkout asks for sponsor skill intent before Stripe', async () => {
   const html = await readFile(path.join(repoDir, 'index.html'), 'utf8');
 
