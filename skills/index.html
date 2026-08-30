@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Catalog — hermosskills</title>
-  <meta name="description" content="The hermosskills charter catalog: six curated, trust-first AI-agent skills. Each is reviewed, tested, and disclosed about funding." />
+  <meta name="description" content="The hermosskills charter catalog: seven curated, trust-first AI-agent skills. Each is reviewed, tested, and disclosed about funding." />
   <link rel="canonical" href="https://hermosskills.com/skills/" />
   <link rel="alternate" type="application/json" href="/catalog/v1/skills.json" title="Hermesskills skill catalog (JSON)" />
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
@@ -65,7 +65,7 @@
   <section>
     <div class="wrap">
       <span class="kicker">Charter catalog · June 2026</span>
-      <h1>Six curated AI-agent skills.</h1>
+      <h1>Seven curated AI-agent skills.</h1>
       <p class="lede">Each skill is reviewed for trust, tested on a real agent, and disclosed about funding. The catalog grows one at a time, by hand. 30% of every commission funds public-good AI.</p>
 
       <div class="skills">
@@ -129,13 +129,23 @@
           <span><a href="/skills/dogfood/SKILL.md" style="color:var(--green);font-weight:800;">SKILL.md</a> · <a href="/skills/dogfood/" style="color:var(--green);font-weight:800;">Detail →</a></span>
         </div>
       </article>
+      <article class="skill">
+        <span class="tag">social-media</span>
+        <h3>xquik-social-automation</h3>
+        <p>Use Xquik's public API and MCP tools to search X posts, inspect public profile context, monitor timelines, and prepare approval-gated social actions.</p>
+        <div class="trust"><span>Reviewed</span><span>v1.0.0</span><span>MIT</span></div>
+        <div class="meta">
+          <span>Maintainer · Xquik</span>
+          <span><a href="/skills/xquik-social-automation/SKILL.md" style="color:var(--green);font-weight:800;">SKILL.md</a> · <a href="/skills/xquik-social-automation/" style="color:var(--green);font-weight:800;">Detail &rarr;</a></span>
+        </div>
+      </article>
       </div>
 
       <div class="api-card">
         <h3 style="margin:0; font-size:20px;">For agent developers</h3>
         <p style="margin-top:10px; color:var(--muted);">Fetch the catalog programmatically, install any skill with one curl, or introspect the OpenClaw capability manifest.</p>
         <pre>curl -s https://hermosskills.com/catalog/v1/skills.json</pre>
-        <pre>curl -sSL https://hermosskills.com/skills/stripe-go-live-workflow/SKILL.md</pre>
+        <pre>curl -sSL https://hermosskills.com/skills/xquik-social-automation/SKILL.md</pre>
         <pre>curl -s https://hermosskills.com/.well-known/openclaw.json</pre>
       </div>
     </div>
