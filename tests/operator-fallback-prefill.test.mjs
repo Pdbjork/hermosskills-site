@@ -61,9 +61,11 @@ test('operator funnel offers a low-friction weekly teardown landing page', async
   const home = await readFile(path.join(repoDir, 'index.html'), 'utf8');
   const teardown = await readFile(path.join(repoDir, 'weekly-teardown/index.html'), 'utf8');
 
-  assert.match(operator, /Weekly operator teardown lead magnet/);
-  assert.match(operator, /Get the weekly operator teardown/);
-  assert.match(operator, /href="\/weekly-teardown\/\?utm_source=operator/);
+  assert.match(operator, /One URL proof path/);
+  assert.match(operator, /Proof-first path: send one URL before you apply\./);
+  assert.match(operator, /Send one URL/);
+  assert.match(operator, /href="\/weekly-teardown\/\?utm_source=operator&amp;utm_medium=one_url_proof&amp;utm_campaign=weekly_teardown#teardown-inline-form/);
+  assert.match(operator, /No list signup, no automation, no private data\./);
   assert.match(sample, /Want the low-friction proof trail\?/);
   assert.match(sample, /Get the weekly teardown/);
   assert.match(sample, /href="\/weekly-teardown\/\?utm_source=sample_report_close/);
@@ -179,4 +181,13 @@ test('operator brief does not hard-code seeded application proof', async () => {
   assert.match(html, /We do not show seeded traction/);
   assert.doesNotMatch(html, /<strong>3<\/strong><span class="muted">founding applications/);
   assert.doesNotMatch(html, /<strong>81<\/strong><span class="muted">avg fit score/);
+});
+
+
+test('homepage operator CTA offers a proof-first one URL path before the paid pilot', async () => {
+  const home = await readFile(path.join(repoDir, 'index.html'), 'utf8');
+
+  assert.match(home, /Send one URL first/);
+  assert.match(home, /utm_source=homepage&utm_medium=revenue_panel&utm_campaign=one_url_proof#teardown-inline-form/);
+  assert.match(home, /Proof-first option: send one public URL, get the first revenue-surface fix and approval queue preview/);
 });
