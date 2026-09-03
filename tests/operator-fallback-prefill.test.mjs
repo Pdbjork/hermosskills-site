@@ -140,6 +140,10 @@ test('sponsor funnel has a forwardable maintainer-economics pitch', async () => 
   assert.match(sponsor, /\/sponsor\/maintainer-economics\/\?utm_source=sponsor&utm_medium=hero&utm_campaign=maintainer_pitch/);
   assert.match(pitch, /Maintainer economics for agent skills/);
   assert.match(pitch, /Forwardable 1-page pitch/);
+  assert.match(pitch, /Fastest useful reply: one line\./);
+  assert.match(pitch, /Name the first skill category to maintain, the MCP\/audit check you would need to trust, or the proof that would make sponsorship credible/);
+  assert.match(pitch, /href="#reply-paths"/);
+  assert.match(pitch, /Pick a one-line reply path/);
   assert.match(pitch, /30% public-good rebate/);
   assert.match(pitch, /https:\/\/hermosskills.com\/sponsor\/maintainer-economics\//);
   assert.match(pitch, /No hidden placement or fake endorsement/);
