@@ -90,6 +90,12 @@ test('operator funnel offers a low-friction weekly teardown landing page', async
   assert.match(teardown, /Request offer teardown/);
   assert.match(teardown, /utm_content=homepage_offer/);
   assert.match(teardown, /id="teardown-inline-form"/);
+  assert.match(teardown, /id="one-line-ask"/);
+  assert.match(teardown, /Fastest useful reply: one URL\./);
+  assert.match(teardown, /smallest non-sales ask: send one public surface and the metric you want moved/);
+  assert.match(teardown, /utm_medium=one_line_ask&amp;utm_campaign=one_url_proof/);
+  assert.match(teardown, /One%20URL%20operator%20teardown/);
+  assert.match(teardown, /Could you teardown this one URL for the fastest safe checkout, subscriber, or reply improvement/);
   assert.match(teardown, /Public URL to inspect/);
   assert.match(teardown, /fetch\('\/api\/contact'/);
   assert.match(teardown, /medium: 'inline_form'/);

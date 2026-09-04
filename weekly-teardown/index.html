@@ -73,6 +73,10 @@
     .template-card p { margin:0; color:var(--muted); }
     .template-card .btn { align-self:flex-start; margin-top:auto; }
     .notice { border-color:rgba(245,158,11,.35); background:var(--amber-soft); color:#78350f; }
+    .reply-box { margin-top:1rem; border:1px solid rgba(15,118,110,.24); background:linear-gradient(135deg,rgba(204,251,241,.65),rgba(255,255,255,.95)); border-radius:20px; padding:1.2rem; }
+    .reply-box h3 { font-size:1.16rem; margin-bottom:.4rem; }
+    .copy-snippet { margin:.75rem 0 0; border:1px dashed rgba(15,118,110,.38); border-radius:16px; background:#fff; padding:.9rem; color:var(--ink); font-weight:720; }
+    .reply-box .actions { margin-top:1rem; }
     .quick-form { display:grid; gap:.75rem; margin-top:1rem; }
     .quick-form label { display:grid; gap:.3rem; font-weight:800; font-size:.92rem; }
     .quick-form input, .quick-form textarea { width:100%; border:1px solid var(--line); border-radius:14px; padding:.8rem .9rem; background:#fff; color:var(--ink); font:inherit; }
@@ -121,6 +125,14 @@
           <div class="metric"><strong id="contact-count">0</strong><span>qualified contact leads</span></div>
         </div>
         <p id="metrics-note" class="muted" style="margin:.75rem 0 0;font-size:.92rem">Loading live contact stats. Test submissions do not count as traction.</p>
+        <div class="reply-box" id="one-line-ask" aria-label="Copyable one-line ask">
+          <h3>Fastest useful reply: one URL.</h3>
+          <p class="muted">If you came from a maintainer outreach email, this is the smallest non-sales ask: send one public surface and the metric you want moved.</p>
+          <div class="copy-snippet">“Could you teardown this one URL for the fastest safe checkout, subscriber, or reply improvement?”</div>
+          <div class="actions">
+            <a class="btn btn-secondary" href="/contact/?intent=operator&amp;subject=One%20URL%20operator%20teardown&amp;message=Please%20teardown%20this%20one%20public%20URL%20for%20the%20fastest%20safe%20checkout,%20subscriber,%20or%20reply%20improvement.%0A%0AURL:%20%0AMetric:%20&amp;utm_source=weekly_teardown&amp;utm_medium=one_line_ask&amp;utm_campaign=one_url_proof#contact-form">Send one URL by form</a>
+          </div>
+        </div>
         <form class="quick-form" id="teardown-inline-form" novalidate>
           <label>Email
             <input name="email" type="email" autocomplete="email" required placeholder="you@company.com" />
