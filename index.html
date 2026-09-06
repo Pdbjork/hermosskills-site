@@ -13,6 +13,75 @@
   <meta property="og:url" content="https://hermosskills.com" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="/assets/polsia.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "Organization",
+        "OnlineBusiness"
+      ],
+      "@id": "https://hermosskills.com/#organization",
+      "name": "Hermosskills",
+      "url": "https://hermosskills.com/",
+      "logo": "https://hermosskills.com/assets/favicon.svg",
+      "description": "A curated marketplace and human-gated operator service for AI agent skills, revenue-command workflows, and public-good AI maintenance.",
+      "founder": {
+        "@type": "Person",
+        "name": "Peter Bjork"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "url": "https://hermosskills.com/contact/"
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Hermosskills services and skill catalog",
+        "url": "https://hermosskills.com/catalog/"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://hermosskills.com/#operator-pilot",
+      "name": "Hermosskills Operator-as-a-Service Pilot",
+      "provider": {
+        "@id": "https://hermosskills.com/#organization"
+      },
+      "serviceType": "Human-gated AI operator pilot for founders",
+      "description": "A four-week operator pilot that prepares or ships revenue, follower, subscriber, and lead-growth work while keeping outbound sends, posts, deploys, and payment changes behind human approval.",
+      "areaServed": "US",
+      "offers": {
+        "@type": "Offer",
+        "price": "2500.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://hermosskills.com/operator/?plan=2500"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://hermosskills.com/#weekly-teardown",
+      "name": "Weekly Operator Teardown",
+      "provider": {
+        "@id": "https://hermosskills.com/#organization"
+      },
+      "serviceType": "Human-reviewed one-URL revenue teardown",
+      "description": "A low-friction proof step: send one public URL and the metric you want moved before applying for the operator pilot.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://hermosskills.com/weekly-teardown/"
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body class="min-h-screen bg-background font-body text-foreground antialiased">
   <header class="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

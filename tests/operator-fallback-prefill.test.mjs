@@ -201,3 +201,21 @@ test('homepage operator CTA offers a proof-first one URL path before the paid pi
   assert.match(home, /utm_source=homepage&utm_medium=revenue_panel&utm_campaign=one_url_proof#teardown-inline-form/);
   assert.match(home, /Proof-first option: send one public URL, get the first revenue-surface fix and approval queue preview/);
 });
+
+test('homepage and weekly teardown publish answer-ready structured data', async () => {
+  const home = await readFile(path.join(repoDir, 'index.html'), 'utf8');
+  const teardown = await readFile(path.join(repoDir, 'weekly-teardown/index.html'), 'utf8');
+  const blocks = [...home.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+  const weeklyBlocks = [...teardown.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+  const graph = blocks.flatMap((block) => block['@graph'] || []);
+  const weeklyFaq = weeklyBlocks.find((block) => block['@type'] === 'FAQPage');
+
+  assert.ok(graph.some((node) => Array.isArray(node['@type']) && node['@type'].includes('Organization')));
+  assert.ok(graph.some((node) => node['@type'] === 'Service' && node.name === 'Hermosskills Operator-as-a-Service Pilot'));
+  assert.ok(graph.some((node) => node['@type'] === 'Service' && node.offers?.price === '0.00'));
+  assert.ok(weeklyFaq);
+  assert.equal(weeklyFaq.mainEntity.length, 7);
+  assert.match(teardown, /Questions founders ask before sending a URL\./);
+  assert.match(teardown, /What stays under human approval\?/);
+  assert.match(teardown, /profits, checkout attempts, qualified leads, subscribers, followers, replies/);
+});
