@@ -141,6 +141,11 @@
     .reply-box h3 { font-size:1.16rem; margin-bottom:.4rem; }
     .copy-snippet { margin:.75rem 0 0; border:1px dashed rgba(15,118,110,.38); border-radius:16px; background:#fff; padding:.9rem; color:var(--ink); font-weight:720; }
     .reply-box .actions { margin-top:1rem; }
+    .outreach-pack { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+    .outreach-card { border:1px solid rgba(15,118,110,.22); background:linear-gradient(180deg,#fff 0%,rgba(204,251,241,.26) 100%); border-radius:18px; padding:1.15rem; }
+    .outreach-card h3 { font-size:1.08rem; margin-bottom:.45rem; }
+    .outreach-card p { margin:.45rem 0 0; color:var(--muted); }
+    .outreach-card .copy-snippet { font-size:.95rem; }
     .quick-form { display:grid; gap:.75rem; margin-top:1rem; }
     .quick-form label { display:grid; gap:.3rem; font-weight:800; font-size:.92rem; }
     .quick-form input, .quick-form textarea { width:100%; border:1px solid var(--line); border-radius:14px; padding:.8rem .9rem; background:#fff; color:var(--ink); font:inherit; }
@@ -151,7 +156,7 @@
     .form-status { min-height:1.4rem; margin:0; color:var(--muted); font-size:.92rem; }
     .form-status.err { color:#991b1b; }
     footer { border-top:1px solid var(--line); color:var(--muted); padding:2rem 0; }
-    @media (max-width:860px) { .hero,.grid-3,.metric-grid,.sample,.template-grid { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } }
+    @media (max-width:860px) { .hero,.grid-3,.metric-grid,.sample,.template-grid,.outreach-pack { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } }
   </style>
 </head>
 <body>
@@ -285,6 +290,34 @@
           <p>Best when the surface exists but visitors may not understand the offer, proof, promise, or next action.</p>
           <a class="btn btn-primary" href="/contact/?intent=operator&amp;subject=Teardown%20my%20homepage%20or%20offer%20page&amp;message=Please%20send%20me%20a%20weekly%20operator%20teardown%20of%20my%20homepage%20or%20offer%20page.%0A%0ARelevant%20URL:%20%0A%0AMetric%20I%20care%20about:%20clearer%20qualified%20interest.%0A%0APlease%20look%20for%20the%20fastest%20safe%20positioning,%20proof,%20or%20CTA%20fix%20before%20I%20consider%20the%20pilot.&amp;utm_source=weekly_teardown&amp;utm_medium=request_template&amp;utm_campaign=weekly_teardown&amp;utm_content=homepage_offer">Request offer teardown</a>
         </article>
+      </div>
+    </section>
+
+    <section class="band wrap" id="maintainer-reply-pack">
+      <div class="section-head">
+        <h2>Reply with one line if you came from a maintainer note.</h2>
+        <p class="muted">The cold-start goal is not to sell a pilot cold. It is to earn one useful reply that names a skill category, a trust objection, or a public URL worth tearing down.</p>
+      </div>
+      <div class="outreach-pack" aria-label="One-line reply prompts for maintainers and referrals">
+        <article class="outreach-card">
+          <h3>Category signal</h3>
+          <p>Best when the recipient maintains docs, SDKs, integrations, or agent examples.</p>
+          <div class="copy-snippet">“The first agent-skill category I’d want maintained is ____.”</div>
+        </article>
+        <article class="outreach-card">
+          <h3>Trust objection</h3>
+          <p>Best when the recipient cares about MCP, safety, disclosure, or marketplace quality.</p>
+          <div class="copy-snippet">“Before I trusted this, I’d need to see ____.”</div>
+        </article>
+        <article class="outreach-card">
+          <h3>One-URL proof</h3>
+          <p>Best when they have a public surface and want to test operator judgment without a call.</p>
+          <div class="copy-snippet">“Please teardown this URL for the fastest safe lead or checkout improvement: ____.”</div>
+        </article>
+      </div>
+      <div class="actions" style="margin-top:1rem">
+        <a class="btn btn-primary" href="#teardown-inline-form">Send the one-URL request</a>
+        <a class="btn btn-secondary" href="/operator/sample-report/?utm_source=weekly_teardown&amp;utm_medium=maintainer_reply_pack&amp;utm_campaign=sample_report">See the sample report</a>
       </div>
     </section>
 
