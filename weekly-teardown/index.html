@@ -155,6 +155,12 @@
     .consent-row input { width:auto; margin-top:.25rem; }
     .form-status { min-height:1.4rem; margin:0; color:var(--muted); font-size:.92rem; }
     .form-status.err { color:#991b1b; }
+    .post-submit { display:none; margin-top:1rem; border:1px solid rgba(15,118,110,.26); background:#fff; border-radius:18px; padding:1rem; }
+    .post-submit[data-visible="true"] { display:block; }
+    .post-submit h3 { font-size:1.08rem; margin-bottom:.35rem; }
+    .post-submit p { margin:.45rem 0 0; color:var(--muted); }
+    .post-submit ul { margin:.7rem 0 0; padding-left:1.1rem; color:var(--muted); }
+    .post-submit li + li { margin-top:.28rem; }
     footer { border-top:1px solid var(--line); color:var(--muted); padding:2rem 0; }
     @media (max-width:860px) { .hero,.grid-3,.metric-grid,.sample,.template-grid,.outreach-pack { grid-template-columns:1fr; } .links .hide-sm { display:none; } main { padding-top:2rem; } }
   </style>
@@ -219,6 +225,15 @@
           <button class="btn btn-primary" type="submit" id="teardown-submit">Request teardown</button>
           <p class="form-status" id="teardown-form-status" role="status" aria-live="polite"></p>
         </form>
+        <div class="post-submit" id="teardown-post-submit" data-visible="false" tabindex="-1" aria-label="After you request a teardown">
+          <h3>Request saved. Keep momentum while Pete reviews it.</h3>
+          <p>You do not need to send private data. If the URL is a fit, Pete replies with the first safe revenue, subscriber, or reply improvement.</p>
+          <ul>
+            <li><a href="/operator/sample-report/?utm_source=weekly_teardown&amp;utm_medium=post_submit&amp;utm_campaign=sample_report">Read the sample daily report</a> to see the review format.</li>
+            <li><a href="/operator/checklist/?utm_source=weekly_teardown&amp;utm_medium=post_submit&amp;utm_campaign=readiness">Check pilot readiness</a> if you want to know whether the four-week pilot fits now.</li>
+            <li><a href="/operator/?plan=2500&amp;utm_source=weekly_teardown&amp;utm_medium=post_submit&amp;utm_campaign=standard_pilot#apply">Apply for the pilot</a> only if you already have one live surface and approval bandwidth.</li>
+          </ul>
+        </div>
       </aside>
     </div>
 
@@ -386,6 +401,7 @@
       const form = document.getElementById('teardown-inline-form');
       const status = document.getElementById('teardown-form-status');
       const submit = document.getElementById('teardown-submit');
+      const postSubmit = document.getElementById('teardown-post-submit');
       if (!form || !status || !submit) return;
 
       function setStatus(kind, message) {
@@ -432,6 +448,10 @@
           if (!response.ok) throw new Error(body.error || 'Could not save your teardown request.');
           form.reset();
           setStatus('ok', body.message || 'Teardown request received for human review.');
+          if (postSubmit) {
+            postSubmit.dataset.visible = 'true';
+            postSubmit.focus({ preventScroll: true });
+          }
         } catch (error) {
           setStatus('error', error.message || 'Could not save your teardown request. Please try the contact form link.');
         } finally {

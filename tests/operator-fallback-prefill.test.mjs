@@ -70,7 +70,7 @@ test('operator funnel offers a low-friction weekly teardown landing page', async
   assert.match(sample, /Get the weekly teardown/);
   assert.match(sample, /href="\/weekly-teardown\/\?utm_source=sample_report_close/);
   assert.match(home, /Weekly operator teardown now open/);
-  assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage&utm_medium=hero&utm_campaign=weekly_teardown/);
+  assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage&utm_medium=hero&utm_campaign=one_url_proof/);
   assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage&utm_medium=nav&utm_campaign=weekly_teardown/);
   assert.match(home, /href="\/weekly-teardown\/\?utm_source=homepage&utm_medium=hero_strip&utm_campaign=weekly_teardown/);
   assert.match(home, /See the operator loop before you apply/);
@@ -90,6 +90,13 @@ test('operator funnel offers a low-friction weekly teardown landing page', async
   assert.match(teardown, /Request offer teardown/);
   assert.match(teardown, /utm_content=homepage_offer/);
   assert.match(teardown, /id="teardown-inline-form"/);
+  assert.match(teardown, /id="teardown-post-submit"/);
+  assert.match(teardown, /Request saved\. Keep momentum while Pete reviews it\./);
+  assert.match(teardown, /utm_medium=post_submit&amp;utm_campaign=sample_report/);
+  assert.match(teardown, /utm_medium=post_submit&amp;utm_campaign=readiness/);
+  assert.match(teardown, /utm_medium=post_submit&amp;utm_campaign=standard_pilot/);
+  assert.match(teardown, /postSubmit\.dataset\.visible = 'true'/);
+  assert.match(teardown, /postSubmit\.focus\(\{ preventScroll: true \}\)/);
   assert.match(teardown, /id="one-line-ask"/);
   assert.match(teardown, /Fastest useful reply: one URL\./);
   assert.match(teardown, /smallest non-sales ask: send one public surface and the metric you want moved/);
